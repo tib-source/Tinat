@@ -10,7 +10,8 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import { PortalHost } from '@rn-primitives/portal';
 import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { useTranslation } from 'react-i18next';
-
+import * as SQLite from 'expo-sqlite';
+import { useEffect } from 'react';
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
   colors: NAV_THEME.light,
@@ -30,7 +31,19 @@ export default function RootLayout() {
   const { colorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
   const { t } = useTranslation();
+  const [db, setDb] = React.useState<any>(null);
 
+  useEffect(() => {
+    SQLite.openDatabaseAsync('~/assets/db/bible.sqlite').then((database) => {
+      setDb(database);
+      console.log('Database opened:', database);
+    }
+    ).catch((error) => {
+      console.error('Error opening database:', error);
+    }
+    );  
+
+  }, []);
   useIsomorphicLayoutEffect(() => {
     if (hasMounted.current) {
       return;
@@ -47,6 +60,16 @@ export default function RootLayout() {
 
   if (!isColorSchemeLoaded) {
     return null;
+  }
+
+  if (db) {
+    const result = db.execSync(
+      "SELECT * FROM sqlite_master;"
+    );
+    console.log('Books table sample:', result?.rows);
+
+  } else {
+    console.log('Database is not ready yet.');
   }
 
   return (
