@@ -17,6 +17,7 @@ const resources = {
                     sunday: 'Sun',
                 },
                 progress: 'verses read',
+                daily_verse: 'Daily Verse',
             },
         }
     },
@@ -35,6 +36,8 @@ const resources = {
                     sunday: 'እሁድ',
                 },
                 progress: 'ጥቅሶች አንብበዋል',
+                daily_verse: 'የዕለቱ ቃል እግዚአብሔር',
+
             },
         }
     }
