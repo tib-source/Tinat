@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
-import "../translation"
+
 export default function Index() {
 
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>{t('home.greeting', {"name": "Tibebe"})}</Text>
+      <Text>{t('home.greeting', {"name": "Bible"})}</Text>
     </View>
   );
 }

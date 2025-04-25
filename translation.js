@@ -7,6 +7,16 @@ const resources = {
             home: {
                 welcome: 'Welcome!',
                 greeting: 'Hello, {{name}}!',
+                days: {
+                    monday: 'Mon',
+                    tuesday: 'Tue',
+                    wednesday: 'Wed',
+                    thursday: 'Thur',
+                    friday: 'Fri',
+                    saturday: 'Sat',
+                    sunday: 'Sun',
+                },
+                progress: 'verses read',
             },
         }
     },
@@ -15,9 +25,19 @@ const resources = {
             home: {
                 welcome: 'ሰላም!',
                 greeting: 'ሰላም, {{name}}!',
+                days: {
+                    monday: 'ሰኞ',
+                    tuesday: 'ማ/ኞ',
+                    wednesday: 'ረቡዕ',
+                    thursday: 'ሐሙስ',
+                    friday: 'አርብ',
+                    saturday: 'ቅዳሜ',
+                    sunday: 'እሁድ',
+                },
+                progress: 'ጥቅሶች አንብበዋል',
             },
         }
-    },
+    }
 };
 
 i18n
