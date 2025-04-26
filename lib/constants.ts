@@ -1,8 +1,8 @@
 export const NAV_THEME = {
   light: {
-    background: '#FEFEF6', // background
+    background: '#FFFFFF', // background
     border: '#6B6B6B33', // border
-    card: '#FEFEF6', // card
+    card: '#FFFFFF', // card
     notification: 'hsl(0 84.2% 60.2%)', // destructive
     primary: '#FDBB5A', // primary
     text: '#2A1C01', // foreground
@@ -13,6 +13,6 @@ export const NAV_THEME = {
     card: 'hsl(240 10% 3.9%)', // card
     notification: 'hsl(0 72% 51%)', // destructive
     primary: '#FDBB5A', // primary
-    text: '#FEFEF6', // foreground
+    text: '#FFFEF6', // foreground
   },
 };

@@ -6,6 +6,7 @@ export default function BibleLayout() {
     return (
         <Stack>
             <Stack.Screen name="index" options={{headerTitle: t('bible.headerTitle')}} />
+            <Stack.Screen name="[book]" options={{headerShown: false}} />
         </Stack>
     );
 }
