@@ -40,7 +40,9 @@ const resources = {
                 },
                 progress: 'ጥቅሶች አንብበዋል',
                 daily_verse: 'የዕለቱ ቃል እግዚአብሔር',
-
+            },
+            bible: {
+                headerTitle: 'Explore The Bible',
             },
         }
     }

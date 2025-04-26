@@ -42,8 +42,8 @@ export default function Index() {
                     data={searchResults}
                     keyExtractor={(item) => item.bookNumber.toString()}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={()=>router.navigate(`/bible/${item.book_am}`)} className="p-1">
-                            <Card className="w-50 p-4 mb-2 bg-background rounded-2xl">
+                        <TouchableOpacity onPress={()=>router.navigate(`/bible/${item.book_am}`)} className="p-1 pl-4 pr-4">
+                            <Card className="p-4 mb-2 bg-background rounded-2xl">
                                 <View className="flex-row items-center justify-between">
                                     <Text className="text-lg font-bold text-foreground">{item.book_am}</Text>
                                     <Text className="text-sm text-muted-foreground">{item.chapters} chapters</Text>
