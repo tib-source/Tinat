@@ -5,6 +5,8 @@ import { Input } from "~/components/ui/input";
 import bibleListData from "~/assets/data/bible_books.json";
 import { Card } from "~/components/ui/card";
 import { Progress } from "~/components/ui/progress";
+import { Link, useRouter } from "expo-router";
+
 interface Book {
     bookNumber: number;
     book_en: string;
@@ -30,6 +32,7 @@ export default function Index() {
         console.log(e.nativeEvent.text);
     };
 
+    const router = useRouter();
 
     return (
         <View className="flex-1 p-2">
@@ -39,7 +42,7 @@ export default function Index() {
                     data={searchResults}
                     keyExtractor={(item) => item.bookNumber.toString()}
                     renderItem={({ item }) => (
-                        <TouchableOpacity className="flex-0.65" onPress={() => console.log(item)}>
+                        <TouchableOpacity onPress={()=>router.navigate('/')} className="p-1">
                             <Card className="w-50 p-4 mb-2 bg-background rounded-2xl">
                                 <View className="flex-row items-center justify-between">
                                     <Text className="text-lg font-bold">{item.book_am}</Text>
