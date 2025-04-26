@@ -4,6 +4,7 @@ import { CircleCheck } from "~/lib/icons/CircleCheck"
 import { View, Text, FlatList, Pressable, TouchableOpacity } from "react-native";
 import { Card, CardContent } from "~/components/ui/card";
 import { useTheme } from "@react-navigation/native";
+import { dir } from "i18next";
 
 export default function Index() {
 
@@ -35,12 +36,12 @@ export default function Index() {
                 renderItem={({ item, index }) => {
 
                     const read = index < 5
-                    const direction = index % 2 ? "start" : "end"
+                    const direction = index % 2 ? "flex-end" : "flex-start"
                     return (
                         <TouchableOpacity
-                            onPress={() => console.log(`onPress: Chapter ${item}`)}
+                            onPress={() => router.navigate(`/bible/${book}/${item}`)}
                         >
-                            <Card className={`self-${direction}`} style={{ width: "85%" }}>
+                            <Card style={{ width: "85%", alignSelf: direction }}>
                                 <CardContent className="flex-row items-center gap-4 p-4" >
                                     {
                                         read ?

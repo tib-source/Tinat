@@ -1,15 +1,18 @@
 import { useLocalSearchParams, useRouter } from "expo-router/build/hooks";
-import { BookOpen } from "~/lib/icons/Book"
-import { CircleCheck } from "~/lib/icons/CircleCheck"
+
 import { View, Text, FlatList, Pressable, TouchableOpacity } from "react-native";
-import { Card, CardContent } from "~/components/ui/card";
 import { useTheme } from "@react-navigation/native";
+import { useState } from "react";
+import { Input } from "~/components/ui/input";
+import { Card, CardContent } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
 
 export default function Index() {
 
     const { book } = useLocalSearchParams();
     console.log("params", book);
     const theme = useTheme()
+    const [fontSize, setFontSize] = useState(25)
     const verses = [
         "እባብም እግዚአብሔር አምላክ ከፈጠረው ከምድር አውሬ ሁሉ ይልቅ ተንኰለኛ ነበረ። ሴቲቱንም። በውኑ እግዚአብሔር ከገነት ዛፍ ሁሉ እንዳትበሉ አዝዞአልን? አላት።",
         "ሴቲቱም ለእባቡ አለችው። በገነት ካለው ከዛፍ ፍሬ እንበላለን፤",
@@ -38,39 +41,34 @@ export default function Index() {
     ]
     const router = useRouter()
     return (
-        <View className="flex-1 p-5 pb-0 pt-0 ">
+        <View className="flex-1 p-2 pb-0 pt-0 ">
             <FlatList
                 className="pt-5 "
-                data={chapters}
-                keyExtractor={(item) => item.toString()}
+                data={verses}
+                keyExtractor={(item) => item}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item, index }) => {
 
-                    const read = index < 5
-                    const direction = index % 2 ? "start" : "end"
                     return (
-                        <TouchableOpacity
-                            onPress={() => console.log(`onPress: Chapter ${item}`)}
-                        >
-                            <Card className={`self-${direction}`} style={{ width: "85%" }}>
-                                <CardContent className="flex-row items-center gap-4 p-4" >
-                                    {
-                                        read ?
-                                            <CircleCheck size={30} stroke={theme.colors.background} fill={theme.colors.primary} className="color-foreground" /> :
-                                            <BookOpen className="color-foreground" />
-                                    }
-                                    <View>
-                                        <Text className="text-xl text-foreground">Chapter {index + 1}</Text>
-                                        <Text className="text-sm text-muted-foreground">24 Verses </Text>
-                                    </View>
-                                </CardContent>
-                            </Card>
-                        </TouchableOpacity>)
+
+                        <View className="m-3 flex-row items-center text-clip">
+                            <CardContent >
+                                <Text className="color-foreground " style={{ fontSize }}>
+                                <Text className="color-muted-foreground" style={{ fontSize: fontSize - 8 }}> {index + 1} </Text>
+                                    {item} </Text>
+
+                            </CardContent>
+                        </View>
+
+                    )
                 }
                 }
 
             />
+        {/* TODO: create the shelf here for adjusting font, brightness, hisotry and highlighting text */}
         </View>
     );
+
+
 }

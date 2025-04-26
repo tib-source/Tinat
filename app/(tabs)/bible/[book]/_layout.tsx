@@ -9,6 +9,8 @@ export default function ChapterLayout() {
     return (
         <Stack>
             <Stack.Screen name="index" options={{ headerTitle: bookName }} />
+            <Stack.Screen name="[chapter]" options={{headerShown: false}} />
+
         </Stack>
     );
 }
