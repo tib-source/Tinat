@@ -1,7 +1,9 @@
+import { SQLiteProvider, useSQLiteContext } from "expo-sqlite";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
+import { useEffect, useState } from "react";
 
-export default function Index() {
+function BibleContent() {
 
   const { t } = useTranslation();
 
@@ -13,7 +15,17 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>{t('home.greeting', {"name": "Bible"})}</Text>
+      <Text className="text-2xl font-bold text-foreground">{t('home.greeting', {"name": "Bible"})}</Text>
     </View>
+  );
+}
+
+export default function Index() {
+  return (
+    <SQLiteProvider 
+      databaseName="bible.sqlite"
+    >
+      <BibleContent />
+    </SQLiteProvider>
   );
 }

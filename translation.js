@@ -19,6 +19,9 @@ const resources = {
                 progress: 'verses read',
                 daily_verse: 'Daily Verse',
             },
+            bible: {
+                headerTitle: 'Explore The Bible',
+            },
         }
     },
     amh: {
@@ -47,7 +50,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: 'amh', // Default language
+        lng: 'en', // Default language
         interpolation: {
             escapeValue: false, // React already escapes values
         },

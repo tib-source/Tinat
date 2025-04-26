@@ -26,9 +26,8 @@ export default function Streak() {
   // }
   return (
       <Card className='w-full p-6 bg-background rounded-2xl'>
-        <CardContent className='flex-col'>
+        <CardContent className='flex-col gap-3 pb-0'>
             <View className='flex-row items-center justify-center gap-2'>
-            
             <Flame size={50} fill={theme.colors.primary} className='color-primary m-0 p-0' />
 
             <View className='flex-grow'>
@@ -40,10 +39,8 @@ export default function Streak() {
               <Progress value={progress} className='h-5' indicatorClassName='bg-primary' />
             </View>
             </View>
-        </CardContent>
-        <CardFooter className='flex-col gap-3 pb-0'>
           <View />
-          <View className='flex-row justify-around gap-3'>
+          <View className='flex-row justify-around gap-4'>
             {days.map((day, index) => {
               return <View key={index} className='items-center'>
                 <CircleCheck stroke={Math.random() > 0.7 ? theme.colors.border : theme.colors.primary}  size={30} className=' mb-1' />
@@ -51,7 +48,7 @@ export default function Streak() {
               </View>
             })}
           </View>
-        </CardFooter>
+          </CardContent>
       </Card>
   );
 }

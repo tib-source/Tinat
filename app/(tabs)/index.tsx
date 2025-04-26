@@ -6,7 +6,6 @@ import DailyVerse from '~/components/home/DailyVerse';
 
 export default function Screen() {
 
-
   // function updateProgressValue() {
   //   setProgress(Math.floor(verseCount/verseGoal * 100));
   // }
