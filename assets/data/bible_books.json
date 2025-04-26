@@ -1,0 +1,466 @@
+{
+    "books": [
+      {
+        "bookNumber": 1,
+        "book_am": "ኦሪት ዘፍጥረት",
+        "book_en": "ኦሪት ዘፍጥረት",
+        "chapters": 50,
+        "chapters_read": 46
+      },
+      {
+        "bookNumber": 2,
+        "book_am": "ኦሪት ዘጸአት",
+        "book_en": "ኦሪት ዘጸአት",
+        "chapters": 40,
+        "chapters_read": 15
+      },
+      {
+        "bookNumber": 3,
+        "book_am": "ኦሪት ዘሌዋውያን",
+        "book_en": "ኦሪት ዘሌዋውያን",
+        "chapters": 27,
+        "chapters_read": 10
+      },
+      {
+        "bookNumber": 4,
+        "book_am": "ኦሪት ዘኍልቍ",
+        "book_en": "ኦሪት ዘኍልቍ",
+        "chapters": 36,
+        "chapters_read": 30
+      },
+      {
+        "bookNumber": 5,
+        "book_am": "ኦሪት ዘዳግም",
+        "book_en": "ኦሪት ዘዳግም",
+        "chapters": 34,
+        "chapters_read": 31
+      },
+      {
+        "bookNumber": 6,
+        "book_am": "መጽሐፈ ኢያሱ ወልደ ነዌ",
+        "book_en": "መጽሐፈ ኢያሱ ወልደ ነዌ",
+        "chapters": 24,
+        "chapters_read": 11
+      },
+      {
+        "bookNumber": 7,
+        "book_am": "መጽሐፈ መሣፍንት",
+        "book_en": "መጽሐፈ መሣፍንት",
+        "chapters": 21,
+        "chapters_read": 18
+      },
+      {
+        "bookNumber": 8,
+        "book_am": "መጽሐፈ ሩት",
+        "book_en": "መጽሐፈ ሩት",
+        "chapters": 4,
+        "chapters_read": 3
+      },
+      {
+        "bookNumber": 9,
+        "book_am": "መጽሐፈ ሳሙኤል ቀዳማዊ",
+        "book_en": "መጽሐፈ ሳሙኤል ቀዳማዊ",
+        "chapters": 31,
+        "chapters_read": 25
+      },
+      {
+        "bookNumber": 10,
+        "book_am": "መጽሐፈ ሳሙኤል ካል",
+        "book_en": "መጽሐፈ ሳሙኤል ካል",
+        "chapters": 24,
+        "chapters_read": 1
+      },
+      {
+        "bookNumber": 11,
+        "book_am": "መጽሐፈ ነገሥት ቀዳማዊ።",
+        "book_en": "መጽሐፈ ነገሥት ቀዳማዊ።",
+        "chapters": 22,
+        "chapters_read": 7
+      },
+      {
+        "bookNumber": 12,
+        "book_am": "መጽሐፈ ነገሥት ካልዕ።",
+        "book_en": "መጽሐፈ ነገሥት ካልዕ።",
+        "chapters": 25,
+        "chapters_read": 4
+      },
+      {
+        "bookNumber": 13,
+        "book_am": "መጽሐፈ ዜና መዋዕል ቀዳማዊ።",
+        "book_en": "መጽሐፈ ዜና መዋዕል ቀዳማዊ።",
+        "chapters": 29,
+        "chapters_read": 22
+      },
+      {
+        "bookNumber": 14,
+        "book_am": "መጽሐፈ ዜና መዋዕል ካልዕ።",
+        "book_en": "መጽሐፈ ዜና መዋዕል ካልዕ።",
+        "chapters": 36,
+        "chapters_read": 34
+      },
+      {
+        "bookNumber": 15,
+        "book_am": "መጽሐፈ ዕዝራ።",
+        "book_en": "መጽሐፈ ዕዝራ።",
+        "chapters": 10,
+        "chapters_read": 0
+      },
+      {
+        "bookNumber": 16,
+        "book_am": "መጽሐፈ ነህምያ።",
+        "book_en": "መጽሐፈ ነህምያ።",
+        "chapters": 13,
+        "chapters_read": 12
+      },
+      {
+        "bookNumber": 17,
+        "book_am": "መጽሐፈ አስቴር።",
+        "book_en": "መጽሐፈ አስቴር።",
+        "chapters": 10,
+        "chapters_read": 6
+      },
+      {
+        "bookNumber": 18,
+        "book_am": "መጽሐፈ ኢዮብ።",
+        "book_en": "መጽሐፈ ኢዮብ።",
+        "chapters": 42,
+        "chapters_read": 39
+      },
+      {
+        "bookNumber": 19,
+        "book_am": "መዝሙረ ዳዊት",
+        "book_en": "መዝሙረ ዳዊት",
+        "chapters": 150,
+        "chapters_read": 87
+      },
+      {
+        "bookNumber": 20,
+        "book_am": "መጽሐፈ ምሳሌ",
+        "book_en": "መጽሐፈ ምሳሌ",
+        "chapters": 31,
+        "chapters_read": 27
+      },
+      {
+        "bookNumber": 21,
+        "book_am": "መጽሐፈ መክብብ",
+        "book_en": "መጽሐፈ መክብብ",
+        "chapters": 12,
+        "chapters_read": 9
+      },
+      {
+        "bookNumber": 22,
+        "book_am": "መኃልየ መኃልይ ዘሰሎሞን",
+        "book_en": "መኃልየ መኃልይ ዘሰሎሞን",
+        "chapters": 8,
+        "chapters_read": 5
+      },
+      {
+        "bookNumber": 23,
+        "book_am": "ትንቢተ ኢሳይያስ",
+        "book_en": "ትንቢተ ኢሳይያስ",
+        "chapters": 66,
+        "chapters_read": 43
+      },
+      {
+        "bookNumber": 24,
+        "book_am": "ትንቢተ ኤርምያስ",
+        "book_en": "ትንቢተ ኤርምያስ",
+        "chapters": 52,
+        "chapters_read": 45
+      },
+      {
+        "bookNumber": 25,
+        "book_am": "ሰቆቃው ኤርምያስ",
+        "book_en": "ሰቆቃው ኤርምያስ",
+        "chapters": 5,
+        "chapters_read": 1
+      },
+      {
+        "bookNumber": 26,
+        "book_am": "ትንቢተ ሕዝቅኤል",
+        "book_en": "ትንቢተ ሕዝቅኤል",
+        "chapters": 48,
+        "chapters_read": 11
+      },
+      {
+        "bookNumber": 27,
+        "book_am": "ትንቢተ ዳንኤል",
+        "book_en": "ትንቢተ ዳንኤል",
+        "chapters": 12,
+        "chapters_read": 0
+      },
+      {
+        "bookNumber": 28,
+        "book_am": "ትንቢተ ሆሴዕ",
+        "book_en": "ትንቢተ ሆሴዕ",
+        "chapters": 14,
+        "chapters_read": 7
+      },
+      {
+        "bookNumber": 29,
+        "book_am": "ትንቢተ ኢዮኤል",
+        "book_en": "ትንቢተ ኢዮኤል",
+        "chapters": 3,
+        "chapters_read": 1
+      },
+      {
+        "bookNumber": 30,
+        "book_am": "ትንቢተ አሞጽ",
+        "book_en": "ትንቢተ አሞጽ",
+        "chapters": 9,
+        "chapters_read": 5
+      },
+      {
+        "bookNumber": 31,
+        "book_am": "ትንቢተ አብድዩ",
+        "book_en": "ትንቢተ አብድዩ",
+        "chapters": 1,
+        "chapters_read": 0
+      },
+      {
+        "bookNumber": 32,
+        "book_am": "ትንቢተ ዮናስ",
+        "book_en": "ትንቢተ ዮናስ",
+        "chapters": 4,
+        "chapters_read": 3
+      },
+      {
+        "bookNumber": 33,
+        "book_am": "ትንቢተ ሚክያስ",
+        "book_en": "ትንቢተ ሚክያስ",
+        "chapters": 7,
+        "chapters_read": 4
+      },
+      {
+        "bookNumber": 34,
+        "book_am": "ትንቢተ ናሆም",
+        "book_en": "ትንቢተ ናሆም",
+        "chapters": 3,
+        "chapters_read": 2
+      },
+      {
+        "bookNumber": 35,
+        "book_am": "ትንቢተ ዕንባቆም",
+        "book_en": "ትንቢተ ዕንባቆም",
+        "chapters": 3,
+        "chapters_read": 2
+      },
+      {
+        "bookNumber": 36,
+        "book_am": "ትንቢተ ሶፎንያስ",
+        "book_en": "ትንቢተ ሶፎንያስ",
+        "chapters": 3,
+        "chapters_read": 2
+      },
+      {
+        "bookNumber": 37,
+        "book_am": "ትንቢተ ሐጌ",
+        "book_en": "ትንቢተ ሐጌ",
+        "chapters": 2,
+        "chapters_read": 0
+      },
+      {
+        "bookNumber": 38,
+        "book_am": "ትንቢተ ዘካርያስ",
+        "book_en": "ትንቢተ ዘካርያስ",
+        "chapters": 14,
+        "chapters_read": 3
+      },
+      {
+        "bookNumber": 39,
+        "book_am": "ትንቢተ ሚልክያ",
+        "book_en": "ትንቢተ ሚልክያ",
+        "chapters": 4,
+        "chapters_read": 3
+      },
+      {
+        "bookNumber": 40,
+        "book_am": "የማቴዎስ ወንጌል",
+        "book_en": "የማቴዎስ ወንጌል",
+        "chapters": 28,
+        "chapters_read": 17
+      },
+      {
+        "bookNumber": 41,
+        "book_am": "የማርቆስ ወንጌል",
+        "book_en": "የማርቆስ ወንጌል",
+        "chapters": 16,
+        "chapters_read": 1
+      },
+      {
+        "bookNumber": 42,
+        "book_am": "የሉቃስ ወንጌል",
+        "book_en": "የሉቃስ ወንጌል",
+        "chapters": 24,
+        "chapters_read": 0
+      },
+      {
+        "bookNumber": 43,
+        "book_am": "የዮሐንስ ወንጌል",
+        "book_en": "የዮሐንስ ወንጌል",
+        "chapters": 21,
+        "chapters_read": 19
+      },
+      {
+        "bookNumber": 44,
+        "book_am": "የሐዋርያት ሥራ",
+        "book_en": "የሐዋርያት ሥራ",
+        "chapters": 28,
+        "chapters_read": 6
+      },
+      {
+        "bookNumber": 45,
+        "book_am": "ወደ ሮሜ ሰዎች",
+        "book_en": "ወደ ሮሜ ሰዎች",
+        "chapters": 16,
+        "chapters_read": 13
+      },
+      {
+        "bookNumber": 46,
+        "book_am": "1ኛ ወደ ቆሮንቶስ ሰዎች",
+        "book_en": "1ኛ ወደ ቆሮንቶስ ሰዎች",
+        "chapters": 16,
+        "chapters_read": 14
+      },
+      {
+        "bookNumber": 47,
+        "book_am": "2ኛ ወደ ቆሮንቶስ ሰዎች",
+        "book_en": "2ኛ ወደ ቆሮንቶስ ሰዎች",
+        "chapters": 13,
+        "chapters_read": 6
+      },
+      {
+        "bookNumber": 48,
+        "book_am": "ወደ ገላትያ ሰዎች",
+        "book_en": "ወደ ገላትያ ሰዎች",
+        "chapters": 6,
+        "chapters_read": 1
+      },
+      {
+        "bookNumber": 49,
+        "book_am": "ወደ ኤፌሶን ሰዎች",
+        "book_en": "ወደ ኤፌሶን ሰዎች",
+        "chapters": 6,
+        "chapters_read": 5
+      },
+      {
+        "bookNumber": 50,
+        "book_am": "ወደ ፊልጵስዩስ ሰዎች",
+        "book_en": "ወደ ፊልጵስዩስ ሰዎች",
+        "chapters": 4,
+        "chapters_read": 3
+      },
+      {
+        "bookNumber": 51,
+        "book_am": "ወደ ቆላስይስ ሰዎች",
+        "book_en": "ወደ ቆላስይስ ሰዎች",
+        "chapters": 4,
+        "chapters_read": 1
+      },
+      {
+        "bookNumber": 52,
+        "book_am": "1ኛ ወደ ተሰሎንቄ ሰዎች",
+        "book_en": "1ኛ ወደ ተሰሎንቄ ሰዎች",
+        "chapters": 5,
+        "chapters_read": 1
+      },
+      {
+        "bookNumber": 53,
+        "book_am": "2ኛ ወደ ተሰሎንቄ ሰዎች",
+        "book_en": "2ኛ ወደ ተሰሎንቄ ሰዎች",
+        "chapters": 3,
+        "chapters_read": 1
+      },
+      {
+        "bookNumber": 54,
+        "book_am": "1ኛ ወደ ጢሞቴዎስ",
+        "book_en": "1ኛ ወደ ጢሞቴዎስ",
+        "chapters": 6,
+        "chapters_read": 1
+      },
+      {
+        "bookNumber": 55,
+        "book_am": "2ኛ ወደ ጢሞቴዎስ",
+        "book_en": "2ኛ ወደ ጢሞቴዎስ",
+        "chapters": 4,
+        "chapters_read": 3
+      },
+      {
+        "bookNumber": 56,
+        "book_am": "ወደ ቲቶ",
+        "book_en": "ወደ ቲቶ",
+        "chapters": 3,
+        "chapters_read": 0
+      },
+      {
+        "bookNumber": 57,
+        "book_am": "ወደ ፊልሞና",
+        "book_en": "ወደ ፊልሞና",
+        "chapters": 1,
+        "chapters_read": 0
+      },
+      {
+        "bookNumber": 58,
+        "book_am": "ወደ ዕብራውያን",
+        "book_en": "ወደ ዕብራውያን",
+        "chapters": 13,
+        "chapters_read": 10
+      },
+      {
+        "bookNumber": 59,
+        "book_am": "የያዕቆብ መልእክት",
+        "book_en": "የያዕቆብ መልእክት",
+        "chapters": 5,
+        "chapters_read": 0
+      },
+      {
+        "bookNumber": 60,
+        "book_am": "1ኛ የጴጥሮስ መልእክት",
+        "book_en": "1ኛ የጴጥሮስ መልእክት",
+        "chapters": 5,
+        "chapters_read": 4
+      },
+      {
+        "bookNumber": 61,
+        "book_am": "2ኛ የጴጥሮስ መልእክት",
+        "book_en": "2ኛ የጴጥሮስ መልእክት",
+        "chapters": 3,
+        "chapters_read": 0
+      },
+      {
+        "bookNumber": 62,
+        "book_am": "1ኛ የዮሐንስ መልእክት",
+        "book_en": "1ኛ የዮሐንስ መልእክት",
+        "chapters": 5,
+        "chapters_read": 1
+      },
+      {
+        "bookNumber": 63,
+        "book_am": "2ኛ የዮሐንስ መልእክት",
+        "book_en": "2ኛ የዮሐንስ መልእክት",
+        "chapters": 1,
+        "chapters_read": 0
+      },
+      {
+        "bookNumber": 64,
+        "book_am": "3ኛ የዮሐንስ መልእክት",
+        "book_en": "3ኛ የዮሐንስ መልእክት",
+        "chapters": 1,
+        "chapters_read": 0
+      },
+      {
+        "bookNumber": 65,
+        "book_am": "የይሁዳ መልእክት",
+        "book_en": "የይሁዳ መልእክት",
+        "chapters": 1,
+        "chapters_read": 0
+      },
+      {
+        "bookNumber": 66,
+        "book_am": "የዮሐንስ ራእይ",
+        "book_en": "የዮሐንስ ራእይ",
+        "chapters": 22,
+        "chapters_read": 9
+      }
+    ]
+  }
