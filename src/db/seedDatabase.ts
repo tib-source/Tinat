@@ -2,17 +2,18 @@ import { SQLiteDatabase } from "expo-sqlite";
 import bibleData from "./bibleData";
 export default async function migrateDbIfNeeded(db: SQLiteDatabase){ 
 
-  const DATABASE_VERSION = 1
+  const DATABASE_VERSION = 0
 
   const result = await db.getFirstAsync<{ user_version: number }>('PRAGMA user_version');
   const currentDbVersion = result ? result.user_version : 0;
 
-  if (currentDbVersion >= DATABASE_VERSION){ 
-    return
-  }
+  // if (currentDbVersion >= DATABASE_VERSION){ 
+  //   return
+  // }
 
-  if (currentDbVersion === 0){ 
+  if (currentDbVersion != DATABASE_VERSION){ 
     // Drop and create tables
+    // SQLite uses INTEGER for boolean: 0=false, 1=true 
     await db.execAsync(`
       PRAGMA journal_mode = 'wal';
       DROP TABLE IF EXISTS books;
@@ -23,13 +24,14 @@ export default async function migrateDbIfNeeded(db: SQLiteDatabase){
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title_am TEXT,
         title_en TEXT,
-        order_index INTEGER
+        book_number INTEGER
       );
 
       CREATE TABLE chapters (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         book_id INTEGER,
         chapter_number INTEGER,
+        is_read INTEGER DEFAULT 0,
         FOREIGN KEY(book_id) REFERENCES books(id)
       );
 
@@ -44,7 +46,7 @@ export default async function migrateDbIfNeeded(db: SQLiteDatabase){
     `);
 
 
-    const insertBook = await db.prepareAsync('INSERT INTO books (title_am, title_en, order_index) VALUES ($title_am, $title_en, $order_index)');
+    const insertBook = await db.prepareAsync('INSERT INTO books (title_am, title_en, book_number) VALUES ($title_am, $title_en, $book_number)');
     const insertChapter = await db.prepareAsync('INSERT INTO chapters (book_id, chapter_number) VALUES ($book_id, $chapter_number)');
     const insertVerse = await db.prepareAsync('INSERT INTO verses (chapter_id, verse_number, text_am, text_en) VALUES ($chapter_id, $verse_number, $text_am, $text_en)');
     try {
@@ -52,7 +54,7 @@ export default async function migrateDbIfNeeded(db: SQLiteDatabase){
       const bookResult = await insertBook.executeAsync({
         $title_am: book.title,
         $title_en: "",
-        $order_index: bookIndex,
+        $book_number: bookIndex,
       });
       const bookId = bookResult.lastInsertRowId;
 
@@ -73,6 +75,9 @@ export default async function migrateDbIfNeeded(db: SQLiteDatabase){
         }
       }
       }
+
+      await db.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);
+
     } finally {
       await insertBook.finalizeAsync();
       await insertChapter.finalizeAsync();

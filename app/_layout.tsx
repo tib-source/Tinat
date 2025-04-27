@@ -11,6 +11,9 @@ import { PortalHost } from '@rn-primitives/portal';
 import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { useTranslation } from 'react-i18next';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SQLiteProvider } from 'expo-sqlite';
+import migrateDbIfNeeded from '~/src/db/seedDatabase';
+import DatabaseLoader from '~/components/DatabaseLoader';
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -56,19 +59,23 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView>
+      <SQLiteProvider databaseName='tinat.db'>
+        <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+          <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
+          <DatabaseLoader>
+            <Stack>
+              <Stack.Screen
+                name='(tabs)'
+                options={{
+                  headerShown: false,
+                }}
+              />
+            </Stack>
+          </DatabaseLoader>
+          <PortalHost />
 
-      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-        <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
-        <Stack>
-          <Stack.Screen
-            name='(tabs)'
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack>
-        <PortalHost />
-      </ThemeProvider>
+        </ThemeProvider>
+      </SQLiteProvider> 
     </GestureHandlerRootView>
   );
 }

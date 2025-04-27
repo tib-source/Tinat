@@ -1,3 +1,6 @@
+import { SQLiteDatabase } from "expo-sqlite";
+import { Book, BookList } from "../types";
+
 interface VerseRow {
     id: number;
     book_id: number;
@@ -72,7 +75,7 @@ interface BookRow {
     [key: string]: any;
 }
 
-export const getBooks = (db: DB): Promise<BookRow[]> =>
+export const getfBooks = (db: DB): Promise<BookRow[]> =>
     new Promise((resolve, reject) => {
         db.transaction((tx: DBTransaction) => {
             tx.executeSql(
@@ -86,3 +89,37 @@ export const getBooks = (db: DB): Promise<BookRow[]> =>
         });
     });
   
+
+export const getBooks = async (db: SQLiteDatabase): Promise<Book[]> => {
+
+    return await db.getAllAsync<Book>(`
+        SELECT 
+          b.id,
+          b.title_am,
+          b.title_en,
+          b.book_number,
+          COUNT(c.id) AS chapters,
+          SUM(CASE WHEN c.is_read = 1 THEN 1 ELSE 0 END) AS read_chapters
+        FROM 
+          books b
+        LEFT JOIN 
+          chapters c ON b.id = c.book_id
+        GROUP BY 
+          b.id
+        ORDER BY
+          b.book_number
+      `);
+
+}
+
+
+export const toggleChapterRead = async (
+    db: SQLiteDatabase,
+    chapterId: number,
+    isRead: boolean
+  ) => {
+    return await db.runAsync(
+      `UPDATE chapters SET is_read = ? WHERE id = ?`,
+      [isRead ? 1 : 0, chapterId]
+    );
+  };

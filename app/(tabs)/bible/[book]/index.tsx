@@ -4,20 +4,21 @@ import { CircleCheck } from "~/lib/icons/CircleCheck"
 import { View, Text, FlatList, Pressable, TouchableOpacity } from "react-native";
 import { Card, CardContent } from "~/components/ui/card";
 import { useTheme } from "@react-navigation/native";
-import { dir } from "i18next";
+import useBibleBooks from "~/hooks/useDbQuery";
 
 export default function Index() {
 
     const { book } = useLocalSearchParams();
-    console.log("params", book);
+
     const theme = useTheme()
     const chapters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const router = useRouter()
+
     return (
         <View className="flex-1 p-5 pb-0 pt-0 ">
             
-            <FlatList
-                className="pt-5 "
+            <FlatList 
+                className="pt-5"
                 data={chapters}
                 keyExtractor={(item) => item.toString()}
                 showsVerticalScrollIndicator={false}

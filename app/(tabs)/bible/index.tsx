@@ -1,58 +1,55 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList, NativeSyntheticEvent, Text, TextInputChangeEventData, TouchableOpacity, View } from "react-native";
 import { Input } from "~/components/ui/input";
-import bibleListData from "~/assets/data/bible_books.json";
 import { Card } from "~/components/ui/card";
 import { Progress } from "~/components/ui/progress";
 import { Link, useRouter } from "expo-router";
+import { getBooks } from "~/src/queries/queries";
+import { Book } from "~/src/types";
+import useDbQuery from "~/hooks/useDbQuery";
 
-interface Book {
-    bookNumber: number;
-    book_en: string;
-    book_am: string;
-    chapters: number;
-    chapters_read: number;
-}
 
-interface BibleList {
-    books: Book[];
-}
 
 export default function Index() {
-
-    const [search, setSearch] = useState("");
     const { t } = useTranslation();
-    const bibleList = useMemo<BibleList>(() => {
-        return bibleListData as BibleList;
-    }, []);
+    const books = useDbQuery<Book[]>(getBooks) || [];
+    console.log(books[0])
+    // const [search, setSearch] = useState(books);
 
-    const [searchResults, setSearchResults] = useState<Book[]>(bibleList.books);
-    const handleSearch = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
-        console.log(e.nativeEvent.text);
-    };
+    // const handleSearch = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+        
+    //     const result = books.filter(
+    //         (book) =>  book.book_am.includes(e.nativeEvent.text)
+    //     )
+        
+
+    //     setSearch(
+    //         result
+    //     )
+    // };
 
     const router = useRouter();
 
     return (
         <View className="flex-1 p-2">
-            <Input className="rounded-2xl mb-5" placeholder="Search Books..." onChange={handleSearch} />
+            <Input className="rounded-2xl mb-5" placeholder="Search Books..." onChange={()=>{}} />
             <View className="">
                 <FlatList
-                    data={searchResults}
-                    keyExtractor={(item) => item.bookNumber.toString()}
+                    data={books}
+                    keyExtractor={(item) => item.book_number.toString()}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={()=>router.navigate(`/bible/${item.book_am}`)} className="p-1 pl-4 pr-4">
+                        <TouchableOpacity onPress={()=>router.navigate(`/bible/${item.title_am}`)} className="p-1 pl-4 pr-4">
                             <Card className="p-4 mb-2 bg-background rounded-2xl">
                                 <View className="flex-row items-center justify-between">
-                                    <Text className="text-lg font-bold text-foreground">{item.book_am}</Text>
+                                    <Text className="text-lg font-bold text-foreground">{item.title_am}</Text>
                                     <Text className="text-sm text-muted-foreground">{item.chapters} chapters</Text>
                                 </View>
                                 <View className="flex-row items-center justify-between mt-2">
                                     <Text className="text-sm text-muted-foreground">Progress</Text>
-                                    <Text className="text-sm text-muted-foreground">{Math.floor((item.chapters_read / item.chapters ) * 100) }%</Text>
+                                    <Text className="text-sm text-muted-foreground">{Math.floor((item.read_chapters / item.chapters ) * 100) }%</Text>
                                 </View>
-                                <Progress value={Math.floor((item.chapters_read / item.chapters) * 100)} className="h-2 mt-1" indicatorClassName="bg-primary" />
+                                <Progress value={Math.floor((item.read_chapters / item.chapters) * 100)} className="h-2 mt-1" indicatorClassName="bg-primary" />
                             </Card>
                         </TouchableOpacity>
                     )}
@@ -67,7 +64,7 @@ export default function Index() {
                     ListHeaderComponent={
                         <View className="flex-row items-center justify-between mb-2">
                             <Text className="text-lg font-bold">Chapters</Text>
-                            <Text className="text-sm text-muted-foreground">{bibleList.books.length} books</Text>
+                            <Text className="text-sm text-muted-foreground">{books.length} books</Text>
                         </View>
                     }
                     />
