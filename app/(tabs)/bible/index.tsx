@@ -14,7 +14,6 @@ import useDbQuery from "~/hooks/useDbQuery";
 export default function Index() {
     const { t } = useTranslation();
     const books = useDbQuery<Book[]>(getBooks) || [];
-    console.log(books[0])
     // const [search, setSearch] = useState(books);
 
     // const handleSearch = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
@@ -39,7 +38,7 @@ export default function Index() {
                     data={books}
                     keyExtractor={(item) => item.book_number.toString()}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={()=>router.navigate(`/bible/${item.title_am}`)} className="p-1 pl-4 pr-4">
+                        <TouchableOpacity onPress={()=>router.navigate(`/bible/${item.id}`)} className="p-1 pl-4 pr-4">
                             <Card className="p-4 mb-2 bg-background rounded-2xl">
                                 <View className="flex-row items-center justify-between">
                                     <Text className="text-lg font-bold text-foreground">{item.title_am}</Text>

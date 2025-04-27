@@ -1,94 +1,6 @@
 import { SQLiteDatabase } from "expo-sqlite";
-import { Book, BookList } from "../types";
+import { Book, Chapter, Verse } from "../types";
 
-interface VerseRow {
-    id: number;
-    book_id: number;
-    chapter: number;
-    verse: number;
-    text_am?: string;
-    [key: string]: any;
-}
-
-interface GetVerseResult extends VerseRow {
-    requestedVerse: number;
-}
-
-interface DBTransaction {
-    executeSql(
-        sqlStatement: string,
-        args?: any[],
-        callback?: (transaction: DBTransaction, resultSet: DBResultSet) => void,
-        errorCallback?: (transaction: DBTransaction, error: Error) => void
-    ): void;
-}
-
-interface DBResultSet {
-    rows: {
-        length: number;
-        item: (index: number) => VerseRow;
-        _array: VerseRow[];
-    };
-}
-
-interface DB {
-    transaction: (callback: (tx: DBTransaction) => void) => void;
-}
-
-export const getVerse = (
-    db: DB,
-    bookId: number,
-    chapter: number,
-    verse: number
-): Promise<GetVerseResult | undefined> =>
-    new Promise((resolve, reject) => {
-        let curr = verse;
-        let tries = 0;
-
-        function query() {
-            db.transaction(tx => {
-                tx.executeSql(
-                    `SELECT * FROM verses WHERE book_id=? AND chapter=? AND verse=?`,
-                    [bookId, chapter, curr],
-                    (_, { rows }) => {
-                        const row = rows.item(0);
-                        if (row?.text_am || tries >= 3) {
-                            resolve({ ...row, requestedVerse: verse });
-                        } else {
-                            curr++;
-                            tries++;
-                            query();
-                        }
-                    },
-                    (_, err) => reject(err)
-                );
-            });
-        }
-
-        query();
-    });
-  
-interface BookRow {
-    id: number;
-    name: string;
-    order_index: number;
-    [key: string]: any;
-}
-
-export const getfBooks = (db: DB): Promise<BookRow[]> =>
-    new Promise((resolve, reject) => {
-        db.transaction((tx: DBTransaction) => {
-            tx.executeSql(
-                `SELECT * FROM books ORDER BY order_index`,
-                [],
-                (_: DBTransaction, { rows }: DBResultSet) => {
-                    resolve(rows._array as unknown as BookRow[]);
-                },
-                (_: DBTransaction, err: Error) => reject(err)
-            );
-        });
-    });
-  
 
 export const getBooks = async (db: SQLiteDatabase): Promise<Book[]> => {
 
@@ -112,14 +24,52 @@ export const getBooks = async (db: SQLiteDatabase): Promise<Book[]> => {
 
 }
 
+export const getChaptersForBook = async (db: SQLiteDatabase, book_id: number): Promise<Chapter[]> => {
+
+    return await db.getAllAsync<Chapter>(`
+        SELECT 
+            c.*,
+            COUNT(v.id) as verses
+        FROM 
+          chapters c
+        LEFT JOIN
+          verses v ON c.id = v.chapter_id
+        WHERE
+          c.book_id = ${book_id}
+        GROUP BY
+          c.id
+        ORDER BY
+          c.chapter_number
+      `);
+
+}
+
+
+export const getVersesForChapter = async (db: SQLiteDatabase, chapter_id: number): Promise<Verse[]> => {
+
+    return await db.getAllAsync<Verse>(`
+        SELECT 
+            *
+        FROM 
+          verses
+        WHERE
+          chapter_id = ${chapter_id}
+      `);
+
+}
+
+
+
+
+
 
 export const toggleChapterRead = async (
     db: SQLiteDatabase,
     chapterId: number,
     isRead: boolean
-  ) => {
+) => {
     return await db.runAsync(
-      `UPDATE chapters SET is_read = ? WHERE id = ?`,
-      [isRead ? 1 : 0, chapterId]
+        `UPDATE chapters SET is_read = ? WHERE id = ?`,
+        [isRead ? 1 : 0, chapterId]
     );
-  };
+};

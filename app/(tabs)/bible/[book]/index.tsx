@@ -4,23 +4,24 @@ import { CircleCheck } from "~/lib/icons/CircleCheck"
 import { View, Text, FlatList, Pressable, TouchableOpacity } from "react-native";
 import { Card, CardContent } from "~/components/ui/card";
 import { useTheme } from "@react-navigation/native";
-import useBibleBooks from "~/hooks/useDbQuery";
+import useDbQuery from "~/hooks/useDbQuery";
+import { getChaptersForBook } from "~/src/queries/queries";
 
 export default function Index() {
 
     const { book } = useLocalSearchParams();
+    let book_id = Array.isArray(book) ? book[0] : book ;
 
     const theme = useTheme()
-    const chapters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const chapters = useDbQuery(getChaptersForBook, [Number.parseInt(book_id)]) || [];
     const router = useRouter()
-
     return (
         <View className="flex-1 p-5 pb-0 pt-0 ">
             
             <FlatList 
                 className="pt-5"
                 data={chapters}
-                keyExtractor={(item) => item.toString()}
+                keyExtractor={(item) => item.chapter_number.toString()}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={
@@ -29,7 +30,7 @@ export default function Index() {
                     }
                 }
                 ListHeaderComponent={
-                () =>             <View className="w-1 h-2 bg-primary/40 self-center" />
+                () => <View className="w-1 h-2 bg-primary/40 self-center" />
 
                 }
                 ItemSeparatorComponent={() => {
@@ -37,22 +38,21 @@ export default function Index() {
                 }}
                 renderItem={({ item, index }) => {
 
-                    const read = index < 5
                     const direction = index % 2 ? "flex-end" : "flex-start"
                     return (
                         <TouchableOpacity
-                            onPress={() => router.navigate(`/bible/${book}/${item}`)}
+                            onPress={() => router.navigate(`/bible/${book_id}/${item.id}`)}
                         >
                             <Card style={{ width: "85%", alignSelf: direction }}>
                                 <CardContent className="flex-row items-center gap-4 p-4" >
                                     {
-                                        read ?
+                                        item.is_read ?
                                             <CircleCheck size={30} stroke={theme.colors.background} fill={theme.colors.primary}  className="color-foreground" /> :
                                             <BookOpen className="color-foreground" />
                                     }
                                     <View>
-                                        <Text className="text-xl text-foreground">Chapter {index + 1}</Text>
-                                        <Text className="text-sm text-muted-foreground">24 Verses </Text>
+                                        <Text className="text-xl text-foreground">Chapter {item.chapter_number}</Text>
+                                        <Text className="text-sm text-muted-foreground">{item.verses} Verses </Text>
                                     </View>
                                 </CardContent>
                             </Card>
