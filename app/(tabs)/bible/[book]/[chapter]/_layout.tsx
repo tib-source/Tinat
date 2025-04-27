@@ -6,7 +6,6 @@ export default function VerseLayout() {
     const bookParam = Array.isArray(params?.book) ? params.book[0] : params?.book;
     const chapterParam = Array.isArray(params?.chapter) ? params.chapter[0] : params?.chapter;
     
-    console.log(params)
     const title = (bookParam ?? "") + " - " +  (chapterParam ?? "");
 
     return (

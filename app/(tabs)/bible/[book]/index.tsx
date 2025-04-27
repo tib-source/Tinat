@@ -15,6 +15,7 @@ export default function Index() {
     const router = useRouter()
     return (
         <View className="flex-1 p-5 pb-0 pt-0 ">
+            
             <FlatList
                 className="pt-5 "
                 data={chapters}
@@ -57,7 +58,6 @@ export default function Index() {
                         </TouchableOpacity>)
                 }
                 }
-
             />
         </View>
     );
