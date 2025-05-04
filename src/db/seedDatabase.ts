@@ -24,6 +24,7 @@ export default async function migrateDbIfNeeded(db: SQLiteDatabase){
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title_am TEXT,
         title_en TEXT,
+        testament TEXT,
         book_number INTEGER
       );
 
@@ -32,6 +33,7 @@ export default async function migrateDbIfNeeded(db: SQLiteDatabase){
         book_id INTEGER,
         chapter_number INTEGER,
         is_read INTEGER DEFAULT 0,
+        verses INTEGER,
         FOREIGN KEY(book_id) REFERENCES books(id)
       );
 
@@ -46,8 +48,8 @@ export default async function migrateDbIfNeeded(db: SQLiteDatabase){
     `);
 
 
-    const insertBook = await db.prepareAsync('INSERT INTO books (title_am, title_en, book_number) VALUES ($title_am, $title_en, $book_number)');
-    const insertChapter = await db.prepareAsync('INSERT INTO chapters (book_id, chapter_number) VALUES ($book_id, $chapter_number)');
+    const insertBook = await db.prepareAsync('INSERT INTO books (title_am, title_en, book_number, testament) VALUES ($title_am, $title_en, $book_number, $testament)');
+    const insertChapter = await db.prepareAsync('INSERT INTO chapters (book_id, chapter_number, verses) VALUES ($book_id, $chapter_number, $verses)');
     const insertVerse = await db.prepareAsync('INSERT INTO verses (chapter_id, verse_number, text_am, text_en) VALUES ($chapter_id, $verse_number, $text_am, $text_en)');
     try {
       for (const [bookIndex, book] of bibleData.books.entries()) {
@@ -55,6 +57,7 @@ export default async function migrateDbIfNeeded(db: SQLiteDatabase){
         $title_am: book.title,
         $title_en: "",
         $book_number: bookIndex,
+        $testament: book.testament
       });
       const bookId = bookResult.lastInsertRowId;
 
@@ -62,6 +65,7 @@ export default async function migrateDbIfNeeded(db: SQLiteDatabase){
         const chapterResult = await insertChapter.executeAsync({
         $book_id: bookId,
         $chapter_number: chapterIndex + 1,
+        $verses: chapter.verses.length
         });
         const chapterId = chapterResult.lastInsertRowId;
 
