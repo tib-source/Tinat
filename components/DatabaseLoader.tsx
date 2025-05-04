@@ -24,17 +24,17 @@ export default function DatabaseLoader({ children }: React.PropsWithChildren<{}>
 
     if (isLoading) {
         return (
-            <View style={styles.container}>
-                <ActivityIndicator size="large" color="#0000ff" />
-                <Text style={styles.text}>Setting up database...</Text>
+            <View className='flex-1 justify-center items-center bg-background'>
+                <ActivityIndicator size="large" className='color-foreground' />
+                <Text className='mt-10 text-foreground'>Setting up database...</Text>
             </View>
         );
     }
 
     if (error) {
         return (
-            <View style={styles.container}>
-                <Text style={styles.errorText}>Error: {error}</Text>
+            <View className='flex-1 justify-center items-center bg-background'>
+                <Text className='mt-10 text-[red]'>Error: {error}</Text>
             </View>
         );
     }
@@ -43,14 +43,6 @@ export default function DatabaseLoader({ children }: React.PropsWithChildren<{}>
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    text: {
-        marginTop: 10,
-    },
     errorText: {
         color: 'red',
         marginTop: 10,
