@@ -1,8 +1,5 @@
 import bibleData from "./amharic_bible.json"; // filepath: /Users/tibs/Projects/Tinat/src/db/seedDatabase.ts
 
-interface Verse {
-  text: string;
-}
 
 interface Chapter {
   verses: string[];
@@ -10,6 +7,7 @@ interface Chapter {
 
 interface Book {
   title: string;
+  testament: string
   chapters: Chapter[];
 }
 

@@ -21,13 +21,20 @@ const resources = {
             },
             bible: {
                 headerTitle: 'Explore The Bible',
+                chapters : 'chapters',
+                books: 'books',
+                progress: 'progress',
+                testament: {
+                    new: 'New Testament',
+                    old: 'Old Test'
+                }
             },
         }
     },
     amh: {
         translation: {
             home: {
-                welcome: 'ሰላም!',
+                welcome: 'እንኳን ደህና መጡ!',
                 greeting: 'ሰላም, {{name}}!',
                 days: {
                     monday: 'ሰኞ',
@@ -39,10 +46,19 @@ const resources = {
                     sunday: 'እሁድ',
                 },
                 progress: 'ጥቅሶች አንብበዋል',
-                daily_verse: 'የዕለቱ ቃል እግዚአብሔር',
+                daily_verse: 'የዕለቱ ቃል',
             },
             bible: {
-                headerTitle: 'Explore The Bible',
+                headerTitle: 'መጽሐፍ ቅዱስን ያስሱ',
+                chapters : 'ምዕራፎች',
+                chapter: 'ምዕራፍ',
+                verses: 'ጥቅሶች',
+                books: 'መጻሕፍት',
+                progress: 'ተካያሄደ',
+                testament: {
+                    new: 'አዲስ ኪዳን',
+                    old: 'ብሉይ ኪዳን'
+                }
             },
         }
     }

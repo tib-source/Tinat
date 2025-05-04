@@ -10,6 +10,7 @@ export const getBooks = async (db: SQLiteDatabase): Promise<Book[]> => {
           b.title_am,
           b.title_en,
           b.book_number,
+          b.testament,
           COUNT(c.id) AS chapters,
           SUM(CASE WHEN c.is_read = 1 THEN 1 ELSE 0 END) AS read_chapters
         FROM 
@@ -23,6 +24,23 @@ export const getBooks = async (db: SQLiteDatabase): Promise<Book[]> => {
       `);
 
 }
+
+export const getBookWithId =  async (db: SQLiteDatabase, book_id: number): Promise<Book|null> => {
+  return db.getFirstAsync<Book>(`
+      SELECT *
+      FROM books
+      WHERE id = ${book_id}
+    `)
+}
+
+export const getChapterWithId =  async (db: SQLiteDatabase, chapter_id: number): Promise<Chapter|null> => {
+  return db.getFirstAsync<Chapter>(`
+      SELECT *
+      FROM chapters
+      WHERE id = ${chapter_id}
+    `)
+}
+
 
 export const getChaptersForBook = async (db: SQLiteDatabase, book_id: number): Promise<Chapter[]> => {
 

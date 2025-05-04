@@ -1,15 +1,17 @@
 import { useLocalSearchParams, useRouter } from "expo-router/build/hooks";
 import { BookOpen } from "~/lib/icons/Book"
 import { CircleCheck } from "~/lib/icons/CircleCheck"
-import { View, Text, FlatList, Pressable, TouchableOpacity } from "react-native";
+import { View, FlatList, TouchableOpacity } from "react-native";
 import { Card, CardContent } from "~/components/ui/card";
 import { useTheme } from "@react-navigation/native";
 import useDbQuery from "~/hooks/useDbQuery";
 import { getChaptersForBook } from "~/src/queries/queries";
-
+import { useTranslation } from "react-i18next";
+import { Text } from "~/components/ui/text";
 export default function Index() {
 
     const { book } = useLocalSearchParams();
+    const { t } = useTranslation()
     let book_id = Array.isArray(book) ? book[0] : book ;
 
     const theme = useTheme()
@@ -51,8 +53,8 @@ export default function Index() {
                                             <BookOpen className="color-foreground" />
                                     }
                                     <View>
-                                        <Text className="text-xl text-foreground">Chapter {item.chapter_number}</Text>
-                                        <Text className="text-sm text-muted-foreground">{item.verses} Verses </Text>
+                                        <Text className="text-xl text-foreground">{t('bible.chapter')} {item.chapter_number}</Text>
+                                        <Text className="text-sm text-muted-foreground">{item.verses} {t('bible.verses')} </Text>
                                     </View>
                                 </CardContent>
                             </Card>

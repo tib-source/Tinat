@@ -1,5 +1,6 @@
 export interface Book {
     id: number
+    testament: string
     book_number: number;
     title_am: string;
     title_en: string;

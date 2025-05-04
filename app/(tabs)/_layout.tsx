@@ -23,12 +23,12 @@ export default function TabLayout() {
             },
             tabBarItemStyle: {
                 justifyContent: "center",
-                alignItems: "center" 
+                alignItems: "center", 
             }
         }
     }>
-        <Tabs.Screen name="index" options={{ headerTitle: t("home.greeting", { "name": "Tibebe" }), headerRight: () => <ThemeToggle />, tabBarIcon: ({ color }) => <HomeIcon color={color} /> }} />
-        <Tabs.Screen name='bible' options={{ headerShown: false, tabBarIcon: ({ color }) => <BookOpen color={color} /> }} />
-        <Tabs.Screen name="calendar" options={{ headerShown: false, tabBarIcon: ({ color }) => <CalendarDays color={color} /> }} />
+        <Tabs.Screen name="index" options={{ headerTitle: t("home.greeting", { "name": "Tibebe" }), headerShadowVisible: false, headerRight: () => <ThemeToggle />, tabBarIcon: ({ color }) => <HomeIcon color={color} /> }} />
+        <Tabs.Screen name='bible' options={{ headerShown: false,headerShadowVisible: false, tabBarIcon: ({ color }) => <BookOpen color={color} /> }} />
+        <Tabs.Screen name="calendar" options={{ headerShown: false, headerShadowVisible: false,tabBarIcon: ({ color }) => <CalendarDays color={color} /> }} />
     </Tabs>
 }
