@@ -39,23 +39,22 @@ export function FontPopover({ progress, min, max, fontSize, setFontSize }: FontP
         <PopoverContent
           side={Platform.OS === 'web' ? 'bottom' : 'top'}
           insets={contentInsets}
-          className="w-64 flex-col gap-1 pl-10 pr-10"
+          className="w-64 flex-col gap-1 pl-5 pr-5"
         >
           <Text className='text-primary'>Font Size: {fontSize}</Text>
             <Slider
             onSlidingComplete={(value) => {
-                setFontSize(value);
+                setFontSize(Math.floor(value));
               }}
             progress={progress}
             style={styles.slider}
             minimumValue={min}
             maximumValue={max}
-            steps={4}
+            steps={3}
             forceSnapToStep
             sliderHeight={2}
-
+            bubble={(s)=> Math.floor(s).toString()}
             theme={{
-                // Improve the visual appearance with themed colors
                 minimumTrackTintColor: theme.colors.primary,
                 maximumTrackTintColor: theme.colors.border,
                 bubbleBackgroundColor: theme.colors.primary,

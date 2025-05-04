@@ -19,7 +19,7 @@ export default function Index() {
     const theme = useTheme()
     const [fontSize, setFontSize ] = useState(25)
     const progress = useSharedValue(fontSize)
-    const minFont = useSharedValue(12)
+    const minFont = useSharedValue(16)
     const maxFont = useSharedValue(32)
     const verses = useDbQuery(getVersesForChapter, [chapter_id])
     const router = useRouter()

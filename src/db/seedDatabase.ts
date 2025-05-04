@@ -2,7 +2,7 @@ import { SQLiteDatabase } from "expo-sqlite";
 import bibleData from "./bibleData";
 export default async function migrateDbIfNeeded(db: SQLiteDatabase){ 
 
-  const DATABASE_VERSION = 0
+  const DATABASE_VERSION = 1
 
   const result = await db.getFirstAsync<{ user_version: number }>('PRAGMA user_version');
   const currentDbVersion = result ? result.user_version : 0;
