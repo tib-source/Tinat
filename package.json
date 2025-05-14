@@ -10,7 +10,8 @@
     "ios": "expo start -c --ios",
     "web": "expo start -c --web",
     "clean": "rm -rf .expo node_modules",
-    "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css"
+    "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css",
+    "lint": "expo lint"
   },
   "dependencies": {
     "@react-navigation/native": "^7.0.0",
@@ -55,6 +56,11 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@types/react": "~19.0.10",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~9.2.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.0",
+    "prettier": "^3.5.3",
     "typescript": "^5.3.3"
   },
   "private": true
