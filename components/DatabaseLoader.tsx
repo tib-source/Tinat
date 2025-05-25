@@ -1,45 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, ActivityIndicator, Text } from "react-native";
-import { useSQLiteContext } from "expo-sqlite";
-import migrateDbIfNeeded from "../src/db/seedDatabase";
+import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
+import { db } from "../src/db";
+import migrations from '../src/db/migrations/migrations'; 
 
 export default function DatabaseLoader({
   children,
 }: React.PropsWithChildren<object>) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const db = useSQLiteContext();
-
-  useEffect(() => {
-    const setupDb = async () => {
-      try {
-        await migrateDbIfNeeded(db);
-        setIsLoading(false);
-      } catch (err: any) {
-        setError(err?.message || "Failed to set up database.");
-        setIsLoading(false);
-      }
-    };
-
-    setupDb();
-  }, [db]);
-
-  if (isLoading) {
-    return (
-      <View className="flex-1 justify-center items-center bg-background">
-        <ActivityIndicator size="large" className="color-foreground" />
-        <Text className="mt-10 text-foreground">Setting up database...</Text>
-      </View>
-    );
-  }
+  const { success, error } = useMigrations(db, migrations);
 
   if (error) {
     return (
       <View className="flex-1 justify-center items-center bg-background">
-        <Text className="mt-10 text-[red]">Error: {error}</Text>
+        <Text className="mt-10 text-[red]">Migration error: {error.message}</Text>
       </View>
     );
   }
 
-  return children;
+  if (!success) {
+    return (
+      <View className="flex-1 justify-center items-center bg-background">
+        <ActivityIndicator size="large" className="color-foreground" />
+        <Text className="mt-10 text-foreground">Migration is in progress...</Text>
+      </View>
+    );
+  }
+
+  return <>{children}</>;
 }

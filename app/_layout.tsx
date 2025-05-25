@@ -17,6 +17,7 @@ import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SQLiteProvider } from "expo-sqlite";
 import DatabaseLoader from "~/components/DatabaseLoader";
+import { QueryProvider } from "~/src/providers/QueryProvider";
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -58,6 +59,7 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView>
       <SQLiteProvider databaseName="tinat.db">
+      <QueryProvider>
         <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
           <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
           <DatabaseLoader>
@@ -72,6 +74,7 @@ export default function RootLayout() {
           </DatabaseLoader>
           <PortalHost />
         </ThemeProvider>
+        </QueryProvider>
       </SQLiteProvider>
     </GestureHandlerRootView>
   );

@@ -1,5 +1,5 @@
 import { SQLiteDatabase } from "expo-sqlite";
-import { Book, Chapter, Verse } from "../types";
+import { Book, Chapter, Log, Verse } from "../types";
 
 export const getBooks = async (db: SQLiteDatabase): Promise<Book[]> => {
   return await db.getAllAsync<Book>(`
@@ -89,3 +89,5 @@ export const toggleChapterRead = async (
     chapterId,
   ]);
 };
+
+
