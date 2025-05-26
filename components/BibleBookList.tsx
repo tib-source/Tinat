@@ -11,7 +11,7 @@ export default function BibleBookList({ books }: { books?: BookData[] }) {
   return (
     <FlatList
       data={books}
-      keyExtractor={(item) => item.bookNumber.toString()}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() => router.navigate(`/bible/${item.id}`)}

@@ -16,6 +16,7 @@ export default function Index() {
 
   const theme = useTheme();
   const chapters = useChaptersForBook(bookId)
+  console.log(chapters)
   const router = useRouter();
   return (
     <View className="flex-1 p-5 pb-0 pt-0 ">

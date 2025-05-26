@@ -1,4 +1,4 @@
-import { db } from "../db"
+import { db } from "../.."
 import { logs, NewLog } from "../db/schema"
 import { eq, gte } from "drizzle-orm"
 

@@ -1,8 +1,9 @@
 import React from "react";
 import { View, ActivityIndicator, Text } from "react-native";
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
-import { db } from "../src/db";
-import migrations from '../src/db/migrations/migrations'; 
+import { db } from "~/.";
+import migrations from "~/drizzle/migrations"; 
+import { seedBibleData } from "~/src/db/seedBibleData";
 
 export default function DatabaseLoader({
   children,
@@ -12,7 +13,10 @@ export default function DatabaseLoader({
   if (error) {
     return (
       <View className="flex-1 justify-center items-center bg-background">
-        <Text className="mt-10 text-[red]">Migration error: {error.message}</Text>
+        {children}
+        {/* <Text className="mt-10 text-[red]">Migration error: {error.message}. {console.error(error.cause)}
+          
+        </Text> */}
       </View>
     );
   }
@@ -25,6 +29,20 @@ export default function DatabaseLoader({
       </View>
     );
   }
+
+  // if(success){
+  //   const result = seedBibleData().then(
+  //     result => {
+  //       if (result.success){
+  //         console.log(success)
+  //       }
+
+  //       else{
+  //         console.log(result.error)
+  //       }
+  //     }
+  //   );
+  // }
 
   return <>{children}</>;
 }

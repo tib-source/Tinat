@@ -8,8 +8,6 @@ import { Button } from "~/components/ui/button";
 import { LeftArrow, RightArrow } from "~/lib/icons/Navigation";
 import { FontPopover } from "~/components/FontPopover";
 import { useSharedValue } from "react-native-reanimated";
-import useDbQuery from "~/hooks/useDbQuery";
-import { getVersesForChapter } from "~/src/queries/queries";
 import { useVersesForChapter } from "~/src/hooks/useDatabase";
 
 export default function Index() {

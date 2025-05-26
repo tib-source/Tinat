@@ -3,37 +3,35 @@ import { sql } from 'drizzle-orm';
 
 // Books table
 export const books = sqliteTable('books', {
-  id: integer('id').primaryKey(),
-  name: text('name').notNull(),
+  id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
   testament: text('testament').notNull(), // 'Old' or 'New'
   bookNumber: integer('bookNumber').notNull(),
-  order: integer('order').notNull(),
   titleAm: text('titleAm'),
-  titleEn: text('titleEn')
+  titleEn: text('titleEn'),
 });
 
 // Chapters table
 export const chapters = sqliteTable('chapters', {
-  id: integer('id').primaryKey(),
+  id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
   bookId: integer('book_id').notNull().references(() => books.id),
   chapterNumber: integer('chapter_number').notNull(),
   titleAm: text('titleAm'),
-  titleEn: text('titleEn')
+  titleEn: text('titleEn'),
+  isRead: integer('is_read', { mode: 'boolean' }).default(false),
 });
 
 // Verses table
 export const verses = sqliteTable('verses', {
-  id: integer('id').primaryKey(),
-  bookId: integer('book_id').notNull().references(() => books.id),
-  chapterNumber: integer('chapter_number').notNull(),
+  id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+  chapterId: integer('chapter_id').notNull().references(() => chapters.id),
   verseNumber: integer('verse_number').notNull(),
   textAm: text('textAm').notNull(),
   textEn: text('textEn').notNull(),
 });
 
 export const logs = sqliteTable('logs', {
-    id: integer('id').primaryKey(),
-    date: text('date').notNull(), // Use text for dates in SQLite
+    id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+    date: integer({ mode: 'timestamp' }).notNull(), // Use text for dates in SQLite
     chaptersRead: text('chapters_read', { mode: 'json' }).notNull(), // Use text with JSON mode
     createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
 });
