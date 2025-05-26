@@ -19,6 +19,6 @@ export async function getVersesForChapter(chapterId: number): Promise<Verse[]>{
     return await db
     .select()
     .from(verses)
-    // .where(eq(verses.chapterId, chapterId))
+    .where(eq(verses.chapterId, chapterId))
 }
 

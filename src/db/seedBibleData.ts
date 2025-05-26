@@ -40,7 +40,6 @@ export async function seedBibleData(): Promise<{
     let totalChapters = 0;
     let totalVerses = 0;
     
-    // Process each book
     const booksData = bibleJson.books.map((book, index) => {
       return {
         titleAm: book.title,
@@ -50,17 +49,13 @@ export async function seedBibleData(): Promise<{
       }
     })
 
-    console.log(booksData)
-    console.log("meow")
     const insertedBookResult = await insertManyBooks(booksData)
-    console.log(insertedBookResult)
 
 
     for (let bookIndex = 0; bookIndex < bibleJson.books.length; bookIndex++) {
       const book = bibleJson.books[bookIndex];
       const bookId = insertedBookResult[bookIndex]
 
-      // Process chapters
     const chaptersToInsert = book.chapters.map((chapter, index) => ({
         bookId: bookId.id,
         chapterNumber: index,
@@ -68,7 +63,7 @@ export async function seedBibleData(): Promise<{
 
     const insertedChaptersResult = await insertManyChapters(chaptersToInsert)
     
-    book.chapters.forEach(async (chapter, chapterIndex) => {
+    book.chapters.forEach( async (chapter, chapterIndex) => {
         const chapterInserted = insertedChaptersResult[chapterIndex]
 
         const versesToInsert: NewVerse[] = chapter.verses.map((verse, verseIndex) => {
@@ -77,7 +72,6 @@ export async function seedBibleData(): Promise<{
                         verseNumber: verseIndex,
                         textAm: verse,
                         textEn: ""
-                        // other verse fields
                     };
                 });
         await insertManyVerses(versesToInsert);
