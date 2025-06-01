@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Input } from "~/components/ui/input";
 import { getBooks } from "~/src/queries/queries";
-import { Book } from "~/src/types";
 import useDbQuery from "~/hooks/useDbQuery";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import BibleBookList from "~/components/BibleBookList";
 import { Text } from "~/components/ui/text";
 import { View } from "react-native";
+import { Book } from "~/src/db/schema";
+import { useBooks } from "~/src/hooks/useDatabase";
+import { Loader } from "lucide-react-native";
 
 export default function Index() {
   const { t } = useTranslation();
-  const books = useDbQuery<Book[]>(getBooks) || [];
+  const {isLoading, data: books} = useBooks()
   // const [search, setSearch] = useState(books);
 
   // const handleSearch = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
@@ -24,7 +26,6 @@ export default function Index() {
   //         result
   //     )
   // };
-  console.log(books[0]);
   const [testament, setTestament] = useState("old");
   return (
     <View className="flex-1 p-2">
@@ -33,7 +34,8 @@ export default function Index() {
         placeholder="Search Books..."
         onChange={() => {}}
       />
-      <Tabs
+      {isLoading ? <Loader /> : 
+            <Tabs
         value={testament}
         onValueChange={setTestament}
         className="w-full mx-auto flex-col "
@@ -48,15 +50,15 @@ export default function Index() {
         </TabsList>
         <TabsContent value="old">
           <BibleBookList
-            books={books.filter((book) => book.testament === "old")}
+            books={books?.filter((book) => book.testament === "old")}
           />
         </TabsContent>
         <TabsContent value="new">
           <BibleBookList
-            books={books.filter((book) => book.testament === "new")}
+            books={books?.filter((book) => book.testament === "new")}
           />
         </TabsContent>
-      </Tabs>
+      </Tabs>}
     </View>
   );
 }

@@ -8,12 +8,11 @@ import { Button } from "~/components/ui/button";
 import { LeftArrow, RightArrow } from "~/lib/icons/Navigation";
 import { FontPopover } from "~/components/FontPopover";
 import { useSharedValue } from "react-native-reanimated";
-import useDbQuery from "~/hooks/useDbQuery";
-import { getVersesForChapter } from "~/src/queries/queries";
+import { useVersesForChapter } from "~/src/hooks/useDatabase";
 
 export default function Index() {
   const { chapter, book } = useLocalSearchParams();
-  const chapter_id = Number.parseInt(
+  const chapterId = Number.parseInt(
     Array.isArray(chapter) ? chapter[0] : chapter,
   );
   const bookStr = Array.isArray(book) ? book[0] : book;
@@ -22,13 +21,13 @@ export default function Index() {
   const progress = useSharedValue(fontSize);
   const minFont = useSharedValue(16);
   const maxFont = useSharedValue(32);
-  const verses = useDbQuery(getVersesForChapter, [chapter_id]);
+  const verses = useVersesForChapter(chapterId)
   const router = useRouter();
   return (
     <View className="flex-1 p-2 pb-0 pt-0 items-center">
       <FlatList
         className="pt-5 "
-        data={verses}
+        data={verses.data}
         keyExtractor={(item) => item.id.toString()}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -48,7 +47,7 @@ export default function Index() {
                     {" "}
                     {index + 1}{" "}
                   </Text>
-                  {item.text_am}{" "}
+                  {item.textAm}{" "}
                 </Text>
               </CardContent>
             </View>
@@ -59,7 +58,7 @@ export default function Index() {
       <View className="absolute w-80 bottom-px bg-background flex-row justify-between w-full h-15 rounded-md border border-foreground/10">
         <Button
           variant={"ghost"}
-          onPress={() => router.navigate(`/bible/${bookStr}/${chapter_id - 1}`)}
+          onPress={() => router.navigate(`/bible/${bookStr}/${chapterId - 1}`)}
         >
           <LeftArrow color={theme.colors.text} />
         </Button>
@@ -76,7 +75,7 @@ export default function Index() {
         </Button>
         <Button
           variant={"ghost"}
-          onPress={() => router.navigate(`/bible/${bookStr}/${chapter_id + 1}`)}
+          onPress={() => router.navigate(`/bible/${bookStr}/${chapterId + 1}`)}
         >
           <RightArrow color={theme.colors.text} />
         </Button>

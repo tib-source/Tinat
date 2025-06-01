@@ -4,25 +4,23 @@ import { CircleCheck } from "~/lib/icons/CircleCheck";
 import { View, FlatList, TouchableOpacity } from "react-native";
 import { Card, CardContent } from "~/components/ui/card";
 import { useTheme } from "@react-navigation/native";
-import useDbQuery from "~/hooks/useDbQuery";
-import { getChaptersForBook } from "~/src/queries/queries";
 import { useTranslation } from "react-i18next";
 import { Text } from "~/components/ui/text";
+import { useChaptersForBook } from "~/src/hooks/useDatabase";
 export default function Index() {
   const { book } = useLocalSearchParams();
   const { t } = useTranslation();
-  let book_id = Array.isArray(book) ? book[0] : book;
+  let bookId = Number.parseInt(Array.isArray(book) ? book[0] : book);
 
   const theme = useTheme();
-  const chapters =
-    useDbQuery(getChaptersForBook, [Number.parseInt(book_id)]) || [];
+  const chapters = useChaptersForBook(bookId)
   const router = useRouter();
   return (
     <View className="flex-1 p-5 pb-0 pt-0 ">
       <FlatList
         className="pt-5"
-        data={chapters}
-        keyExtractor={(item) => item.chapter_number.toString()}
+        data={chapters.data}
+        keyExtractor={(item) => item.chapterNumber.toString()}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
@@ -38,11 +36,11 @@ export default function Index() {
           const direction = index % 2 ? "flex-end" : "flex-start";
           return (
             <TouchableOpacity
-              onPress={() => router.navigate(`/bible/${book_id}/${item.id}`)}
+              onPress={() => router.navigate(`/bible/${bookId}/${item.id}`)}
             >
               <Card style={{ width: "85%", alignSelf: direction }}>
                 <CardContent className="flex-row items-center gap-4 p-4">
-                  {item.is_read ? (
+                  {item.isRead ? (
                     <CircleCheck
                       size={30}
                       stroke={theme.colors.background}
@@ -54,7 +52,7 @@ export default function Index() {
                   )}
                   <View>
                     <Text className="text-xl text-foreground">
-                      {t("bible.chapter")} {item.chapter_number}
+                      {t("bible.chapter")} {item.chapterNumber}
                     </Text>
                     <Text className="text-sm text-muted-foreground">
                       {item.verses} {t("bible.verses")}{" "}

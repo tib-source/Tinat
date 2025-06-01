@@ -1,17 +1,17 @@
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { Card } from "./ui/card";
 import { Text } from "./ui/text";
-import { Book } from "~/src/types";
 import { useRouter } from "expo-router";
 import { Progress } from "./ui/progress";
 import { useTranslation } from "react-i18next";
-export default function BibleBookList({ books }: { books: Book[] }) {
+import { BookData } from "~/src/types";
+export default function BibleBookList({ books }: { books?: BookData[] }) {
   const router = useRouter();
   const { t } = useTranslation();
   return (
     <FlatList
       data={books}
-      keyExtractor={(item) => item.book_number.toString()}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() => router.navigate(`/bible/${item.id}`)}
@@ -20,7 +20,7 @@ export default function BibleBookList({ books }: { books: Book[] }) {
           <Card className="p-4 mb-2 bg-background rounded-2xl">
             <View className="flex-row items-center justify-between">
               <Text className="text-lg font-bold text-foreground">
-                {item.title_am}
+                {item.titleAm}
               </Text>
               <Text className="text-sm text-muted-foreground">
                 {item.chapters} {t("bible.chapters")}
@@ -31,11 +31,11 @@ export default function BibleBookList({ books }: { books: Book[] }) {
                 {t("bible.progress")}
               </Text>
               <Text className="text-sm text-muted-foreground">
-                {Math.floor((item.read_chapters / item.chapters) * 100)}%
+                {Math.floor((item.readChapters / item.chapters) * 100)}%
               </Text>
             </View>
             <Progress
-              value={Math.floor((item.read_chapters / item.chapters) * 100)}
+              value={Math.floor((item.readChapters / item.chapters) * 100)}
               className="h-2 mt-1"
               indicatorClassName="bg-primary"
             />
@@ -55,7 +55,7 @@ export default function BibleBookList({ books }: { books: Book[] }) {
       ListHeaderComponent={
         <View className="flex-row items-center justify-end mb-2 pr-5">
           <Text className="text-sm text-muted-foreground">
-            {books.length} {t("bible.books")}
+            {books?.length} {t("bible.books")}
           </Text>
         </View>
       }
