@@ -13,10 +13,7 @@ export default function DatabaseLoader({
   if (error) {
     return (
       <View className="flex-1 justify-center items-center bg-background">
-        {children}
-        {/* <Text className="mt-10 text-[red]">Migration error: {error.message}. {console.error(error.cause)}
-          
-        </Text> */}
+        <Text className="mt-10 text-[red]">Migration error: {error.message}r</Text>
       </View>
     );
   }
@@ -30,19 +27,17 @@ export default function DatabaseLoader({
     );
   }
 
-  // if(success){
-  //   const result = seedBibleData().then(
-  //     result => {
-  //       if (result.success){
-  //         console.log(success)
-  //       }
+  const result = seedBibleData().then(
+    result => {
+      if (result.success){
+        console.log(success)
+      }
 
-  //       else{
-  //         console.log(result.error)
-  //       }
-  //     }
-  //   );
-  // }
+      else{
+        console.log(result.error)
+      }
+    }
+  );
 
   return <>{children}</>;
 }

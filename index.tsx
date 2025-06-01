@@ -6,7 +6,7 @@ import { openDatabaseSync } from 'expo-sqlite';
 import * as schema from './src/db/schema';
 
 // Open the database with change listeners enabled for live queries
-const expo = openDatabaseSync('tinat.db', { enableChangeListener: true });
+const expo = openDatabaseSync('tinat_v1.db', { enableChangeListener: true });
 
 // Create the drizzle instance with schema
 export const db = drizzle(expo, { schema });

@@ -1,8 +1,10 @@
+import { db } from '~/index';
 import { getAllBooks, insertBook, insertManyBooks } from '../queries/bookQueries';
 import { insertChapter, insertManyChapters } from '../queries/chapterQueries';
 import { insertManyVerses, insertVerse } from '../queries/verseQueries';
 import bibleData from './amharic-bible.json';
-import { NewVerse, Verse } from './schema';
+import { books, chapters, NewVerse, Verse, verses } from './schema';
+import { sql } from 'drizzle-orm';
 
 interface BibleChapter {
   chapter: string;
@@ -25,13 +27,31 @@ interface BibleData {
 export async function seedBibleData(): Promise<{
   success: boolean;
   error?: string;
-  stats?: {
-    books: number;
-    chapters: number;
-    verses: number;
-  };
 }> {
   try {
+    const DB_VERSION = 1
+    const result = await db.get(sql`PRAGMA user_version`);
+    const currentVersion = result ? (result as any).user_version : 0;
+
+    if (currentVersion === DB_VERSION){
+      console.log('Database already seeded with version', currentVersion);
+      return {
+        success: true
+      }
+    }
+
+    console.log('Current DB version:', currentVersion, 'Target version:', DB_VERSION);
+
+    // Actually clear the tables completely
+    try {
+      await db.delete(books)
+      await db.delete(chapters)
+      await db.delete(verses)
+      console.log('Tables cleared successfully');
+    } catch (clearError) {
+      console.log('Tables might not exist yet, continuing with seeding...');
+    }  
+
     console.log('🌱 Starting bible data seeding...');
     
     const bibleJson = bibleData as BibleData;
@@ -58,7 +78,7 @@ export async function seedBibleData(): Promise<{
 
     const chaptersToInsert = book.chapters.map((chapter, index) => ({
         bookId: bookId.id,
-        chapterNumber: index,
+        chapterNumber: index + 1,
     }));
 
     const insertedChaptersResult = await insertManyChapters(chaptersToInsert)
@@ -69,7 +89,7 @@ export async function seedBibleData(): Promise<{
         const versesToInsert: NewVerse[] = chapter.verses.map((verse, verseIndex) => {
                     return {
                         chapterId: chapterInserted.id,
-                        verseNumber: verseIndex,
+                        verseNumber: verseIndex + 1,
                         textAm: verse,
                         textEn: ""
                     };
@@ -80,6 +100,10 @@ export async function seedBibleData(): Promise<{
     }
     
     console.log('🎉 Database seeding completed successfully!');
+    
+    
+    // set the db version to the latest 
+    await db.run(`PRAGMA user_version = ${DB_VERSION}`);
     
     return {
       success: true,

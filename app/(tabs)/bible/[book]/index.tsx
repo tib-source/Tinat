@@ -4,8 +4,6 @@ import { CircleCheck } from "~/lib/icons/CircleCheck";
 import { View, FlatList, TouchableOpacity } from "react-native";
 import { Card, CardContent } from "~/components/ui/card";
 import { useTheme } from "@react-navigation/native";
-import useDbQuery from "~/hooks/useDbQuery";
-import { getChaptersForBook } from "~/src/queries/queries";
 import { useTranslation } from "react-i18next";
 import { Text } from "~/components/ui/text";
 import { useChaptersForBook } from "~/src/hooks/useDatabase";
