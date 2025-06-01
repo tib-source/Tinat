@@ -5,6 +5,8 @@ import { insertManyVerses, insertVerse } from '../queries/verseQueries';
 import bibleData from './amharic-bible.json';
 import { books, chapters, NewVerse, Verse, verses } from './schema';
 import { sql } from 'drizzle-orm';
+import { getAllDaysInCurrentWeek } from '../helpers/dateHelpers';
+import { insertLog } from '../queries/logQueries';
 
 interface BibleChapter {
   chapter: string;
@@ -29,7 +31,7 @@ export async function seedBibleData(): Promise<{
   error?: string;
 }> {
   try {
-    const DB_VERSION = 1
+    const DB_VERSION = 2
     const result = await db.get(sql`PRAGMA user_version`);
     const currentVersion = result ? (result as any).user_version : 0;
 
@@ -99,6 +101,19 @@ export async function seedBibleData(): Promise<{
       
     }
     
+    const daysInWeek = getAllDaysInCurrentWeek()
+
+    for (let day of daysInWeek){
+      const currentIndex = daysInWeek.indexOf(day)
+      if (currentIndex < 3){ 
+        insertLog({
+          date: day, 
+          chaptersRead: [1]
+        })
+      }
+    }
+
+
     console.log('🎉 Database seeding completed successfully!');
     
     
