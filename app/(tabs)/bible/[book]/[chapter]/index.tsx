@@ -2,7 +2,7 @@ import { useLocalSearchParams, useRouter } from "expo-router/build/hooks";
 
 import { View, Text, FlatList } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CardContent } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import { LeftArrow, RightArrow } from "~/lib/icons/Navigation";

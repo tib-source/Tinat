@@ -4,21 +4,27 @@ import { NewVerse, Verse, verses } from "../db/schema";
 
 
 export async function insertVerse(verse: NewVerse){
-    return await db
-    .insert(verses)
-    .values(verse)
+    return await db.transaction(async (tx) => {
+        return await tx
+            .insert(verses)
+            .values(verse)
+    })
 }
 
 export async function insertManyVerses(versesData: NewVerse[]){
-    return await db
-    .insert(verses)
-    .values(versesData)
+    return await db.transaction(async (tx) => {
+        return await tx
+            .insert(verses)
+            .values(versesData)
+    })
 }
 
 export async function getVersesForChapter(chapterId: number): Promise<Verse[]>{
-    return await db
-    .select()
-    .from(verses)
-    .where(eq(verses.chapterId, chapterId))
+    return await db.transaction(async (tx) => {
+        return await tx
+            .select()
+            .from(verses)
+            .where(eq(verses.chapterId, chapterId))
+    })
 }
 
