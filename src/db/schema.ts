@@ -32,7 +32,7 @@ export const verses = sqliteTable('verses', {
 export const logs = sqliteTable('logs', {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
     date: integer({ mode: 'timestamp' }).notNull(), // Use text for dates in SQLite
-    chaptersRead: text('chapters_read', { mode: 'json' }).notNull(), // Use text with JSON mode
+    chaptersRead: text('chapters_read', { mode: 'json' }).$type<number[]>().notNull(), // Use text with JSON mode
     createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
 });
 

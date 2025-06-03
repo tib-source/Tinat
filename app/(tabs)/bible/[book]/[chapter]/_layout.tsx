@@ -1,10 +1,14 @@
 import { Stack, useLocalSearchParams } from "expo-router";
-import useDbQuery from "~/hooks/useDbQuery";
-import { useBook, useChapter } from "~/src/hooks/useDatabase";
-import { getBookWithId, getChapterWithId } from "~/src/queries/queries";
+import { useEffect } from "react";
+import { NewLog } from "~/src/db/schema";
+import { getToday } from "~/src/helpers/dateHelpers";
+import { useAddLog, useBook, useChapter, useLogsForToday, useUpdateLog } from "~/src/hooks/useDatabase";
+import { addChaptersRead, insertLog } from "~/src/queries/logQueries";
 
 export default function VerseLayout() {
+  const streakCheck = 1 * 1000 // 30 seconds
   const params = useLocalSearchParams();
+  const { data: todayLog, isSuccess: todaySuccess, error } = useLogsForToday()
 
   const bookId = Number.parseInt(Array.isArray(params?.book) ? params.book[0] : params?.book);
   const chapterId = Number.parseInt(Array.isArray(params?.chapter)
@@ -13,8 +17,39 @@ export default function VerseLayout() {
 
   const { data: book} = useBook(bookId);
   const { data: chapter } = useChapter(chapterId)
-  console.log(chapter);
+  const { mutate: updateLog } = useUpdateLog()
+  const { mutate: addLog } = useAddLog()
   const title = `${book?.titleAm ?? ""} - ${chapter?.chapterNumber ?? ""} : ${chapter?.verses ?? ""}`;
+
+
+  useEffect(()=>{
+    const activeTimer = setTimeout( ()=>{
+      console.log("testing")
+      console.log(todayLog, "testing", todaySuccess)
+      if (todaySuccess){
+          if (todayLog === undefined || todayLog.length === 0){
+              const newLog: NewLog = {
+                  date: getToday(),
+                  chaptersRead: [chapterId]
+              }
+              addLog(newLog)
+          }else{
+              const current = todayLog[0]
+              if (current.chaptersRead.includes(chapterId)){
+                  console.log("doing nothing...")
+                  return
+              }
+              updateLog([...current.chaptersRead, chapterId])
+          }
+      }else{
+        console.log("error?")
+        console.log(error?.message, error?.cause, error?.stack)
+      }
+
+    }, streakCheck)
+
+    return () => clearTimeout(activeTimer)
+  }, [])
 
   return (
     <Stack>

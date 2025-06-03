@@ -6,9 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { CircleCheck } from '~/lib/icons/CircleCheck';
 import { Flame } from '~/lib/icons/Flame';
 import { useTheme } from '@react-navigation/native';
-import useDbQuery from '~/hooks/useDbQuery';
 import { getAllDaysInCurrentWeek } from '~/src/helpers/dateHelpers';
-import { getLogsForWeekStarting, getTodaysLog } from '~/src/queries/logQueries';
 import { useEffect, useState } from 'react';
 import { useLogsForToday, useWeeklyLog } from '~/src/hooks/useDatabase';
 import { Log } from '~/src/db/schema';
@@ -17,6 +15,13 @@ import { Log } from '~/src/db/schema';
 export default function StreakCard() {
     const theme = useTheme();
     const { t } = useTranslation();
+    const {data: todayLogQuery, isSuccess: todayLogQuerySuccess} = useLogsForToday()
+    const [todayLog, setTodayLog] = useState<Log>()
+    useEffect(()=>{
+        if(todayLogQuerySuccess && todayLogQuery){
+            setTodayLog(todayLogQuery[0])
+        }
+    }, [todayLogQuery, todayLogQuerySuccess])
 
     const days = [
         'monday',
@@ -28,35 +33,34 @@ export default function StreakCard() {
         'sunday'
     ];
     const verseGoal = 10;
-    const verseCount = 1;
-    const progressValue = Math.floor((verseCount / verseGoal) * 100);
-    const [progress, setProgress] = useState(progressValue);
+
+    const [progress, setProgress] = useState(0);
+    const [streak, setStreak] = useState<Record<string, Log | null>>({})
 
     const weekDays = getAllDaysInCurrentWeek()
     const {data : weekLogs} = useWeeklyLog(weekDays[0])
-    const {data: todayLog} = useLogsForToday()
-    
-    const streakObject: Record<string, Log | null> = {};
-    const getWeekStreak = () => { 
+    useEffect(() => { 
       // Create array with indices 0-6 for iteration
-      for(let index = 0; index < 7; index++) {
-        const current_day = weekDays[index]; // Get current day from weekDays array
-        
-        if (current_day && weekLogs) {
-          const date_streak = weekLogs.filter((log) => {
-              const streak_date = new Date(log.date);
-              return streak_date.getDate() === current_day.getDate()
-          })[0];
-          
+        const streakObject: Record<string, Log | null> = {};
+        for(let index = 0; index < 7; index++) {
+            const current_day = weekDays[index]; // Get current day from weekDays array
+            
+            if (current_day && weekLogs) {
+            const date_streak = weekLogs.filter((log) => {
+                return log.date.getDate() === current_day.getDate()
+            })[0];
+            
 
-          streakObject[`${days[index]}`] = date_streak || null;
+            streakObject[`${days[index]}`] = date_streak || null;
+            }
         }
-      }
-    }
+        setStreak(streakObject)
+    }, [])
 
-    getWeekStreak();
-
-    
+    useEffect(()=>{
+        const verseCount = todayLog?.chaptersRead.length || 1;
+        setProgress(verseCount)
+    }, [todayLog])
 
 
     return (
@@ -72,7 +76,7 @@ export default function StreakCard() {
                     <View className="flex-grow">
                         <View className="flex-row items-center overflow-hidden">
                             <Text className="text-2xl font-bold">
-                                {verseCount}/
+                                {progress}/
                             </Text>
                             <Text className="text-lg text-muted-foreground">
                                 {verseGoal}{' '}
@@ -82,7 +86,7 @@ export default function StreakCard() {
                             </Text>
                         </View>
                         <Progress
-                            value={progress}
+                            value={Math.floor((progress / verseGoal) * 100)}
                             className="h-5"
                             indicatorClassName="bg-primary"
                         />
@@ -91,7 +95,7 @@ export default function StreakCard() {
                 <View />
                 <View className="flex-row justify-around gap-4">
                     {days.map((day, index) => {
-                        const current_streak = streakObject[day]
+                        const current_streak = streak[day]
                         const active = current_streak !== null
                         return (
                             <View key={index} className="items-center">

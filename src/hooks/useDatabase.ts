@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getChaptersForBook, getChapterWithId, toggleChapterRead } from '../queries/chapterQueries';
 import { getVersesForChapter } from '../queries/verseQueries';
 import { getAllBooks, getBookWithId } from '../queries/bookQueries';
-import { getLogsForWeekStarting, getTodaysLog, insertLog } from '../queries/logQueries';
+import { addChaptersRead, getLogsForWeekStarting, getTodaysLog, insertLog } from '../queries/logQueries';
 import { NewLog } from '../db/schema';
 
 // Book queries
@@ -81,6 +81,16 @@ export function useWeeklyLog(date: Date){
 export function useLogsForToday(){
   return useQuery({
     queryKey: ['logs','today'],
-    queryFn: getTodaysLog
+    queryFn: getTodaysLog,
   })
+}
+
+export function useUpdateLog() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (chapters: number[]) => addChaptersRead(chapters),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['logs'] });
+    },
+  });
 }
