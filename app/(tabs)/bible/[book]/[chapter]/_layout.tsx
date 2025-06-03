@@ -6,7 +6,7 @@ import { useAddLog, useBook, useChapter, useLogsForToday, useUpdateLog } from "~
 import { addChaptersRead, insertLog } from "~/src/queries/logQueries";
 
 export default function VerseLayout() {
-  const streakCheck = 1 * 1000 // 30 seconds
+  const streakCheck = 10 * 1000 // 30 seconds
   const params = useLocalSearchParams();
   const { data: todayLog, isSuccess: todaySuccess, error } = useLogsForToday()
 
@@ -24,14 +24,13 @@ export default function VerseLayout() {
 
   useEffect(()=>{
     const activeTimer = setTimeout( ()=>{
-      console.log("testing")
-      console.log(todayLog, "testing", todaySuccess)
       if (todaySuccess){
           if (todayLog === undefined || todayLog.length === 0){
               const newLog: NewLog = {
                   date: getToday(),
                   chaptersRead: [chapterId]
               }
+              console.log("Adding entry : ", newLog)
               addLog(newLog)
           }else{
               const current = todayLog[0]
@@ -39,6 +38,7 @@ export default function VerseLayout() {
                   console.log("doing nothing...")
                   return
               }
+              console.log("Updating entry with chapter: ", chapterId)
               updateLog([...current.chaptersRead, chapterId])
           }
       }else{

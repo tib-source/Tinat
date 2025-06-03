@@ -55,7 +55,7 @@ export default function StreakCard() {
             }
         }
         setStreak(streakObject)
-    }, [])
+    }, [weekLogs])
 
     useEffect(()=>{
         const verseCount = todayLog?.chaptersRead.length || 1;
