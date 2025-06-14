@@ -6,7 +6,7 @@ import { useAddLog, useBook, useChapter, useLogsForToday, useUpdateLog } from "~
 import { addChaptersRead, insertLog } from "~/src/queries/logQueries";
 
 export default function VerseLayout() {
-  const streakCheck = 10 * 1000 // 30 seconds
+  const streakCheck = 5* 1000 // 30 seconds
   const params = useLocalSearchParams();
   const { data: todayLog, isSuccess: todaySuccess, error } = useLogsForToday()
 

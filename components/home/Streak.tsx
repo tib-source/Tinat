@@ -7,7 +7,7 @@ import { CircleCheck } from '~/lib/icons/CircleCheck';
 import { Flame } from '~/lib/icons/Flame';
 import { useTheme } from '@react-navigation/native';
 import { getAllDaysInCurrentWeek } from '~/src/helpers/dateHelpers';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { useLogsForToday, useWeeklyLog } from '~/src/hooks/useDatabase';
 import { Log } from '~/src/db/schema';
 
@@ -15,13 +15,8 @@ import { Log } from '~/src/db/schema';
 export default function StreakCard() {
     const theme = useTheme();
     const { t } = useTranslation();
-    const {data: todayLogQuery, isSuccess: todayLogQuerySuccess} = useLogsForToday()
-    const [todayLog, setTodayLog] = useState<Log>()
-    useEffect(()=>{
-        if(todayLogQuerySuccess && todayLogQuery){
-            setTodayLog(todayLogQuery[0])
-        }
-    }, [todayLogQuery, todayLogQuerySuccess])
+    const {data: todayLogQuery} = useLogsForToday()
+    const todayLog = todayLogQuery?.[0]
 
     const days = [
         'monday',
@@ -34,34 +29,25 @@ export default function StreakCard() {
     ];
     const verseGoal = 10;
 
-    const [progress, setProgress] = useState(0);
-    const [streak, setStreak] = useState<Record<string, Log | null>>({})
+    const progress = todayLog?.chaptersRead.length || 0;
 
     const weekDays = getAllDaysInCurrentWeek()
     const {data : weekLogs} = useWeeklyLog(weekDays[0])
-    useEffect(() => { 
-      // Create array with indices 0-6 for iteration
-        const streakObject: Record<string, Log | null> = {};
-        for(let index = 0; index < 7; index++) {
-            const current_day = weekDays[index]; // Get current day from weekDays array
-            
-            if (current_day && weekLogs) {
-            const date_streak = weekLogs.filter((log) => {
+    const streak = useMemo(() => {
+    const streakObject: Record<string, Log | null> = {};
+    for(let index = 0; index < 7; index++) {
+        const current_day = weekDays[index];
+        
+        if (current_day && weekLogs) {
+            const date_streak = weekLogs.find((log) => {
                 return log.date.getDate() === current_day.getDate()
-            })[0];
+            });
             
-
             streakObject[`${days[index]}`] = date_streak || null;
-            }
         }
-        setStreak(streakObject)
-    }, [weekLogs])
-
-    useEffect(()=>{
-        const verseCount = todayLog?.chaptersRead.length || 1;
-        setProgress(verseCount)
-    }, [todayLog])
-
+    }
+    return streakObject;
+}, [weekLogs, weekDays]);
 
     return (
         <Card className="w-full p-6 bg-background rounded-2xl">
