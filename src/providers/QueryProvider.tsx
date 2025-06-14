@@ -1,15 +1,10 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: (failureCount, error) => {
-        // Don't retry on certain errors
-        if (error?.message?.includes('SQLITE_CONSTRAINT')) {
-          return false;
-        }
+      retry: (failureCount) => {
         return failureCount < 3;
       },
     },
