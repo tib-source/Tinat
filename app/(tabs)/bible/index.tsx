@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Input } from "~/components/ui/input";
-import { getBooks } from "~/src/queries/queries";
-import useDbQuery from "~/hooks/useDbQuery";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import BibleBookList from "~/components/BibleBookList";
 import { Text } from "~/components/ui/text";
 import { View } from "react-native";
-import { Book } from "~/src/db/schema";
 import { useBooks } from "~/src/hooks/useDatabase";
 import { Loader } from "lucide-react-native";
 
