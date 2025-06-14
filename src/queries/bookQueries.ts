@@ -1,33 +1,29 @@
-import { eq, getTableColumns, sql } from "drizzle-orm";
-import { db } from "../..";
-import { Book, books, chapters, NewBook } from "../db/schema";
-import { BookData } from "../types";
+import { eq, getTableColumns, sql } from 'drizzle-orm';
+import { db } from '../..';
+import { books, chapters, NewBook } from '../db/schema';
+import { BookData } from '../types';
 
-
-export async function insertBook( book: NewBook){
+export async function insertBook(book: NewBook) {
     return await db.transaction(async (tx) => {
-        return await tx
-            .insert(books)
-            .values(book)
-    })
+        return await tx.insert(books).values(book);
+    });
 }
 
-export async function insertManyBooks(booksData: NewBook[]){
+export async function insertManyBooks(booksData: NewBook[]) {
     return await db.transaction(async (tx) => {
         return await tx
             .insert(books)
             .values(booksData)
-            .returning({id: books.id})
-    })
+            .returning({ id: books.id });
+    });
 }
 
-
-export async function getBookWithId(bookId: number){ 
+export async function getBookWithId(bookId: number) {
     return await db.transaction(async (tx) => {
         return await tx.query.books.findFirst({
             where: eq(books.id, bookId)
-        })
-    })
+        });
+    });
 }
 
 export async function getAllBooks(): Promise<BookData[]> {
@@ -41,6 +37,6 @@ export async function getAllBooks(): Promise<BookData[]> {
             .from(books)
             .leftJoin(chapters, eq(books.id, chapters.bookId))
             .groupBy(books.id)
-            .orderBy(books.bookNumber)
-    })
+            .orderBy(books.bookNumber);
+    });
 }
