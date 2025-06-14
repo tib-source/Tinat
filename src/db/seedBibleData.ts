@@ -31,7 +31,7 @@ export async function seedBibleData(): Promise<{
   error?: string;
 }> {
   try {
-    const DB_VERSION = 1
+    const DB_VERSION = 2
     const result = await db.transaction(async (tx) => {
       return await tx.get(sql`PRAGMA user_version`)
     })
