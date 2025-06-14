@@ -1,41 +1,46 @@
-import { sqliteTable, text, integer, real } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
 
 // Books table
 export const books = sqliteTable('books', {
-  id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-  testament: text('testament').notNull(), // 'Old' or 'New'
-  bookNumber: integer('bookNumber').notNull(),
-  titleAm: text('titleAm'),
-  titleEn: text('titleEn'),
+    id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+    testament: text('testament').notNull(), // 'Old' or 'New'
+    bookNumber: integer('bookNumber').notNull(),
+    titleAm: text('titleAm'),
+    titleEn: text('titleEn')
 });
 
 // Chapters table
 export const chapters = sqliteTable('chapters', {
-  id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-  bookId: integer('book_id').notNull().references(() => books.id),
-  chapterNumber: integer('chapter_number').notNull(),
-  titleAm: text('titleAm'),
-  titleEn: text('titleEn'),
-  isRead: integer('is_read', { mode: 'boolean' }).default(false),
+    id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+    bookId: integer('book_id')
+        .notNull()
+        .references(() => books.id),
+    chapterNumber: integer('chapter_number').notNull(),
+    titleAm: text('titleAm'),
+    titleEn: text('titleEn'),
+    isRead: integer('is_read', { mode: 'boolean' }).default(false)
 });
 
 // Verses table
 export const verses = sqliteTable('verses', {
-  id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-  chapterId: integer('chapter_id').notNull().references(() => chapters.id),
-  verseNumber: integer('verse_number').notNull(),
-  textAm: text('textAm').notNull(),
-  textEn: text('textEn').notNull(),
+    id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+    chapterId: integer('chapter_id')
+        .notNull()
+        .references(() => chapters.id),
+    verseNumber: integer('verse_number').notNull(),
+    textAm: text('textAm').notNull(),
+    textEn: text('textEn').notNull()
 });
 
 export const logs = sqliteTable('logs', {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
     date: integer({ mode: 'timestamp' }).notNull(), // Use text for dates in SQLite
-    chaptersRead: text('chapters_read', { mode: 'json' }).$type<number[]>().notNull(), // Use text with JSON mode
-    createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
+    chaptersRead: text('chapters_read', { mode: 'json' })
+        .$type<number[]>()
+        .notNull(), // Use text with JSON mode
+    createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`)
 });
-
 
 // // Bookmarks table
 // export const bookmarks = sqliteTable('bookmarks', {
@@ -71,13 +76,11 @@ export const logs = sqliteTable('logs', {
 
 // User settings table
 export const userSettings = sqliteTable('user_settings', {
-  id: integer('id').primaryKey(),
-  key: text('key').notNull().unique(),
-  value: text('value').notNull(),
-  updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`),
+    id: integer('id').primaryKey(),
+    key: text('key').notNull().unique(),
+    value: text('value').notNull(),
+    updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`)
 });
-
-
 
 export type Book = typeof books.$inferSelect;
 export type NewBook = typeof books.$inferInsert;

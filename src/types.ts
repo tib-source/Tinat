@@ -1,6 +1,6 @@
-import { Book, Chapter } from "./db/schema";
+import { Book } from './db/schema';
 
-export interface BookData extends Book  {
-  chapters: number;
-  readChapters: number;
+export interface BookData extends Book {
+    chapters: number;
+    readChapters: number;
 }
