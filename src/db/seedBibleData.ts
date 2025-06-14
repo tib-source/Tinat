@@ -129,7 +129,7 @@ export async function seedBibleData(): Promise<{
             }
         });
 
-        // // Seed logs 
+        // // Seed logs
         // await db.transaction(async (tx) => {
         //   const daysInWeek = getAllDaysInCurrentWeek()
         //   console.log(daysInWeek)

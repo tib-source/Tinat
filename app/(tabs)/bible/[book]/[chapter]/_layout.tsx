@@ -1,16 +1,6 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { useEffect } from 'react';
-import { NewLog } from '~/src/db/schema';
-import { getToday } from '~/src/helpers/dateHelpers';
-import {
-    useAddLog,
-    useBook,
-    useChapter,
-    useLogsForToday,
-    useUpdateLog
-} from '~/src/hooks/useDatabase';
+import { useBook, useChapter } from '~/src/hooks/useDatabase';
 import { useReadingTracker } from '~/src/hooks/useReadingTracker';
-import { addChaptersRead, insertLog } from '~/src/queries/logQueries';
 
 export default function VerseLayout() {
     const params = useLocalSearchParams();

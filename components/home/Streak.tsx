@@ -17,15 +17,18 @@ export default function StreakCard() {
     const { data: todayLogQuery } = useLogsForToday();
     const todayLog = todayLogQuery?.[0];
 
-    const days = [
-        'monday',
-        'tuesday',
-        'wednesday',
-        'thursday',
-        'friday',
-        'saturday',
-        'sunday'
-    ];
+    const days = useMemo(
+        () => [
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday'
+        ],
+        []
+    );
     const verseGoal = 10;
 
     const progress = todayLog?.chaptersRead.length || 0;
@@ -46,7 +49,7 @@ export default function StreakCard() {
             }
         }
         return streakObject;
-    }, [weekLogs, weekDays]);
+    }, [weekLogs, weekDays, days]);
 
     return (
         <Card className="w-full p-6 bg-background rounded-2xl">

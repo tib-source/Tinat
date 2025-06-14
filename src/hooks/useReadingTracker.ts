@@ -38,5 +38,5 @@ export function useReadingTracker(chapterId: number, delayMs: number = 5000) {
         }, delayMs);
 
         return () => clearTimeout(activeTimer);
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 }
