@@ -29,6 +29,13 @@ const resources = {
                     old: 'Old Test'
                 }
             },
+            calendar: {
+                headerTitle: 'Ethiopian Calendar',
+                title: 'Calendar',
+                today: 'Today',
+                ethiopian: 'Ethiopian',
+                gregorian: 'Gregorian'
+            },
         }
     },
     amh: {
@@ -59,6 +66,13 @@ const resources = {
                     new: 'አዲስ ኪዳን',
                     old: 'ብሉይ ኪዳን'
                 }
+            },
+            calendar: {
+                headerTitle: 'የኢትዮጵያ ዘመን አቆጣጠር',
+                title: 'ዘመን አቆጣጠር',
+                today: 'ዛሬ',
+                ethiopian: 'የኢትዮጵያ',
+                gregorian: 'ጎሪጎሪያን'
             },
         }
     }
