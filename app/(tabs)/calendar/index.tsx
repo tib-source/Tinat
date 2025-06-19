@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import EthiopianCalendar from '~/components/EthiopianCalendar';
 import { EthiopianDate } from '~/src/helpers/ethiopianCalendarHelpers';
 
 export default function Index() {
-    const { t } = useTranslation();
-    const [selectedDate, setSelectedDate] = useState<EthiopianDate | undefined>();
+    const [selectedDate, setSelectedDate] = useState<
+        EthiopianDate | undefined
+    >();
 
     const handleDateSelect = (date: EthiopianDate) => {
         setSelectedDate(date);
@@ -16,7 +16,7 @@ export default function Index() {
 
     return (
         <View className="flex-1 bg-background">
-            <EthiopianCalendar 
+            <EthiopianCalendar
                 onDateSelect={handleDateSelect}
                 selectedDate={selectedDate}
             />
