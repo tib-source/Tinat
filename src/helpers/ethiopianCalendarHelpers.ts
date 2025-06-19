@@ -63,6 +63,8 @@ export function getPagumenDays(year: number): number {
  * Convert Gregorian date to Ethiopian date (approximate conversion)
  */
 export function gregorianToEthiopian(gregorianDate: Date): EthiopianDate {
+    // TODO: this implementation is wronggggg AGHHH 
+    // WHY CANT LIFE JUST BE EASYYY
     const [ethiopianYear, ethiopianMonth, ethiopianDate] = toEthiopian(
         gregorianDate.getFullYear(),
         gregorianDate.getMonth(),
