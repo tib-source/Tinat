@@ -64,7 +64,10 @@ export function getPagumenDays(year: number): number {
  */
 export function gregorianToEthiopian(gregorianDate: Date): EthiopianDate {
     // TODO: this implementation is wronggggg AGHHH 
-    // WHY CANT LIFE JUST BE EASYYY
+    // WHY CANT LIFE JUST BE EASYYY 
+    // SO this thing converts the days but its wrong by a day and a whole month. 
+    // its midnight and ive tried understanding how the hell they implemented it but I dont have the brain cells for it 
+    // Either reimplement this or yoink someone elses attempt at this
     const [ethiopianYear, ethiopianMonth, ethiopianDate] = toEthiopian(
         gregorianDate.getFullYear(),
         gregorianDate.getMonth(),
