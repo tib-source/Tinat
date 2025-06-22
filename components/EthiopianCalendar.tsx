@@ -17,6 +17,7 @@ import {
 } from '~/src/helpers/ethiopianCalendarHelpers';
 import { LeftArrow, RightArrow } from '~/lib/icons/Navigation';
 import Day from './calendar/Day';
+import { getToday } from '~/src/helpers/dateHelpers';
 
 interface EthiopianCalendarProps {
     onDateSelect?: (date: EthiopianDate) => void;
@@ -229,7 +230,7 @@ export default function EthiopianCalendar({
                     <Card className="w-full">
                         <CardContent className="p-4">
                             <Calendar
-                                calendarMonthId={toDateId(new Date())}
+                                calendarMonthId={toDateId(getToday())}
                                 onCalendarDayPress={() => {}}
                                 calendarFirstDayOfWeek="monday"
                             />

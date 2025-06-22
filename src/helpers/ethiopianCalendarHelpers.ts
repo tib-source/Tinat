@@ -4,6 +4,7 @@
  * and has 13 months (12 months of 30 days each + 1 month of 5 or 6 days)
  */
 import { toEthiopian, toGregorian } from 'ethiopian-date';
+import { getToday } from './dateHelpers';
 
 export interface EthiopianDate {
     year: number;
@@ -73,7 +74,7 @@ export function gregorianToEthiopian(gregorianDate: Date): EthiopianDate {
         gregorianDate.getMonth(),
         gregorianDate.getDate()
     );
-    return { year: ethiopianYear, month: ethiopianMonth, day: ethiopianDate };
+    return { year: ethiopianYear, month: ethiopianMonth + 1, day: ethiopianDate + 1};
 }
 
 /**
@@ -86,7 +87,9 @@ export function ethiopianToGregorian(ethDate: EthiopianDate): Date {
         ethDate.day
     );
 
-    return new Date(year, month, day);
+    // Temporary hack to not have to reimplement this 
+    // currently the converter is off by a month :) 
+    return new Date(year, month - 1 , day);
 }
 /**
  * Get the Ethiopian month name in Amharic
@@ -99,7 +102,6 @@ export function getEthiopianMonthName(month: number): string {
 
 export function getMonthStart(ethDate: EthiopianDate): Date {
     const date = ethiopianToGregorian(ethDate);
-
     return new Date(date.getFullYear(), date.getMonth(), 1, 1, 0, 0);
 }
 
@@ -122,7 +124,7 @@ export function formatEthiopianDate(ethDate: EthiopianDate): string {
  * Get current Ethiopian date
  */
 export function getCurrentEthiopianDate(): EthiopianDate {
-    return gregorianToEthiopian(new Date());
+    return gregorianToEthiopian(getToday());
 }
 
 /**
