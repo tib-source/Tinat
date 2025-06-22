@@ -1,0 +1,122 @@
+import type {
+  CalendarProps,
+  CalendarTheme,
+} from "@marceloterreiro/flash-calendar";
+import { Calendar, useCalendar } from "@marceloterreiro/flash-calendar";
+import { useTheme } from "@react-navigation/native";
+import { memo, useMemo } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import MonthHeader from "./MonthHeader";
+
+
+const DAY_HEIGHT = 40;
+const MONTH_HEADER_HEIGHT = 40;
+const WEEK_DAYS_HEIGHT = 40;
+
+
+
+export const GregorianCalendar = memo((props: CalendarProps) => {
+
+
+
+const theme = useTheme()
+
+const calendarTheme: CalendarTheme = {
+  rowMonth: {
+    container: {
+      backgroundColor: theme.colors.background,
+      height: MONTH_HEADER_HEIGHT,
+    },
+    content: {
+      color: theme.colors.text,
+      fontSize: 17,
+      width: 200,
+      textAlign: "center",
+    },
+  },
+  itemWeekName: { content: { color: theme.colors.text } },
+  itemDay: {
+    base: () => ({
+      container: {
+        padding: 0,
+        borderRadius: 50,
+      },
+    }),
+    today: () => ({
+      container: {
+        borderWidth: 2,
+        borderColor: theme.colors.border,
+      },
+    }),
+    idle: ({ isDifferentMonth }) => ({
+      content: isDifferentMonth
+        ? {
+            color: theme.colors.background,
+          }
+        : undefined,
+    }),
+    active: () => ({
+      container: {
+        backgroundColor: theme.colors.primary,
+      },
+      content: {
+        color: theme.colors.text,
+      },
+    }),
+  },
+};
+
+
+    const { calendarRowMonth, weekDaysList, weeksList } = useCalendar(props);
+
+  const today = useMemo(() => {
+    return weeksList.flatMap((week) => week).find((day) => day.isToday);
+  }, [weeksList]);
+
+
+  const navigateMonth = (direction: "prev" | "next") => {
+    props.calendarMonthId
+  }
+
+  return (
+    <View>
+      <Calendar.VStack spacing={props.calendarRowVerticalSpacing}>
+        <MonthHeader month={calendarRowMonth} calendarTheme={calendarTheme} navigateMonth={navigateMonth}/>
+
+        <Calendar.Row.Week spacing={4}>
+          {weekDaysList.map((day, i) => (
+            <Calendar.Item.WeekName
+              height={WEEK_DAYS_HEIGHT}
+              key={i}
+              theme={calendarTheme.itemWeekName}
+            >
+              {day}
+            </Calendar.Item.WeekName>
+          ))}
+        </Calendar.Row.Week>
+
+        {weeksList.map((week, i) => (
+          <Calendar.Row.Week key={i}>
+            {week.map((day) => (
+              <Calendar.Item.Day.Container
+                dayHeight={DAY_HEIGHT}
+                daySpacing={4}
+                isStartOfWeek={day.isStartOfWeek}
+                key={day.id}
+              >
+                <Calendar.Item.Day
+                  height={DAY_HEIGHT}
+                  metadata={day}
+                  onPress={props.onCalendarDayPress}
+                  theme={calendarTheme.itemDay}
+                >
+                  {day.displayLabel}
+                </Calendar.Item.Day>
+              </Calendar.Item.Day.Container>
+            ))}
+          </Calendar.Row.Week>
+        ))}
+      </Calendar.VStack>
+    </View>
+  );
+});

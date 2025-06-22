@@ -56,7 +56,7 @@ const resources = {
                 daily_verse: 'የዕለቱ ቃል',
             },
             bible: {
-                headerTitle: 'መጽሐፍ ቅዱስን ያስሱ',
+                headerTitle: 'መጽሐፍ ቅዱስ',
                 chapters : 'ምዕራፎች',
                 chapter: 'ምዕራፍ',
                 verses: 'ጥቅሶች',
@@ -68,11 +68,11 @@ const resources = {
                 }
             },
             calendar: {
-                headerTitle: 'የኢትዮጵያ ዘመን አቆጣጠር',
+                headerTitle: 'ካላንደር',
                 title: 'ዘመን አቆጣጠር',
                 today: 'ዛሬ',
                 ethiopian: 'የኢትዮጵያ',
-                gregorian: 'ጎሪጎሪያን'
+                gregorian: 'የፈረንጆች'
             },
         }
     }

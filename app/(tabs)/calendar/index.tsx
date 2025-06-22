@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View } from 'react-native';
-import EthiopianCalendar from '~/components/EthiopianCalendar';
+import CalendarView from '~/components/CalendarView';
 import { EthiopianDate } from '~/src/helpers/ethiopianCalendarHelpers';
 
 export default function Index() {
@@ -16,7 +16,7 @@ export default function Index() {
 
     return (
         <View className="flex-1 bg-background">
-            <EthiopianCalendar
+            <CalendarView
                 onDateSelect={handleDateSelect}
                 selectedDate={selectedDate}
             />

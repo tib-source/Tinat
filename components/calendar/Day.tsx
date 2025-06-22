@@ -26,22 +26,22 @@ export default function Day({
         return (
             <TouchableOpacity
                 className={cn(
-                    'w-[calc(100%/7.02)] py-1 px-0 items-center justify-center'
+                    'w-[calc(100%/7.02)] items-center justify-center'
                 )}
             >
-                <Text className={cn('text-l p-1.5 px-2.5 rounded-full')}></Text>
+                <Text className={cn('text-m px-2.5 rounded-full')}></Text>
             </TouchableOpacity>
         );
     }
     return (
         <TouchableOpacity
             className={cn(
-                'w-[calc(100%/7.02)] py-1 px-0 items-center justify-center'
+                'w-[calc(100%/7.01)] p-0 items-center justify-center'
             )}
         >
             <Text
                 className={cn(
-                    'text-l p-1.5 px-2.5 rounded-full',
+                    'text-m text-foreground p-2.5 rounded-full',
                     isToday && isTodayStyle
                 )}
             >
@@ -50,25 +50,3 @@ export default function Day({
         </TouchableOpacity>
     );
 }
-
-//   <TouchableOpacity
-//     key={day}
-//     onPress={() => onDateSelect?.({
-//       year: currentEthDate.year,
-//       month: currentEthDate.month,
-//       day
-//     })}
-//     className={cn(
-//       "w-[14.285%] aspect-square items-center justify-center rounded-md",
-//       isSelected && "bg-primary",
-//       isToday && !isSelected && "bg-accent"
-//     )}
-//   >
-//     <Text className={cn(
-//       "text-sm",
-//       isSelected ? "text-primary-foreground font-medium" : "text-foreground",
-//       isToday && !isSelected && "font-medium"
-//     )}>
-//       {day}
-//     </Text>
-//   </TouchableOpacity>
