@@ -7,6 +7,7 @@ import { useTheme } from '@react-navigation/native';
 import { cn } from '~/lib/utils';
 import {
     EthiopianDate,
+    ethiopianToGregorian,
     getCurrentEthiopianDate,
 } from '~/src/helpers/ethiopianCalendarHelpers';
 import { getToday } from '~/src/helpers/dateHelpers';
@@ -134,9 +135,10 @@ export default function CalendarView({
                             <EthiopianCalendar currentEthDate={currentEthDate} navigateMonth={navigateMonth} selectedDate={selectedDate} />
                         ) : (
                             <GregorianCalendar
-                                calendarMonthId={toDateId(getToday())}
+                                calendarMonthId={toDateId(ethiopianToGregorian(currentEthDate))}
                                 onCalendarDayPress={() => { }}
                                 calendarFirstDayOfWeek="monday"
+                                navigateMonth={navigateMonth}
                             />
                         )}
                     </CardContent>

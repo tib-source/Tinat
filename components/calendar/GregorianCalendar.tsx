@@ -13,9 +13,12 @@ const DAY_HEIGHT = 40;
 const MONTH_HEADER_HEIGHT = 40;
 const WEEK_DAYS_HEIGHT = 40;
 
+interface GregorianCalendarProps extends CalendarProps { 
+    navigateMonth: (direction: "prev" | "next") => void;
+}
 
 
-export const GregorianCalendar = memo((props: CalendarProps) => {
+export const GregorianCalendar = memo((props: GregorianCalendarProps) => {
 
 
 
@@ -73,15 +76,10 @@ const calendarTheme: CalendarTheme = {
     return weeksList.flatMap((week) => week).find((day) => day.isToday);
   }, [weeksList]);
 
-
-  const navigateMonth = (direction: "prev" | "next") => {
-    props.calendarMonthId
-  }
-
   return (
     <View>
       <Calendar.VStack spacing={props.calendarRowVerticalSpacing}>
-        <MonthHeader month={calendarRowMonth} calendarTheme={calendarTheme} navigateMonth={navigateMonth}/>
+        <MonthHeader month={calendarRowMonth} calendarTheme={calendarTheme} navigateMonth={props.navigateMonth}/>
 
         <Calendar.Row.Week spacing={4}>
           {weekDaysList.map((day, i) => (
