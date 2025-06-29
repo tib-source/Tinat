@@ -1,12 +1,14 @@
 import type {
+    CalendarDayMetadata,
   CalendarProps,
   CalendarTheme,
 } from "@marceloterreiro/flash-calendar";
 import { Calendar, useCalendar } from "@marceloterreiro/flash-calendar";
 import { useTheme } from "@react-navigation/native";
-import { memo, useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { memo, useEffect, useMemo, useState } from "react";
+import {View } from "react-native";
 import MonthHeader from "./MonthHeader";
+import { EthiopianDate, getEthiopianMonthName, getEthiopianWeekDaysList, getEthiopianWeeksList, gregorianToEthiopian } from "~/src/helpers/ethiopianCalendarHelpers";
 
 
 const DAY_HEIGHT = 40;
@@ -15,12 +17,18 @@ const WEEK_DAYS_HEIGHT = 40;
 
 interface GregorianCalendarProps extends CalendarProps { 
     navigateMonth: (direction: "prev" | "next") => void;
+    viewMode: string;
+    currDate: Date;
 }
 
+interface CalendarMetadata { 
+    calendarRowMonth: string;
+    weekDaysList: string[];
+    weeksList: CalendarDayMetadata[][]
+}
 
 export const GregorianCalendar = memo((props: GregorianCalendarProps) => {
-
-
+const currentEthDate = gregorianToEthiopian(props?.currDate)
 
 const theme = useTheme()
 
@@ -69,20 +77,33 @@ const calendarTheme: CalendarTheme = {
   },
 };
 
+    const gregorianMetadata = useCalendar(props)
+    const [calendarMetadata, setCalendarMetadata] = useState<CalendarMetadata>(gregorianMetadata)
 
-    const { calendarRowMonth, weekDaysList, weeksList } = useCalendar(props);
+    useEffect(()=>{
 
-  const today = useMemo(() => {
-    return weeksList.flatMap((week) => week).find((day) => day.isToday);
-  }, [weeksList]);
+        const ethiopianMetadata: CalendarMetadata = {
+            calendarRowMonth: `${getEthiopianMonthName(currentEthDate.month)} ${currentEthDate.year}`,
+            weekDaysList: getEthiopianWeekDaysList(),
+            weeksList: getEthiopianWeeksList(currentEthDate)
+        }
 
+        if (props.viewMode == "ethiopian"){
+            setCalendarMetadata(ethiopianMetadata)
+        }else{
+            setCalendarMetadata(gregorianMetadata)
+        }
+
+    }, [props])
+
+    calendarMetadata
   return (
     <View>
       <Calendar.VStack spacing={props.calendarRowVerticalSpacing}>
-        <MonthHeader month={calendarRowMonth} calendarTheme={calendarTheme} navigateMonth={props.navigateMonth}/>
+        <MonthHeader month={calendarMetadata.calendarRowMonth} calendarTheme={calendarTheme} navigateMonth={props.navigateMonth}/>
 
         <Calendar.Row.Week spacing={4}>
-          {weekDaysList.map((day, i) => (
+          {calendarMetadata.weekDaysList.map((day, i) => (
             <Calendar.Item.WeekName
               height={WEEK_DAYS_HEIGHT}
               key={i}
@@ -93,7 +114,7 @@ const calendarTheme: CalendarTheme = {
           ))}
         </Calendar.Row.Week>
 
-        {weeksList.map((week, i) => (
+        {calendarMetadata.weeksList.map((week, i) => (
           <Calendar.Row.Week key={i}>
             {week.map((day) => (
               <Calendar.Item.Day.Container

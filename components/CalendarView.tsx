@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { addYears, addMonths } from "date-fns"
 import { View, Text, ScrollView } from 'react-native';
-import { Calendar, toDateId } from '@marceloterreiro/flash-calendar';
+import { Calendar, CalendarProps, toDateId, useCalendar } from '@marceloterreiro/flash-calendar';
 import { Card, CardContent } from '~/components/ui/card';
 import { Button } from '~/components/ui/button';
 import { useTheme } from '@react-navigation/native';
@@ -19,14 +20,10 @@ interface EthiopianCalendarProps {
     selectedDate?: EthiopianDate;
 }
 
-export default function CalendarView({
-    onDateSelect,
-    selectedDate
-}: EthiopianCalendarProps) {
+export default function CalendarView(props: EthiopianCalendarProps) {
     const theme = useTheme();
-
-    const [currentEthDate, setCurrentEthDate] = useState<EthiopianDate>(
-        getCurrentEthiopianDate()
+    const [currentDate, setCurrentDate] = useState<Date>(
+        getToday()
     );
     const [viewMode, setViewMode] = useState<'gregorian' | 'ethiopian'>(
         'ethiopian'
@@ -49,28 +46,14 @@ export default function CalendarView({
     // };
 
     const navigateMonth = (direction: 'prev' | 'next') => {
-        setCurrentEthDate((prev) => {
-            let newMonth = prev.month;
-            let newYear = prev.year;
-
+        setCurrentDate((prev) => {
             if (direction === 'next') {
-                newMonth += 1;
-                if (newMonth > 13) {
-                    newMonth = 1;
-                    newYear += 1;
-                }
+                return addMonths(prev, 1)
             } else {
-                newMonth -= 1;
-                if (newMonth < 1) {
-                    newMonth = 13;
-                    newYear -= 1;
-                }
+                return addMonths(prev, -1)
             }
-
-            return { ...prev, year: newYear, month: newMonth };
         });
     };
-
 
     return (
         <View className="flex-1 p-4">
@@ -131,16 +114,15 @@ export default function CalendarView({
 
                 <Card className="w-full">
                     <CardContent className="p-4">
-                        {viewMode === 'ethiopian' ? (
-                            <EthiopianCalendar currentEthDate={currentEthDate} navigateMonth={navigateMonth} selectedDate={selectedDate} />
-                        ) : (
                             <GregorianCalendar
-                                calendarMonthId={toDateId(ethiopianToGregorian(currentEthDate))}
+                                currDate={currentDate}
+                                calendarMonthId={toDateId(currentDate)}
                                 onCalendarDayPress={() => { }}
                                 calendarFirstDayOfWeek="monday"
                                 navigateMonth={navigateMonth}
+                                viewMode={viewMode}
+
                             />
-                        )}
                     </CardContent>
                 </Card>
 

@@ -5,7 +5,7 @@ declare module 'ethiopian-date' {
         2: number; // day
     }
 
-    export function toEthiopian(gregorianDate: Date): EthiopianDateArray;
+    export function toEthiopian(date: number[]): EthiopianDateArray;
     export function toEthiopian(
         year: number,
         month: number,
