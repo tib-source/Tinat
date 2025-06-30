@@ -5,7 +5,8 @@
  */
 import { toEthiopian, toGregorian } from 'ethiopian-date';
 import { getToday } from './dateHelpers';
-import { CalendarDayMetadata } from '@marceloterreiro/flash-calendar';
+import { CalendarActiveDateRange, CalendarDayMetadata, useCalendar } from '@marceloterreiro/flash-calendar';
+import { getStateFields } from './calendarHelper';
 
 export interface EthiopianDate {
     year: number;
@@ -132,9 +133,21 @@ export function getEthiopianWeekDaysList(): string[] {
 
 export function getEthiopianWeeksList(ethDate: EthiopianDate) : CalendarDayMetadata[][]{
     const emptyCells = getNumberOfEmptyCellsForMonthStart(getMonthStart(ethDate))
-    console.log(getMonthStart(ethDate), ethDate, emptyCells)
     const monthDays = getEthiopianMonthDays(ethDate)
     let weekList: CalendarDayMetadata[][] = []
+
+    const testRange: CalendarActiveDateRange[] = [{
+        startId: toEthiopianDateId({
+            day: 3,
+            month: ethDate.month,
+            year: ethDate.year
+        }),
+        endId: toEthiopianDateId({
+            day: 10,
+            month: ethDate.month,
+            year: ethDate.year
+        })
+    }]
 
     let week: CalendarDayMetadata[] = []
     for (let i = 0; i < emptyCells; i++) {
@@ -173,18 +186,16 @@ export function getEthiopianWeeksList(ethDate: EthiopianDate) : CalendarDayMetad
         const currEthDay = copyEthDate(ethDate)
         currEthDay.day = currDate
 
-        let currMetadata = generateDayMetadata(false, currEthDay)
+        let currMetadata = generateDayMetadata(false, currEthDay, testRange)
         week.push(currMetadata)
 
     }
-
-
 
     return weekList
 }
 
 
-function generateDayMetadata(isEmpty: boolean, ethDate: EthiopianDate, range?: any): CalendarDayMetadata{
+function generateDayMetadata(isEmpty: boolean, ethDate: EthiopianDate, range?: CalendarActiveDateRange[]): CalendarDayMetadata{
     const today = getCurrentEthiopianDate()
     const gregDay = ethiopianToGregorian(ethDate)
     const isToday = isSameEthiopianDate(
@@ -193,21 +204,20 @@ function generateDayMetadata(isEmpty: boolean, ethDate: EthiopianDate, range?: a
     )
 
     return {
+            id: toEthiopianDateId(ethDate),
             date: gregDay,
             displayLabel: isEmpty ? "" : ethDate.day.toString(),
             isDifferentMonth: isEmpty,
             isEndOfMonth: false,
-            isDisabled: isEmpty,
             isEndOfWeek: false,
-            id: isEmpty ? Math.random().toString() : formatEthiopianDate(ethDate),
             isStartOfMonth: false, 
-            isStartOfRange: false, 
             isStartOfWeek: false,
             isWeekend: false,
-            isToday: isToday,
-            isEndOfRange: false,
-            state: isToday ? "today" : isEmpty ? 'disabled' : "idle",
-            isRangeValid: true,
+            ...getStateFields({
+                id: toEthiopianDateId(ethDate),
+                todayId: toEthiopianDateId(today),
+                calendarActiveDateRanges: range
+            })
         }
 }
 
@@ -267,4 +277,17 @@ export function copyEthDate(ethDate: EthiopianDate): EthiopianDate{
         month: ethDate.month,
         year: ethDate.year
     }
+}
+
+
+export function toEthiopianDateId(ethDate: EthiopianDate): string { 
+    const year = ethDate.year
+    const month = ethDate.month
+    const day = ethDate.day
+
+    // Pad single digit month and day with leading zeros
+    const monthFormatted = month < 10 ? `0${month}` : month;
+    const dayFormatted = day < 10 ? `0${day}` : day;
+
+    return `${year}-${monthFormatted}-${dayFormatted}`;
 }

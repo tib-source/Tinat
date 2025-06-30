@@ -47,12 +47,12 @@ const calendarTheme: CalendarTheme = {
   },
   itemWeekName: { content: { color: theme.colors.text } },
   itemDay: {
-    base: () => ({
-      container: {
-        padding: 0,
-        borderRadius: 50,
-      },
-    }),
+    // base: () => ({
+    //   container: {
+    //     padding: 0,
+    //     borderRadius: 50,
+    //   },
+    // }),
     today: () => ({
       container: {
         borderWidth: 2,
@@ -66,9 +66,11 @@ const calendarTheme: CalendarTheme = {
           }
         : undefined,
     }),
-    active: () => ({
+    active: ({isPressed}) => ({
       container: {
-        backgroundColor: theme.colors.primary,
+        backgroundColor:theme.colors.primary,
+        opacity: isPressed ? 0.6 : .8,
+        transitionDuration: "100ms"
       },
       content: {
         color: theme.colors.text,
@@ -99,7 +101,7 @@ const calendarTheme: CalendarTheme = {
     calendarMetadata
   return (
     <View>
-      <Calendar.VStack spacing={props.calendarRowVerticalSpacing}>
+      <Calendar.VStack spacing={3}>
         <MonthHeader month={calendarMetadata.calendarRowMonth} calendarTheme={calendarTheme} navigateMonth={props.navigateMonth}/>
 
         <Calendar.Row.Week spacing={4}>
@@ -119,7 +121,7 @@ const calendarTheme: CalendarTheme = {
             {week.map((day) => (
               <Calendar.Item.Day.Container
                 dayHeight={DAY_HEIGHT}
-                daySpacing={4}
+                daySpacing={0}
                 isStartOfWeek={day.isStartOfWeek}
                 key={day.id}
               >

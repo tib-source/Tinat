@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { addYears, addMonths } from "date-fns"
 import { View, Text, ScrollView } from 'react-native';
-import { Calendar, CalendarProps, toDateId, useCalendar } from '@marceloterreiro/flash-calendar';
+import { Calendar, CalendarActiveDateRange, CalendarProps, toDateId, useCalendar } from '@marceloterreiro/flash-calendar';
 import { Card, CardContent } from '~/components/ui/card';
 import { Button } from '~/components/ui/button';
 import { useTheme } from '@react-navigation/native';
@@ -44,6 +44,15 @@ export default function CalendarView(props: EthiopianCalendarProps) {
     //     const ethiopianDate = gregorianToEthiopian(gregorianDate);
     //     onDateSelect?.(ethiopianDate);
     // };
+
+
+    const testRange: CalendarActiveDateRange[] = [{
+        startId: toDateId(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)),
+        endId: toDateId(new Date(currentDate.getFullYear(), currentDate.getMonth(), 5)),
+    },{
+        startId: toDateId(new Date(currentDate.getFullYear(), currentDate.getMonth(), 10)),
+        endId: toDateId(new Date(currentDate.getFullYear(), currentDate.getMonth(), 25)),
+    }]
 
     const navigateMonth = (direction: 'prev' | 'next') => {
         setCurrentDate((prev) => {
@@ -118,6 +127,7 @@ export default function CalendarView(props: EthiopianCalendarProps) {
                                 currDate={currentDate}
                                 calendarMonthId={toDateId(currentDate)}
                                 onCalendarDayPress={() => { }}
+                                calendarActiveDateRanges={testRange}
                                 calendarFirstDayOfWeek="monday"
                                 navigateMonth={navigateMonth}
                                 viewMode={viewMode}
