@@ -4,9 +4,9 @@ export function getAllDaysInCurrentWeek(): Date[] {
     const numberDays = [1, 2, 3, 4, 5, 6, 7];
 
     for (let count of numberDays) {
-        let currDay = today.getDay()
-        if (currDay === 0){
-            currDay = 7
+        let currDay = today.getDay();
+        if (currDay === 0) {
+            currDay = 7;
         }
         const diff = count - currDay;
         let day = new Date(today);

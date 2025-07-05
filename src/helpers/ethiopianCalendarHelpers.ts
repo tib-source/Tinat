@@ -5,7 +5,10 @@
  */
 import { toEthiopian, toGregorian } from 'ethiopian-date';
 import { getToday } from './dateHelpers';
-import { CalendarActiveDateRange, CalendarDayMetadata, useCalendar } from '@marceloterreiro/flash-calendar';
+import {
+    CalendarActiveDateRange,
+    CalendarDayMetadata
+} from '@marceloterreiro/flash-calendar';
 import { getStateFields } from './calendarHelper';
 
 export interface EthiopianDate {
@@ -66,45 +69,70 @@ export function getPagumenDays(year: number): number {
  * Convert Gregorian date to Ethiopian date (approximate conversion)
  */
 export function gregorianToEthiopian(gregorianDate: Date): EthiopianDate {
-
-    const input = [
-        gregorianDate.getFullYear(),
-        gregorianDate.getMonth() + 1,
-        gregorianDate.getDate() - 1
-    ]
-    try{
-
-        // Validate input
-        if (!gregorianDate || !(gregorianDate instanceof Date) || isNaN(gregorianDate.getTime())) {
-            console.error('Invalid date passed to gregorianToEthiopian:', gregorianDate);
-            throw Error("Invalid date passed to gregorianToEthiopian")
+    try {
+        if (
+            !gregorianDate ||
+            !(gregorianDate instanceof Date) ||
+            isNaN(gregorianDate.getTime())
+        ) {
+            console.warn(
+                'gregorianToEthiopian: Invalid date received',
+                gregorianDate
+            );
+            return { year: 2017, month: 1, day: 1 }; // Fallback
         }
-    
-        const [ethiopianYear, ethiopianMonth, ethiopianDate] = toEthiopian(
-            input
-        );
-        return { year: ethiopianYear, month: ethiopianMonth , day: ethiopianDate + 1};
-    }catch(e){
-        console.log(input)
-        throw e;
+        const input = [
+            gregorianDate.getFullYear(),
+            gregorianDate.getMonth() + 1,
+            gregorianDate.getDate()
+        ];
+        const [year, month, day] = toEthiopian(input);
+        return { year, month, day };
+    } catch (e) {
+        console.error(`gregorianToEthiopian Error: ${(e as Error).message}`, {
+            input: gregorianDate
+        });
+        return { year: 2017, month: 1, day: 1 }; // Fallback
     }
 }
-
-
 
 /**
  * Convert Ethiopian date to Gregorian date (approximate conversion)
  */
 export function ethiopianToGregorian(ethDate: EthiopianDate): Date {
-    let [year, month, day] = toGregorian(
-        ethDate.year,
-        ethDate.month ,
-        ethDate.day
-    );
-    // Temporary hack to not have to reimplement this 
-    // currently the converter is off by a month :) 
-    return new Date(year,month-1, day,0,0,0,0);
+    // Validate Ethiopian date components before conversion
+    if (
+        !ethDate ||
+        ethDate.month < 1 ||
+        ethDate.month > 13 ||
+        ethDate.day < 1 ||
+        ethDate.day > 30
+    ) {
+        console.error(
+            'ethiopianToGregorian Error: Invalid Ethiopian date input.',
+            { input: ethDate }
+        );
+        return new Date(); // Return a fallback date
+    }
+
+    try {
+        const [year, month, day] = toGregorian(
+            ethDate.year,
+            ethDate.month,
+            ethDate.day
+        );
+        // The library is off by a month, so we subtract 1
+        return new Date(year, month - 1, day, 0, 0, 0, 0);
+    } catch (error) {
+        console.error(
+            "ethiopianToGregorian Error: Malformed input can't be converted.",
+            { input: ethDate }
+        );
+        console.error(error);
+        return new Date(); // Return a fallback date
+    }
 }
+
 /**
  * Get the Ethiopian month name in Amharic
  */
@@ -115,9 +143,8 @@ export function getEthiopianMonthName(month: number): string {
 }
 
 export function getMonthStart(ethDate: EthiopianDate): Date {
-    const date = ethiopianToGregorian(ethDate);
-    return new Date(date.getFullYear(), date.getMonth(), 1, 0,0,0,0);
-    
+    const date = ethiopianToGregorian(getFirstDayOfMonth(ethDate));
+    return new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
 }
 
 export function getEthiopianWeekdayName(dayIndex: number): string {
@@ -126,101 +153,98 @@ export function getEthiopianWeekdayName(dayIndex: number): string {
 }
 
 export function getEthiopianWeekDaysList(): string[] {
-    return Array.from({ length: 7 }, (_, i) => (
-            getEthiopianWeekdayName(i).slice(0, 1)
-    ))
+    return Array.from({ length: 7 }, (_, i) =>
+        getEthiopianWeekdayName(i).slice(0, 1)
+    );
 }
 
-export function getEthiopianWeeksList(ethDate: EthiopianDate) : CalendarDayMetadata[][]{
-    const emptyCells = getNumberOfEmptyCellsForMonthStart(getMonthStart(ethDate))
-    const monthDays = getEthiopianMonthDays(ethDate)
-    let weekList: CalendarDayMetadata[][] = []
+export function getEthiopianWeeksList(
+    ethDate: EthiopianDate
+): CalendarDayMetadata[][] {
+    const emptyCells = getNumberOfEmptyCellsForMonthStart(
+        getMonthStart(ethDate)
+    );
+    const monthDays = getEthiopianMonthDays(ethDate);
+    let weekList: CalendarDayMetadata[][] = [];
 
-    const testRange: CalendarActiveDateRange[] = [{
-        startId: toEthiopianDateId({
-            day: 3,
-            month: ethDate.month,
-            year: ethDate.year
-        }),
-        endId: toEthiopianDateId({
-            day: 10,
-            month: ethDate.month,
-            year: ethDate.year
-        })
-    }]
-
-    let week: CalendarDayMetadata[] = []
-    for (let i = 0; i < emptyCells; i++) {
-        let prevMonthDate = {
-            day: 31-i,
-            month: ethDate.month - 1,
-            year: ethDate.year
-        }
-        week.push(generateDayMetadata(true, prevMonthDate))
-    }
-
-    const monthCopy = [...monthDays]
-
-    while (monthCopy.length >= 0){
-        let currDate = monthCopy.shift()
-        if (currDate === undefined){
-            for(let i = week.length; i < 7; i++){
-                let newDay = {
-                    day: i,
-                    month: ethDate.month + 1,
-                    year: ethDate.year
-                }
-
-                let newMetadata = generateDayMetadata(true, newDay)
-
-                week.push(newMetadata)
-            }
-            weekList.push(week)
-            break;
-        }
-        if (week.length == 7){
-            weekList.push(week)
-            week = []
-        }
-
-        const currEthDay = copyEthDate(ethDate)
-        currEthDay.day = currDate
-
-        let currMetadata = generateDayMetadata(false, currEthDay, testRange)
-        week.push(currMetadata)
-
-    }
-
-    return weekList
-}
-
-
-function generateDayMetadata(isEmpty: boolean, ethDate: EthiopianDate, range?: CalendarActiveDateRange[]): CalendarDayMetadata{
-    const today = getCurrentEthiopianDate()
-    const gregDay = ethiopianToGregorian(ethDate)
-    const isToday = isSameEthiopianDate(
-        ethDate,
-        today
-    )
-
-    return {
-            id: toEthiopianDateId(ethDate),
-            date: gregDay,
-            displayLabel: isEmpty ? "" : ethDate.day.toString(),
-            isDifferentMonth: isEmpty,
-            isEndOfMonth: false,
-            isEndOfWeek: false,
-            isStartOfMonth: false, 
-            isStartOfWeek: false,
-            isWeekend: false,
-            ...getStateFields({
-                id: toEthiopianDateId(ethDate),
-                todayId: toEthiopianDateId(today),
-                calendarActiveDateRanges: range
+    const testRange: CalendarActiveDateRange[] = [
+        {
+            startId: toEthiopianDateId({
+                day: 3,
+                month: ethDate.month,
+                year: ethDate.year
+            }),
+            endId: toEthiopianDateId({
+                day: 10,
+                month: ethDate.month,
+                year: ethDate.year
             })
         }
+    ];
+
+    let week: CalendarDayMetadata[] = [];
+    for (let i = 1; i < emptyCells + 1; i++) {
+        let firstDay = getFirstDayOfMonth(ethDate);
+        let prevMonthDay = subEthiopianDays(firstDay, i);
+        week.push(generateDayMetadata(true, prevMonthDay));
+    }
+
+    const monthCopy = [...monthDays];
+
+    while (monthCopy.length >= 0) {
+        let currDate = monthCopy.shift();
+        if (currDate === undefined) {
+            let remainingDays = 7 - week.length;
+            for (let i = 1; i <= remainingDays; i++) {
+                const lastDay = getLastDayOfMonth(ethDate);
+                const newDay = addEthiopianDays(lastDay, i);
+                let newMetadata = generateDayMetadata(true, newDay);
+
+                week.push(newMetadata);
+            }
+            weekList.push(week);
+            break;
+        }
+        if (week.length === 7) {
+            weekList.push(week);
+            week = [];
+        }
+
+        const currEthDay = copyEthDate(ethDate);
+        currEthDay.day = currDate;
+
+        let currMetadata = generateDayMetadata(false, currEthDay, testRange);
+        week.push(currMetadata);
+    }
+
+    return weekList;
 }
 
+function generateDayMetadata(
+    isEmpty: boolean,
+    ethDate: EthiopianDate,
+    range?: CalendarActiveDateRange[]
+): CalendarDayMetadata {
+    const today = getCurrentEthiopianDate();
+    const gregDay = ethiopianToGregorian(ethDate);
+
+    return {
+        id: toEthiopianDateId(ethDate),
+        date: gregDay,
+        displayLabel: isEmpty ? '' : ethDate.day.toString(),
+        isDifferentMonth: isEmpty,
+        isEndOfMonth: false,
+        isEndOfWeek: false,
+        isStartOfMonth: false,
+        isStartOfWeek: false,
+        isWeekend: false,
+        ...getStateFields({
+            id: toEthiopianDateId(ethDate),
+            todayId: toEthiopianDateId(today),
+            calendarActiveDateRanges: range
+        })
+    };
+}
 
 /**
  * Format Ethiopian date as string
@@ -250,6 +274,25 @@ export function getEthiopianMonthDays(ethDate: EthiopianDate): number[] {
     return Array.from({ length: daysInMonth }, (_, i) => i + 1);
 }
 
+export function getLastDayOfMonth(ethDate: EthiopianDate): EthiopianDate {
+    let daysInMonth = 30;
+
+    if (ethDate.month === 13) {
+        daysInMonth = getPagumenDays(ethDate.year);
+    }
+
+    let lastDay = copyEthDate(ethDate);
+    lastDay.day = daysInMonth;
+
+    return lastDay;
+}
+
+export function getFirstDayOfMonth(ethDate: EthiopianDate): EthiopianDate {
+    let firstDay = copyEthDate(ethDate);
+    firstDay.day = 1;
+    return firstDay;
+}
+
 /**
  * Check if two Ethiopian dates are the same
  */
@@ -270,24 +313,93 @@ export function getNumberOfEmptyCellsForMonthStart(date: Date) {
     return startDayOfMonth === 0 ? 6 : startDayOfMonth - 1;
 }
 
-
-export function copyEthDate(ethDate: EthiopianDate): EthiopianDate{
+export function copyEthDate(ethDate: EthiopianDate): EthiopianDate {
     return {
         day: ethDate.day,
         month: ethDate.month,
         year: ethDate.year
-    }
+    };
 }
 
-
-export function toEthiopianDateId(ethDate: EthiopianDate): string { 
-    const year = ethDate.year
-    const month = ethDate.month
-    const day = ethDate.day
+export function toEthiopianDateId(ethDate: EthiopianDate): string {
+    const year = ethDate.year;
+    const month = ethDate.month;
+    const day = ethDate.day;
 
     // Pad single digit month and day with leading zeros
     const monthFormatted = month < 10 ? `0${month}` : month;
     const dayFormatted = day < 10 ? `0${day}` : day;
 
     return `${year}-${monthFormatted}-${dayFormatted}`;
+}
+
+function adjustEthiopianDate(
+    ethDate: EthiopianDate,
+    days: number
+): EthiopianDate {
+    let newDate = copyEthDate(ethDate);
+    const increment = days > 0;
+    const absoluteDays = Math.abs(days);
+
+    for (let i = 0; i < absoluteDays; i++) {
+        if (increment) {
+            // Adding a day
+            const daysInCurrentMonth =
+                newDate.month === 13 ? getPagumenDays(newDate.year) : 30;
+
+            if (newDate.day < daysInCurrentMonth) {
+                // Simple case: add one day within the same month
+                newDate.day++;
+            } else {
+                // Need to go to next month
+                if (newDate.month < 13) {
+                    newDate.month++;
+                    newDate.day = 1;
+                } else {
+                    // Go to next year, month 1
+                    newDate.year++;
+                    newDate.month = 1;
+                    newDate.day = 1;
+                }
+            }
+        } else {
+            // Subtracting a day
+            if (newDate.day > 1) {
+                // Simple case: subtract one day within the same month
+                newDate.day--;
+            } else {
+                // Need to go to previous month
+                if (newDate.month > 1) {
+                    newDate.month--;
+                    // Set to last day of previous month
+                    if (newDate.month === 13) {
+                        newDate.day = getPagumenDays(newDate.year);
+                    } else {
+                        newDate.day = 30;
+                    }
+                } else {
+                    // Go to previous year, month 13 (Pagumen)
+                    newDate.year--;
+                    newDate.month = 13;
+                    newDate.day = getPagumenDays(newDate.year);
+                }
+            }
+        }
+    }
+
+    return newDate;
+}
+
+export function addEthiopianDays(
+    ethDate: EthiopianDate,
+    days: number = 1
+): EthiopianDate {
+    return adjustEthiopianDate(ethDate, days);
+}
+
+export function subEthiopianDays(
+    ethDate: EthiopianDate,
+    days: number = 1
+): EthiopianDate {
+    return adjustEthiopianDate(ethDate, -days);
 }
