@@ -1,18 +1,25 @@
-import { useTranslation } from 'react-i18next';
-import { Text, View } from 'react-native';
+import { useState } from 'react';
+import { View } from 'react-native';
+import CalendarView from '~/components/CalendarView';
+import { EthiopianDate } from '~/src/helpers/ethiopianCalendarHelpers';
 
 export default function Index() {
-    const { t } = useTranslation();
+    const [selectedDate, setSelectedDate] = useState<
+        EthiopianDate | undefined
+    >();
+
+    const handleDateSelect = (date: EthiopianDate) => {
+        setSelectedDate(date);
+        // You can add additional logic here, such as showing events for the selected date
+        console.log('Selected Ethiopian date:', date);
+    };
 
     return (
-        <View
-            style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}
-        >
-            <Text>{t('home.greeting', { name: 'Calendar' })}</Text>
+        <View className="flex-1 bg-background">
+            <CalendarView
+                onDateSelect={handleDateSelect}
+                selectedDate={selectedDate}
+            />
         </View>
     );
 }
