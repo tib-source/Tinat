@@ -29,6 +29,13 @@ const resources = {
                     old: 'Old Test'
                 }
             },
+            calendar: {
+                headerTitle: 'Ethiopian Calendar',
+                title: 'Calendar',
+                today: 'Today',
+                ethiopian: 'Ethiopian',
+                gregorian: 'Gregorian'
+            },
         }
     },
     amh: {
@@ -49,7 +56,7 @@ const resources = {
                 daily_verse: 'የዕለቱ ቃል',
             },
             bible: {
-                headerTitle: 'መጽሐፍ ቅዱስን ያስሱ',
+                headerTitle: 'መጽሐፍ ቅዱስ',
                 chapters : 'ምዕራፎች',
                 chapter: 'ምዕራፍ',
                 verses: 'ጥቅሶች',
@@ -59,6 +66,13 @@ const resources = {
                     new: 'አዲስ ኪዳን',
                     old: 'ብሉይ ኪዳን'
                 }
+            },
+            calendar: {
+                headerTitle: 'ካላንደር',
+                title: 'ዘመን አቆጣጠር',
+                today: 'ዛሬ',
+                ethiopian: 'የኢትዮጵያ',
+                gregorian: 'የፈረንጆች'
             },
         }
     }
