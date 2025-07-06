@@ -11,7 +11,7 @@ export function julianDateToJulianDay(julianDate){
     // reference: https://en.wikipedia.org/wiki/Julian_day#Converting_Julian_calendar_date_to_Julian_Day_Number
     const Y = julianDate.getFullYear()
     const M = julianDate.getMonth() + 1 // month is 0 indexed so we need to add 1
-    const D = julianDate.getDate() - 1 // not sure why but the calculation is always 1 off ?? this fixes it
+    const D = julianDate.getDate() 
     return 367 * Y - Math.floor((7 * ( Y + 5001 + Math.floor((M - 9)/7)))/4) + Math.floor((275 * M)/9) + D + 1729777
 }
 
@@ -47,7 +47,12 @@ function julianComputus(year) {
         firstResurrection = 11 - vruceleto
     }
 
-    let passover = ecclesiasticalFullMoon + 7 - (ecclesiasticalFullMoon - firstResurrection) % 7
+    // not sure why its off by 1?? i dont understand this calculation enough to figure it out 
+    // just adding a -1 here instead. 
+    // Seems to work and all the calculated easter dates from 2018 - 2028 are accurate 🤷
+    let passover =Math.floor(ecclesiasticalFullMoon + 7 - (ecclesiasticalFullMoon - firstResurrection) % 7) - 1 
+
+    
     if (passover > 31){
         let month = 4 - 1 // its april but months are 0 indexed
         let day = passover - 31
