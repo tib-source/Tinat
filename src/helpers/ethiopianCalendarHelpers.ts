@@ -10,6 +10,8 @@ import {
     CalendarDayMetadata
 } from '@marceloterreiro/flash-calendar';
 import { getStateFields } from './calendarHelper';
+import { GeneratedEvent } from '../generateEvents';
+import { EnhancedCalendarDayMetadata } from '~/components/calendar/DualCalendar';
 
 export interface EthiopianDate {
     year: number;
@@ -159,30 +161,16 @@ export function getEthiopianWeekDaysList(): string[] {
 }
 
 export function getEthiopianWeeksList(
-    ethDate: EthiopianDate
-): CalendarDayMetadata[][] {
+    ethDate: EthiopianDate,
+    range?: GeneratedEvent[]
+): EnhancedCalendarDayMetadata[][] {
     const emptyCells = getNumberOfEmptyCellsForMonthStart(
         getMonthStart(ethDate)
     );
     const monthDays = getEthiopianMonthDays(ethDate);
-    let weekList: CalendarDayMetadata[][] = [];
+    let weekList: EnhancedCalendarDayMetadata[][] = [];
 
-    const testRange: CalendarActiveDateRange[] = [
-        {
-            startId: toEthiopianDateId({
-                day: 3,
-                month: ethDate.month,
-                year: ethDate.year
-            }),
-            endId: toEthiopianDateId({
-                day: 10,
-                month: ethDate.month,
-                year: ethDate.year
-            })
-        }
-    ];
-
-    let week: CalendarDayMetadata[] = [];
+    let week: EnhancedCalendarDayMetadata[] = [];
     for (let i = 1; i < emptyCells + 1; i++) {
         let firstDay = getFirstDayOfMonth(ethDate);
         let prevMonthDay = subEthiopianDays(firstDay, i);
@@ -213,7 +201,7 @@ export function getEthiopianWeeksList(
         const currEthDay = copyEthDate(ethDate);
         currEthDay.day = currDate;
 
-        let currMetadata = generateDayMetadata(false, currEthDay, testRange);
+        let currMetadata = generateDayMetadata(false, currEthDay, range);
         week.push(currMetadata);
     }
 
@@ -223,8 +211,8 @@ export function getEthiopianWeeksList(
 function generateDayMetadata(
     isEmpty: boolean,
     ethDate: EthiopianDate,
-    range?: CalendarActiveDateRange[]
-): CalendarDayMetadata {
+    range?: GeneratedEvent[]
+): EnhancedCalendarDayMetadata {
     const today = getCurrentEthiopianDate();
     const gregDay = ethiopianToGregorian(ethDate);
 
@@ -241,7 +229,8 @@ function generateDayMetadata(
         ...getStateFields({
             id: toEthiopianDateId(ethDate),
             todayId: toEthiopianDateId(today),
-            calendarActiveDateRanges: range
+            calendarActiveDateRanges: range,
+            calendarType: "ethiopian"
         })
     };
 }

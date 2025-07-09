@@ -5,9 +5,7 @@
 
 import { GregorianCalendar } from "@internationalized/date";
 
-
-
-export function julianDateToJulianDay(julianDate){
+export function julianDateToJulianDay(julianDate: Date): number {
     // reference: https://en.wikipedia.org/wiki/Julian_day#Converting_Julian_calendar_date_to_Julian_Day_Number
     const Y = julianDate.getFullYear()
     const M = julianDate.getMonth() + 1 // month is 0 indexed so we need to add 1
@@ -16,14 +14,13 @@ export function julianDateToJulianDay(julianDate){
 }
 
 
-export function julianDateToGregorian(julianDate){  
-    julianDate = julianDateToJulianDay(julianDate)
+export function julianDateToGregorian(julianDate: Date){  
+    let julianDay = julianDateToJulianDay(julianDate)
     let gregorian = new GregorianCalendar()
-    gregorian = gregorian.fromJulianDay(julianDate)
-    return gregorian
+    return gregorian.fromJulianDay(julianDay)
 }
 
-function julianComputus(year) {
+export function julianComputus(year: number) {
     let creationOfWorld = year + 5508;
     let lunarCycle = (creationOfWorld - 1) % 19 + 1; 
 
@@ -60,15 +57,7 @@ function julianComputus(year) {
         return julianDateToGregorian(date)
     }
     let month = 3 - 1// its march but months are 0 indexed
-    const date =  new Date(year, month, passover, 0,0,0) 
-    return julianDateToGregorian(date)
+    const date =  new Date(year, month, passover, 0,0,0)
     
-
-}
-
-
-for (let i =0; i < 20; i++){
-    let year = 2010 + i
-    let easter = julianComputus(year)
-    console.log(year, easter)
+    return julianDateToGregorian(date)
 }

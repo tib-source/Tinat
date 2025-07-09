@@ -1,9 +1,10 @@
 import type {
+    CalendarActiveDateRange,
     CalendarDayMetadata,
     CalendarProps,
     CalendarTheme
 } from '@marceloterreiro/flash-calendar';
-import { Calendar, useCalendar } from '@marceloterreiro/flash-calendar';
+import { Calendar } from '@marceloterreiro/flash-calendar';
 import { useTheme } from '@react-navigation/native';
 import { memo, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
@@ -14,6 +15,8 @@ import {
     getEthiopianWeeksList,
     gregorianToEthiopian
 } from '~/src/helpers/ethiopianCalendarHelpers';
+import { GeneratedEvent } from '~/src/generateEvents';
+import { useEnhancedCalendar } from '~/src/hooks/useEnhancedCalendar';
 
 const DAY_HEIGHT = 40;
 const MONTH_HEADER_HEIGHT = 40;
@@ -23,12 +26,18 @@ interface GregorianCalendarProps extends CalendarProps {
     navigateMonth: (direction: 'prev' | 'next') => void;
     viewMode: string;
     currDate: Date;
+    religiousEvents: GeneratedEvent[]
+}
+
+
+export interface EnhancedCalendarDayMetadata extends CalendarDayMetadata {
+    eventMetadata: Partial<GeneratedEvent>
 }
 
 interface CalendarMetadata {
     calendarRowMonth: string;
     weekDaysList: string[];
-    weeksList: CalendarDayMetadata[][];
+    weeksList: EnhancedCalendarDayMetadata[][];
 }
 
 const DualCalendar = memo((props: GregorianCalendarProps) => {
@@ -97,7 +106,7 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
         }
     };
 
-    const gregorianMetadata = useCalendar(props);
+    const gregorianMetadata = useEnhancedCalendar(props);
     const [calendarMetadata, setCalendarMetadata] =
         useState<CalendarMetadata>(gregorianMetadata);
 
@@ -105,7 +114,7 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
         const ethiopianMetadata: CalendarMetadata = {
             calendarRowMonth: `${getEthiopianMonthName(currentEthDate.month)} ${currentEthDate.year}`,
             weekDaysList: getEthiopianWeekDaysList(),
-            weeksList: getEthiopianWeeksList(currentEthDate)
+            weeksList: getEthiopianWeeksList(currentEthDate, props.religiousEvents )
         };
 
         if (props.viewMode === 'ethiopian') {
