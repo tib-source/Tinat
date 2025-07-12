@@ -9,7 +9,7 @@ import { Card, CardContent } from '~/components/ui/card';
 import { Button } from '~/components/ui/button';
 import { cn } from '~/lib/utils';
 import { EthiopianDate } from '~/src/helpers/ethiopianCalendarHelpers';
-import { getToday } from '~/src/helpers/dateHelpers';
+import { getMiddleOfMonth, getToday } from '~/src/helpers/dateHelpers';
 import  DualCalendar from './calendar/DualCalendar';
 import { generateReligiousEventsForYear } from '~/src/generateEvents';
 
@@ -19,7 +19,7 @@ interface EthiopianCalendarProps {
 }
 
 export default function CalendarView(props: EthiopianCalendarProps) {
-    const [currentDate, setCurrentDate] = useState<Date>(getToday());
+    const [currentDate, setCurrentDate] = useState<Date>(getMiddleOfMonth());
     const religiousEvents = useMemo(()=> generateReligiousEventsForYear(currentDate.getFullYear()), [currentDate.getFullYear()])
     const [viewMode, setViewMode] = useState<'gregorian' | 'ethiopian'>(
         'ethiopian'

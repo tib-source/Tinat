@@ -3,7 +3,7 @@
 // Gauss created an algorithm for determining this date
 // reference : https://www.calendarbede.com/book/calculation-orthodox-easter-sunday
 
-import { GregorianCalendar } from "@internationalized/date";
+import { EthiopicCalendar, GregorianCalendar } from "@internationalized/date";
 
 export function julianDateToJulianDay(julianDate: Date): number {
     // reference: https://en.wikipedia.org/wiki/Julian_day#Converting_Julian_calendar_date_to_Julian_Day_Number
@@ -17,7 +17,11 @@ export function julianDateToJulianDay(julianDate: Date): number {
 export function julianDateToGregorian(julianDate: Date){  
     let julianDay = julianDateToJulianDay(julianDate)
     let gregorian = new GregorianCalendar()
-    return gregorian.fromJulianDay(julianDay)
+    let ethiopian = new EthiopicCalendar()
+    return { 
+        easter: gregorian.fromJulianDay(julianDay),
+        fasika: ethiopian.fromJulianDay(julianDay)
+    }
 }
 
 export function julianComputus(year: number) {

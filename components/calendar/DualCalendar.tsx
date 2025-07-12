@@ -1,9 +1,3 @@
-import type {
-    CalendarActiveDateRange,
-    CalendarDayMetadata,
-    CalendarProps,
-    CalendarTheme
-} from '@marceloterreiro/flash-calendar';
 import { Calendar } from '@marceloterreiro/flash-calendar';
 import { useTheme } from '@react-navigation/native';
 import { memo, useEffect, useMemo, useState } from 'react';
@@ -15,30 +9,17 @@ import {
     getEthiopianWeeksList,
     gregorianToEthiopian
 } from '~/src/helpers/ethiopianCalendarHelpers';
-import { GeneratedEvent } from '~/src/generateEvents';
 import { useEnhancedCalendar } from '~/src/hooks/useEnhancedCalendar';
+import type {
+    CalendarTheme,
+    CalendarMetadata,
+    EnhancedCalendarDayMetadata,
+    GregorianCalendarProps
+} from './types';
 
 const DAY_HEIGHT = 40;
 const MONTH_HEADER_HEIGHT = 40;
 const WEEK_DAYS_HEIGHT = 40;
-
-interface GregorianCalendarProps extends CalendarProps {
-    navigateMonth: (direction: 'prev' | 'next') => void;
-    viewMode: string;
-    currDate: Date;
-    religiousEvents: GeneratedEvent[]
-}
-
-
-export interface EnhancedCalendarDayMetadata extends CalendarDayMetadata {
-    eventMetadata: Partial<GeneratedEvent>
-}
-
-interface CalendarMetadata {
-    calendarRowMonth: string;
-    weekDaysList: string[];
-    weeksList: EnhancedCalendarDayMetadata[][];
-}
 
 const DualCalendar = memo((props: GregorianCalendarProps) => {
     // Add error boundary and validation
@@ -57,8 +38,8 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
         return gregorianToEthiopian(props.currDate);
     }, [props?.currDate]);
 
-    const theme = useTheme();
 
+    const theme = useTheme();
     const calendarTheme: CalendarTheme = {
         rowMonth: {
             container: {
@@ -74,12 +55,6 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
         },
         itemWeekName: { content: { color: theme.colors.text } },
         itemDay: {
-            // base: () => ({
-            //   container: {
-            //     padding: 0,
-            //     borderRadius: 50,
-            //   },
-            // }),
             today: () => ({
                 container: {
                     borderWidth: 2,
@@ -93,9 +68,9 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
                       }
                     : undefined
             }),
-            active: ({ isPressed }) => ({
+            active: ({ isPressed, eventMetadata }) => ({
                 container: {
-                    backgroundColor: theme.colors.primary,
+                    backgroundColor: eventMetadata.color,
                     opacity: isPressed ? 0.6 : 0.8,
                     transitionDuration: '100ms'
                 },
@@ -129,7 +104,7 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
             <Calendar.VStack spacing={3}>
                 <MonthHeader
                     month={calendarMetadata.calendarRowMonth}
-                    calendarTheme={calendarTheme}
+                    calendarTheme={calendarTheme as any}
                     navigateMonth={props.navigateMonth}
                 />
 
@@ -158,7 +133,7 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
                                     height={DAY_HEIGHT}
                                     metadata={day}
                                     onPress={props.onCalendarDayPress}
-                                    theme={calendarTheme.itemDay}
+                                    theme={calendarTheme.itemDay as any}
                                 >
                                     {day.displayLabel}
                                 </Calendar.Item.Day>

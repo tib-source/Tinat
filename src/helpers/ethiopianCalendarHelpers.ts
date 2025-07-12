@@ -5,13 +5,10 @@
  */
 import { toEthiopian, toGregorian } from 'ethiopian-date';
 import { getToday } from './dateHelpers';
-import {
-    CalendarActiveDateRange,
-    CalendarDayMetadata
-} from '@marceloterreiro/flash-calendar';
+
 import { getStateFields } from './calendarHelper';
 import { GeneratedEvent } from '../generateEvents';
-import { EnhancedCalendarDayMetadata } from '~/components/calendar/DualCalendar';
+import { EnhancedCalendarDayMetadata } from '~/components/calendar/types';
 
 export interface EthiopianDate {
     year: number;

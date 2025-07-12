@@ -4,6 +4,7 @@ import { julianComputus as determineEaster } from "./determineEaster"
 import religiousEvents from "./religiousEvents"
 import { EthiopianDate, gregorianToEthiopian, toEthiopianDateId } from "./helpers/ethiopianCalendarHelpers"
 import { toDateId } from "@marceloterreiro/flash-calendar"
+import { EthiopicCalendar } from "@internationalized/date"
 
 export interface GeneratedEvent {
     id: string, 
@@ -18,8 +19,12 @@ export interface GeneratedEvent {
 
 
 export function generateReligiousEventsForYear(year: number): GeneratedEvent[] {
-    const easterSunday = determineEaster(year).toDate('UTC')
-
+    const easterDays = determineEaster(year)
+    const easterSunday = easterDays.easter.toDate("UTC")
+    const fasikaSunday = easterDays.fasika.toDate("UTC")
+    // TODO : date conversions not working as expected ?? 
+    console.log(fasikaSunday)
+    console.log(easterSunday)
     const eventsForYear: GeneratedEvent[] = []
 
     for (let event of religiousEvents){ 
@@ -28,7 +33,7 @@ export function generateReligiousEventsForYear(year: number): GeneratedEvent[] {
 
         if (event.dateType == "fixed"){
             if (event.day != undefined && event.month != undefined){
-                start = new Date(year, event?.month, event?.day)
+                start = new Date(year, event?.month -1, event?.day)
                 end = addDays(start, event.duration || 0)
             }else{ 
                 throw Error("Fixed event without specified day and month : " + event.id,)

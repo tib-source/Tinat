@@ -8,8 +8,8 @@ const religiousEvents: ReligiousEvent[] = [
         eventType: 'fast',
         dateType: 'variable',
         fromEaster: -55,
-        duration: 55,
-        color: 'rgba(139, 69, 19, 0.15)', // Light brown
+        duration: 54,
+        color: 'rgba(156, 39, 176, 0.35)', // Bright purple
     },
     {
         id: 'tsom_nehase',
@@ -19,7 +19,7 @@ const religiousEvents: ReligiousEvent[] = [
         month: 8,
         day: 1,
         duration: 15,
-        color: 'rgba(70, 130, 180, 0.15)', // Light steel blue
+        color: 'rgba(3, 169, 244, 0.35)', // Bright sky blue
     },
     {
         id: 'tsom_advent',
@@ -29,7 +29,7 @@ const religiousEvents: ReligiousEvent[] = [
         month: 11,
         day: 25,
         duration: 43,
-        color: 'rgba(128, 0, 128, 0.15)', // Light purple
+        color: 'rgba(233, 30, 99, 0.35)', // Bright pink
     },
     {
         id: 'tsom_apostles',
@@ -38,16 +38,16 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'variable',
         fromEaster: 36,
         duration: 10,
-        color: 'rgba(255, 140, 0, 0.15)', // Light orange
+        color: 'rgba(255, 152, 0, 0.35)', // Bright orange
     },
     {
         id: 'tsom_nineveh',
         name: { am: 'ጾመ ኒኒዌ', en: 'Fast of Nineveh' },
         eventType: 'fast',
         dateType: 'variable',
-        fromEaster: -70,
-        duration: 3,
-        color: 'rgba(220, 20, 60, 0.15)', // Light crimson
+        fromEaster: -69,
+        duration: 2,
+        color: 'rgba(244, 67, 54, 0.35)', // Bright red
     },
     {
         id: 'weekly_fast',
@@ -55,7 +55,7 @@ const religiousEvents: ReligiousEvent[] = [
         eventType: 'fast',
         dateType: 'weekly',
         weekDays: [3, 5], // Wednesday and Friday
-        color: 'rgba(105, 105, 105, 0.15)', // Light gray
+        color: 'rgba(0, 188, 212, 0.35)', // Bright cyan
     },
 
     // Standalone feasts (not preceded by fasts)
@@ -65,7 +65,7 @@ const religiousEvents: ReligiousEvent[] = [
         eventType: 'feast',
         dateType: 'variable',
         fromEaster: 0,
-        color: 'rgba(255, 215, 0, 0.20)', // Light gold
+        color: 'rgba(255, 235, 59, 0.45)', // Bright golden yellow
         
     },
     {
@@ -75,7 +75,7 @@ const religiousEvents: ReligiousEvent[] = [
             dateType: 'fixed',
             month: 8,
             day: 22,
-            color: 'rgba(135, 206, 235, 0.20)', // Light sky blue
+            color: 'rgba(103, 58, 183, 0.40)', // Bright deep purple
         },
     {
             id: 'apostles_feast',
@@ -84,7 +84,7 @@ const religiousEvents: ReligiousEvent[] = [
             dateType: 'fixed',
             month: 7,
             day: 12,
-            color: 'rgba(255, 182, 193, 0.20)', // Light pink
+            color: 'rgba(255, 64, 129, 0.40)', // Bright rose
         },
     {
         id: 'epiphany',
@@ -93,7 +93,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 1,
         day: 19,
-        color: 'rgba(0, 191, 255, 0.20)', // Light deep sky blue
+        color: 'rgba(0, 150, 136, 0.40)', // Bright teal
     },
     {
         id: 'finding_cross',
@@ -102,7 +102,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 9,
         day: 27,
-        color: 'rgba(255, 165, 0, 0.20)', // Light orange
+        color: 'rgba(255, 87, 34, 0.40)', // Bright deep orange
     },
     {
         id: 'palm_sunday',
@@ -110,7 +110,7 @@ const religiousEvents: ReligiousEvent[] = [
         eventType: 'feast',
         dateType: 'variable',
         fromEaster: -7,
-        color: 'rgba(34, 139, 34, 0.20)', // Light forest green
+        color: 'rgba(76, 175, 80, 0.40)', // Bright green
     },
     {
         id: 'ascension',
@@ -118,7 +118,7 @@ const religiousEvents: ReligiousEvent[] = [
         eventType: 'feast',
         dateType: 'variable',
         fromEaster: 39,
-        color: 'rgba(147, 112, 219, 0.20)', // Light medium purple
+        color: 'rgba(171, 71, 188, 0.40)', // Bright lavender
     },
     {
         id: 'pentecost',
@@ -126,7 +126,7 @@ const religiousEvents: ReligiousEvent[] = [
         eventType: 'feast',
         dateType: 'variable',
         fromEaster: 49,
-        color: 'rgba(255, 69, 0, 0.20)', // Light red orange
+        color: 'rgba(255, 61, 0, 0.40)', // Bright red-orange
     },
     {
         id: 'transfiguration',
@@ -135,7 +135,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 8,
         day: 13,
-        color: 'rgba(255, 255, 0, 0.20)', // Light yellow
+        color: 'rgba(255, 193, 7, 0.40)', // Bright amber
     },
     {
         id: 'nativity_mary',
@@ -144,7 +144,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 5,
         day: 9,
-        color: 'rgba(176, 196, 222, 0.20)', // Light steel blue
+        color: 'rgba(63, 81, 181, 0.40)', // Bright indigo
     },
     {
         id: 'covenant_mercy',
@@ -153,7 +153,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 2,
         day: 16,
-        color: 'rgba(221, 160, 221, 0.20)', // Light plum
+        color: 'rgba(255, 105, 180, 0.40)', // Bright hot pink
     },
     {
         id: 'annunciation',
@@ -162,7 +162,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 4,
         day: 7,
-        color: 'rgba(173, 216, 230, 0.20)', // Light blue
+        color: 'rgba(41, 182, 246, 0.40)', // Bright light blue
     },
     {
         id: 'christmas',
@@ -171,7 +171,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 1,
         day: 7,
-        color: 'rgba(220, 20, 60, 0.20)', // Light crimson
+        color: 'rgba(139, 195, 74, 0.40)', // Bright light green
     }
 ];
 
