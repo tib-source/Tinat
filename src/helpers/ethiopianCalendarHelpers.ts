@@ -138,7 +138,6 @@ function generateDayMetadata(
 ): EnhancedCalendarDayMetadata {
     const today = getCurrentEthiopianDate();
     const gregDay = ethiopianToGregorian(ethDate);
-    console.log(toCalendarDateId(ethDate))
     return {
         id: toCalendarDateId(ethDate),
         date: gregDay,
