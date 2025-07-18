@@ -1,44 +1,37 @@
 // taken from flash-calendar. Had to copy these since they are not exported by default
-import { UseCalendarParams } from '@marceloterreiro/flash-calendar';
+import { CalendarActiveDateRange, UseCalendarParams } from '@marceloterreiro/flash-calendar';
+import { GeneratedEvent } from '../generateEvents';
+import { act } from 'react';
 
 export type DayState = 'idle' | 'active' | 'today' | 'disabled';
 
-type GetStateFields = Pick<
-    UseCalendarParams,
-    | 'calendarActiveDateRanges'
-    | 'calendarMinDateId'
-    | 'calendarMaxDateId'
-    | 'calendarDisabledDateIds'
-> & {
+type GetStateFields = {
+    calendarActiveDateRanges?: GeneratedEvent[];
     todayId?: string;
     id: string;
+    calendarType: 'gregorian' | 'ethiopian',
 };
 
-/** All fields that affects the day's state. */
 interface CalendarDayStateFields {
-    /** Is this day disabled? */
     isDisabled: boolean;
-    /** Is this the current day? */
     isToday: boolean;
-    /** Is this the start of a range? */
     isStartOfRange: boolean;
-    /**  Is this the end of a range? */
     isEndOfRange: boolean;
-    /** The state of the day */
     state: DayState;
-    /** Is the range valid (has both start and end dates set)? */
     isRangeValid: boolean;
+    eventMetadata: Partial<GeneratedEvent>
 }
 
 export const getStateFields = ({
     todayId,
     id,
     calendarActiveDateRanges,
-    calendarMinDateId,
-    calendarMaxDateId,
-    calendarDisabledDateIds
+    calendarType
 }: GetStateFields): CalendarDayStateFields => {
-    const activeRange = calendarActiveDateRanges?.find(({ startId, endId }) => {
+    const activeRange = calendarActiveDateRanges?.find((range) => {
+        const startId = calendarType === 'gregorian' ? range.startDate : range.ethStartDate;
+        const endId = calendarType === 'gregorian' ? range.endDate : range.ethEndDate;
+        
         // Regular range
         if (startId && endId) {
             return id >= startId && id <= endId;
@@ -49,13 +42,14 @@ export const getStateFields = ({
         }
         return false;
     });
+    
+    const getStartId = (range: any) => calendarType === 'gregorian' ? range?.startDate : range?.ethStartDate;
+    const getEndId = (range: any) => calendarType === 'gregorian' ? range?.endDate : range?.ethEndDate;
+    
     const isRangeValid =
-        activeRange?.startId !== undefined && activeRange.endId !== undefined;
+        (activeRange && getStartId(activeRange) !== undefined && getEndId(activeRange) !== undefined) ||  false;
 
-    const isDisabled =
-        (calendarDisabledDateIds?.includes(id) ||
-            (calendarMinDateId && id < calendarMinDateId) ||
-            (calendarMaxDateId && id > calendarMaxDateId)) === true;
+    const isDisabled = false
 
     const isToday = todayId === id;
 
@@ -68,11 +62,15 @@ export const getStateFields = ({
             : 'idle';
 
     return {
-        isStartOfRange: id === activeRange?.startId,
-        isEndOfRange: id === activeRange?.endId,
+        isStartOfRange: id === getStartId(activeRange),
+        isEndOfRange: id === getEndId(activeRange),
         isRangeValid,
         state,
         isDisabled,
-        isToday
+        isToday,
+        eventMetadata: {
+            type: activeRange?.type,
+            color: activeRange?.color
+        }
     };
 };

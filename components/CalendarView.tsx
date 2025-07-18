@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { addMonths } from 'date-fns';
 import { View, Text, ScrollView } from 'react-native';
 import {
@@ -9,8 +9,9 @@ import { Card, CardContent } from '~/components/ui/card';
 import { Button } from '~/components/ui/button';
 import { cn } from '~/lib/utils';
 import { EthiopianDate } from '~/src/helpers/ethiopianCalendarHelpers';
-import { getToday } from '~/src/helpers/dateHelpers';
+import { getMiddleOfMonth, getToday } from '~/src/helpers/dateHelpers';
 import  DualCalendar from './calendar/DualCalendar';
+import { generateReligiousEventsForYear } from '~/src/generateEvents';
 
 interface EthiopianCalendarProps {
     onDateSelect?: (date: EthiopianDate) => void;
@@ -18,29 +19,11 @@ interface EthiopianCalendarProps {
 }
 
 export default function CalendarView(props: EthiopianCalendarProps) {
-    const [currentDate, setCurrentDate] = useState<Date>(getToday());
+    const [currentDate, setCurrentDate] = useState<Date>(getMiddleOfMonth());
+    const religiousEvents = useMemo(()=> generateReligiousEventsForYear(currentDate.getFullYear()), [currentDate.getFullYear()])
     const [viewMode, setViewMode] = useState<'gregorian' | 'ethiopian'>(
         'ethiopian'
     );
-
-    const testRange: CalendarActiveDateRange[] = [
-        {
-            startId: toDateId(
-                new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
-            ),
-            endId: toDateId(
-                new Date(currentDate.getFullYear(), currentDate.getMonth(), 5)
-            )
-        },
-        {
-            startId: toDateId(
-                new Date(currentDate.getFullYear(), currentDate.getMonth(), 10)
-            ),
-            endId: toDateId(
-                new Date(currentDate.getFullYear(), currentDate.getMonth(), 25)
-            )
-        }
-    ];
 
     const navigateMonth = (direction: 'prev' | 'next') => {
         setCurrentDate((prev) => {
@@ -114,7 +97,7 @@ export default function CalendarView(props: EthiopianCalendarProps) {
                             currDate={currentDate}
                             calendarMonthId={toDateId(currentDate)}
                             onCalendarDayPress={() => {}}
-                            calendarActiveDateRanges={testRange}
+                            religiousEvents={religiousEvents}
                             calendarFirstDayOfWeek="monday"
                             navigateMonth={navigateMonth}
                             viewMode={viewMode}
