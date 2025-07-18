@@ -9,7 +9,7 @@ import { Card, CardContent } from '~/components/ui/card';
 import { Button } from '~/components/ui/button';
 import { cn } from '~/lib/utils';
 import { getMiddleOfMonth, getToday } from '~/src/helpers/dateHelpers';
-import  DualCalendar from './calendar/DualCalendar';
+import DualCalendar from './calendar/DualCalendar';
 import { MonthlyEventList } from './calendar/MonthlyEventList';
 import { generateReligiousEventsForYear } from '~/src/generateEvents';
 import { CalendarDate } from '@internationalized/date';
@@ -23,19 +23,24 @@ export default function CalendarView(props: EthiopianCalendarProps) {
     const [currentDate, setCurrentDate] = useState<Date>(getMiddleOfMonth());
     // Generate events for previous, current, and next year, merge, and deduplicate by id+startDate+endDate
     const religiousEvents = useMemo(() => {
-      const year = currentDate.getFullYear();
-      const prevYear = generateReligiousEventsForYear(year - 1);
-      const thisYear = generateReligiousEventsForYear(year);
-      const nextYear = generateReligiousEventsForYear(year + 1);
-      // Merge and deduplicate (in case of overlap)
-      const all = [...prevYear, ...thisYear, ...nextYear];
-      const seen = new Set();
-      return all.filter(ev => {
-        const key = ev.id + (ev.startDate || '') + (ev.endDate || '') + (ev.ethStartDate || '') + (ev.ethEndDate || '');
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      });
+        const year = currentDate.getFullYear();
+        const prevYear = generateReligiousEventsForYear(year - 1);
+        const thisYear = generateReligiousEventsForYear(year);
+        const nextYear = generateReligiousEventsForYear(year + 1);
+        // Merge and deduplicate (in case of overlap)
+        const all = [...prevYear, ...thisYear, ...nextYear];
+        const seen = new Set();
+        return all.filter((ev) => {
+            const key =
+                ev.id +
+                (ev.startDate || '') +
+                (ev.endDate || '') +
+                (ev.ethStartDate || '') +
+                (ev.ethEndDate || '');
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        });
     }, [currentDate.getFullYear()]);
     const [viewMode, setViewMode] = useState<'gregorian' | 'ethiopian'>(
         'ethiopian'
@@ -121,9 +126,9 @@ export default function CalendarView(props: EthiopianCalendarProps) {
                     </CardContent>
                 </Card>
                 <MonthlyEventList
-                  currentDate={currentDate}
-                  events={religiousEvents}
-                  viewMode={viewMode}
+                    currentDate={currentDate}
+                    events={religiousEvents}
+                    viewMode={viewMode}
                 />
             </ScrollView>
         </View>

@@ -1,4 +1,4 @@
-import { ReligiousEvent } from "./types";
+import { ReligiousEvent } from './types';
 
 const religiousEvents: ReligiousEvent[] = [
     // Fasts with their associated feasts
@@ -9,7 +9,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'variable',
         fromEaster: -55,
         duration: 54,
-        color: 'rgba(186, 104, 200, 0.65)', // Pastel purple (medium opacity)
+        color: 'rgba(186, 104, 200, 0.65)' // Pastel purple (medium opacity)
     },
     {
         id: 'tsom_nehase',
@@ -19,7 +19,7 @@ const religiousEvents: ReligiousEvent[] = [
         month: 8,
         day: 1,
         duration: 15,
-        color: 'rgba(129, 212, 250, 0.65)', // Pastel blue (medium opacity)
+        color: 'rgba(129, 212, 250, 0.65)' // Pastel blue (medium opacity)
     },
     {
         id: 'tsom_advent',
@@ -29,7 +29,7 @@ const religiousEvents: ReligiousEvent[] = [
         month: 11,
         day: 25,
         duration: 43,
-        color: 'rgba(244, 143, 177, 0.65)', // Pastel pink (medium opacity)
+        color: 'rgba(244, 143, 177, 0.65)' // Pastel pink (medium opacity)
     },
     {
         id: 'tsom_apostles',
@@ -38,7 +38,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'variable',
         fromEaster: 36,
         duration: 10,
-        color: 'rgba(255, 183, 77, 0.65)', // Pastel orange (medium opacity)
+        color: 'rgba(255, 183, 77, 0.65)' // Pastel orange (medium opacity)
     },
     {
         id: 'tsom_nineveh',
@@ -47,7 +47,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'variable',
         fromEaster: -69,
         duration: 2,
-        color: 'rgba(239, 154, 154, 0.65)', // Pastel red (medium opacity)
+        color: 'rgba(239, 154, 154, 0.65)' // Pastel red (medium opacity)
     },
     {
         id: 'weekly_fast',
@@ -55,7 +55,7 @@ const religiousEvents: ReligiousEvent[] = [
         eventType: 'fast',
         dateType: 'weekly',
         weekDays: [3, 5], // Wednesday and Friday
-        color: 'rgba(128, 222, 234, 0.65)', // Pastel cyan (medium opacity)
+        color: 'rgba(128, 222, 234, 0.65)' // Pastel cyan (medium opacity)
     },
 
     // Standalone feasts (not preceded by fasts)
@@ -65,27 +65,26 @@ const religiousEvents: ReligiousEvent[] = [
         eventType: 'feast',
         dateType: 'variable',
         fromEaster: 0,
-        color: 'rgba(255, 241, 118, 0.65)', // Pastel yellow (medium opacity)
-        
+        color: 'rgba(255, 241, 118, 0.65)' // Pastel yellow (medium opacity)
     },
     {
-            id: 'assumption',
-            name: { am: 'ፍልሰታ', en: 'Assumption of Mary' },
-            eventType: 'feast',
-            dateType: 'fixed',
-            month: 8,
-            day: 22,
-            color: 'rgba(179, 157, 219, 0.65)', // Pastel deep purple (medium opacity)
-        },
+        id: 'assumption',
+        name: { am: 'ፍልሰታ', en: 'Assumption of Mary' },
+        eventType: 'feast',
+        dateType: 'fixed',
+        month: 8,
+        day: 22,
+        color: 'rgba(179, 157, 219, 0.65)' // Pastel deep purple (medium opacity)
+    },
     {
-            id: 'apostles_feast',
-            name: { am: 'በዓለ ሐዋርያት', en: 'Feast of the Apostles' },
-            eventType: 'feast',
-            dateType: 'fixed',
-            month: 7,
-            day: 12,
-            color: 'rgba(248, 187, 208, 0.65)', // Pastel rose (medium opacity)
-        },
+        id: 'apostles_feast',
+        name: { am: 'በዓለ ሐዋርያት', en: 'Feast of the Apostles' },
+        eventType: 'feast',
+        dateType: 'fixed',
+        month: 7,
+        day: 12,
+        color: 'rgba(248, 187, 208, 0.65)' // Pastel rose (medium opacity)
+    },
     {
         id: 'epiphany',
         name: { am: 'ጥምቀት', en: 'Epiphany (Timkat)' },
@@ -93,7 +92,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 1,
         day: 19,
-        color: 'rgba(128, 203, 196, 0.65)', // Pastel teal (medium opacity)
+        color: 'rgba(128, 203, 196, 0.65)' // Pastel teal (medium opacity)
     },
     {
         id: 'finding_cross',
@@ -102,7 +101,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 9,
         day: 27,
-        color: 'rgba(255, 204, 128, 0.65)', // Pastel deep orange (medium opacity)
+        color: 'rgba(255, 204, 128, 0.65)' // Pastel deep orange (medium opacity)
     },
     {
         id: 'palm_sunday',
@@ -110,7 +109,7 @@ const religiousEvents: ReligiousEvent[] = [
         eventType: 'feast',
         dateType: 'variable',
         fromEaster: -7,
-        color: 'rgba(165, 214, 167, 0.65)', // Pastel green (medium opacity)
+        color: 'rgba(165, 214, 167, 0.65)' // Pastel green (medium opacity)
     },
     {
         id: 'ascension',
@@ -118,7 +117,7 @@ const religiousEvents: ReligiousEvent[] = [
         eventType: 'feast',
         dateType: 'variable',
         fromEaster: 39,
-        color: 'rgba(206, 147, 216, 0.65)', // Pastel lavender (medium opacity)
+        color: 'rgba(206, 147, 216, 0.65)' // Pastel lavender (medium opacity)
     },
     {
         id: 'pentecost',
@@ -126,7 +125,7 @@ const religiousEvents: ReligiousEvent[] = [
         eventType: 'feast',
         dateType: 'variable',
         fromEaster: 49,
-        color: 'rgba(255, 171, 145, 0.65)', // Pastel red-orange (medium opacity)
+        color: 'rgba(255, 171, 145, 0.65)' // Pastel red-orange (medium opacity)
     },
     {
         id: 'transfiguration',
@@ -135,7 +134,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 8,
         day: 13,
-        color: 'rgba(255, 224, 130, 0.65)', // Pastel amber (medium opacity)
+        color: 'rgba(255, 224, 130, 0.65)' // Pastel amber (medium opacity)
     },
     {
         id: 'nativity_mary',
@@ -144,7 +143,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 5,
         day: 9,
-        color: 'rgba(197, 202, 233, 0.65)', // Pastel indigo (medium opacity)
+        color: 'rgba(197, 202, 233, 0.65)' // Pastel indigo (medium opacity)
     },
     {
         id: 'covenant_mercy',
@@ -153,7 +152,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 2,
         day: 16,
-        color: 'rgba(244, 143, 177, 0.65)', // Pastel hot pink (medium opacity)
+        color: 'rgba(244, 143, 177, 0.65)' // Pastel hot pink (medium opacity)
     },
     {
         id: 'annunciation',
@@ -162,7 +161,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 4,
         day: 7,
-        color: 'rgba(144, 202, 249, 0.65)', // Pastel light blue (medium opacity)
+        color: 'rgba(144, 202, 249, 0.65)' // Pastel light blue (medium opacity)
     },
     {
         id: 'christmas',
@@ -171,7 +170,7 @@ const religiousEvents: ReligiousEvent[] = [
         dateType: 'fixed',
         month: 1,
         day: 7,
-        color: 'rgba(200, 230, 201, 0.65)', // Pastel light green (medium opacity)
+        color: 'rgba(200, 230, 201, 0.65)' // Pastel light green (medium opacity)
     }
 ];
 

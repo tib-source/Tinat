@@ -37,7 +37,6 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
         return gregorianToEthiopian(props.currDate);
     }, [props?.currDate]);
 
-
     const theme = useTheme();
     const calendarTheme: CalendarTheme = {
         rowMonth: {
@@ -76,6 +75,11 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
                 content: {
                     color: theme.colors.text
                 }
+            }),
+            disabled: () => ({
+                content: {
+                    color: theme.colors.border
+                }
             })
         }
     };
@@ -88,7 +92,10 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
         const ethiopianMetadata: CalendarMetadata = {
             calendarRowMonth: `${getEthiopianMonthName(currentEthDate.month)} ${currentEthDate.year}`,
             weekDaysList: getEthiopianWeekDaysList(),
-            weeksList: getEthiopianWeeksList(currentEthDate, props.religiousEvents )
+            weeksList: getEthiopianWeeksList(
+                currentEthDate,
+                props.religiousEvents
+            )
         };
 
         if (props.viewMode === 'ethiopian') {
@@ -133,28 +140,63 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
                                     onPress={props.onCalendarDayPress}
                                     theme={calendarTheme.itemDay as any}
                                 >
-                                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-                                        <View style={{ minHeight: 18, justifyContent: 'center' }}>
-                                            <Text style={{ textAlign: 'center', color: theme.colors.text, fontSize: 14, fontWeight: '500' }}>
+                                    <View
+                                        style={{
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            flex: 1
+                                        }}
+                                    >
+                                        <View
+                                            style={{
+                                                minHeight: 18,
+                                                justifyContent: 'center'
+                                            }}
+                                        >
+                                            <Text
+                                                style={{
+                                                    textAlign: 'center',
+                                                    color: theme.colors.text,
+                                                    fontSize: 14,
+                                                    fontWeight: '500'
+                                                }}
+                                            >
                                                 {day.displayLabel}
                                             </Text>
                                         </View>
-                                        {Array.isArray(day.allEvents) && day.allEvents.length > 0 && (
-                                            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 2 }}>
-                                                {day.allEvents.map((ev, idx) => (
-                                                    <View
-                                                        key={(ev.id ?? 'event') + '-' + idx}
-                                                        style={{
-                                                            width: 12,
-                                                            height: 6,
-                                                            borderRadius: 3,
-                                                            backgroundColor: ev.color || '#888',
-                                                            marginHorizontal: 1
-                                                        }}
-                                                    />
-                                                ))}
-                                            </View>
-                                        )}
+                                        {Array.isArray(day.allEvents) &&
+                                            day.allEvents.length > 0 && (
+                                                <View
+                                                    style={{
+                                                        flexDirection: 'row',
+                                                        justifyContent:
+                                                            'center',
+                                                        marginTop: 2
+                                                    }}
+                                                >
+                                                    {day.allEvents.map(
+                                                        (ev, idx) => (
+                                                            <View
+                                                                key={
+                                                                    (ev.id ??
+                                                                        'event') +
+                                                                    '-' +
+                                                                    idx
+                                                                }
+                                                                style={{
+                                                                    width: 12,
+                                                                    height: 6,
+                                                                    borderRadius: 3,
+                                                                    backgroundColor:
+                                                                        ev.color ||
+                                                                        '#888',
+                                                                    marginHorizontal: 1
+                                                                }}
+                                                            />
+                                                        )
+                                                    )}
+                                                </View>
+                                            )}
                                     </View>
                                 </Calendar.Item.Day>
                             </Calendar.Item.Day.Container>

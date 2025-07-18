@@ -1,15 +1,21 @@
 // taken from flash-calendar. Had to copy these since they are not exported by default
-import { CalendarActiveDateRange, UseCalendarParams } from '@marceloterreiro/flash-calendar';
+import {
+    CalendarActiveDateRange,
+    UseCalendarParams
+} from '@marceloterreiro/flash-calendar';
 import { GeneratedEvent } from '../generateEvents';
 import { act } from 'react';
 
 export type DayState = 'idle' | 'active' | 'today' | 'disabled';
 
-type GetStateFields = {
+type GetStateFields = Pick<
+    UseCalendarParams,
+    'calendarMinDateId' | 'calendarMaxDateId' | 'calendarDisabledDateIds'
+> & {
     calendarActiveDateRanges?: GeneratedEvent[];
     todayId?: string;
     id: string;
-    calendarType: 'gregorian' | 'ethiopian',
+    calendarType: 'gregorian' | 'ethiopian';
 };
 
 interface CalendarDayStateFields {
@@ -19,19 +25,25 @@ interface CalendarDayStateFields {
     isEndOfRange: boolean;
     state: DayState;
     isRangeValid: boolean;
-    eventMetadata: Partial<GeneratedEvent>
+    eventMetadata: Partial<GeneratedEvent>;
 }
 
 export const getStateFields = ({
     todayId,
     id,
     calendarActiveDateRanges,
-    calendarType
-}: GetStateFields): CalendarDayStateFields & { allEvents: Partial<GeneratedEvent>[] } => {
+    calendarType,
+    calendarMinDateId,
+    calendarMaxDateId
+}: GetStateFields): CalendarDayStateFields & {
+    allEvents: Partial<GeneratedEvent>[];
+} => {
     // Find all events that overlap this day
     const allEvents = (calendarActiveDateRanges || []).filter((range) => {
-        const startId = calendarType === 'gregorian' ? range.startDate : range.ethStartDate;
-        const endId = calendarType === 'gregorian' ? range.endDate : range.ethEndDate;
+        const startId =
+            calendarType === 'gregorian' ? range.startDate : range.ethStartDate;
+        const endId =
+            calendarType === 'gregorian' ? range.endDate : range.ethEndDate;
         if (startId && endId) {
             return id >= startId && id <= endId;
         } else if (startId) {
@@ -42,27 +54,37 @@ export const getStateFields = ({
         return false;
     });
 
-    const getStartId = (range: any) => calendarType === 'gregorian' ? range?.startDate : range?.ethStartDate;
-    const getEndId = (range: any) => calendarType === 'gregorian' ? range?.endDate : range?.ethEndDate;
+    const getStartId = (range: any) =>
+        calendarType === 'gregorian' ? range?.startDate : range?.ethStartDate;
+    const getEndId = (range: any) =>
+        calendarType === 'gregorian' ? range?.endDate : range?.ethEndDate;
 
     const isRangeValid =
-        (allEvents.length > 0 && getStartId(allEvents[0]) !== undefined && getEndId(allEvents[0]) !== undefined) ||  false;
+        (allEvents.length > 0 &&
+            getStartId(allEvents[0]) !== undefined &&
+            getEndId(allEvents[0]) !== undefined) ||
+        false;
 
-    const isDisabled = false
+    const isDisabled =
+        ((calendarMinDateId && id < calendarMinDateId) ||
+            (calendarMaxDateId && id > calendarMaxDateId)) === true;
 
     const isToday = todayId === id;
 
-    const state: DayState = allEvents.length > 0
-        ? ('active' as const)
-        : isDisabled
-          ? 'disabled'
-          : isToday
-            ? 'today'
-            : 'idle';
+    const state: DayState =
+        allEvents.length > 0
+            ? ('active' as const)
+            : isDisabled
+              ? 'disabled'
+              : isToday
+                ? 'today'
+                : 'idle';
 
     return {
-        isStartOfRange: allEvents.length > 0 ? id === getStartId(allEvents[0]) : false,
-        isEndOfRange: allEvents.length > 0 ? id === getEndId(allEvents[0]) : false,
+        isStartOfRange:
+            allEvents.length > 0 ? id === getStartId(allEvents[0]) : false,
+        isEndOfRange:
+            allEvents.length > 0 ? id === getEndId(allEvents[0]) : false,
         isRangeValid,
         state,
         isDisabled,
@@ -71,6 +93,10 @@ export const getStateFields = ({
             type: allEvents[0]?.type,
             color: allEvents[0]?.color
         },
-        allEvents: allEvents.map(ev => ({ type: ev.type, color: ev.color, id: ev.id }))
+        allEvents: allEvents.map((ev) => ({
+            type: ev.type,
+            color: ev.color,
+            id: ev.id
+        }))
     };
 };
