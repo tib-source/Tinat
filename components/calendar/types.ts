@@ -7,14 +7,15 @@ import type {
     CalendarRowMonthProps,
     CalendarRowWeekProps,
 } from '@marceloterreiro/flash-calendar';
-import { ReactNode } from 'react';
-import { TextProps, TextStyle, ViewStyle } from 'react-native';
-import { GeneratedEvent } from '~/src/generateEvents';
-import { DayState } from '~/src/helpers/calendarHelper';
+import type { ReactNode } from 'react';
+import type { TextProps, TextStyle, ViewStyle } from 'react-native';
+import type { GeneratedEvent } from '~/src/generateEvents';
+import type { DayState } from '~/src/helpers/calendarHelper';
 
 // Enhanced calendar types
 export interface EnhancedCalendarDayMetadata extends CalendarDayMetadata {
     eventMetadata: Partial<GeneratedEvent>;
+    allEvents?: Array<Partial<GeneratedEvent>>;
 }
 
 export interface CalendarMetadata {

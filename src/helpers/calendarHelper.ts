@@ -27,12 +27,11 @@ export const getStateFields = ({
     id,
     calendarActiveDateRanges,
     calendarType
-}: GetStateFields): CalendarDayStateFields => {
-    const activeRange = calendarActiveDateRanges?.find((range) => {
+}: GetStateFields): CalendarDayStateFields & { allEvents: Partial<GeneratedEvent>[] } => {
+    // Find all events that overlap this day
+    const allEvents = (calendarActiveDateRanges || []).filter((range) => {
         const startId = calendarType === 'gregorian' ? range.startDate : range.ethStartDate;
         const endId = calendarType === 'gregorian' ? range.endDate : range.ethEndDate;
-        
-        // Regular range
         if (startId && endId) {
             return id >= startId && id <= endId;
         } else if (startId) {
@@ -42,18 +41,18 @@ export const getStateFields = ({
         }
         return false;
     });
-    
+
     const getStartId = (range: any) => calendarType === 'gregorian' ? range?.startDate : range?.ethStartDate;
     const getEndId = (range: any) => calendarType === 'gregorian' ? range?.endDate : range?.ethEndDate;
-    
+
     const isRangeValid =
-        (activeRange && getStartId(activeRange) !== undefined && getEndId(activeRange) !== undefined) ||  false;
+        (allEvents.length > 0 && getStartId(allEvents[0]) !== undefined && getEndId(allEvents[0]) !== undefined) ||  false;
 
     const isDisabled = false
 
     const isToday = todayId === id;
 
-    const state: DayState = activeRange
+    const state: DayState = allEvents.length > 0
         ? ('active' as const)
         : isDisabled
           ? 'disabled'
@@ -62,15 +61,16 @@ export const getStateFields = ({
             : 'idle';
 
     return {
-        isStartOfRange: id === getStartId(activeRange),
-        isEndOfRange: id === getEndId(activeRange),
+        isStartOfRange: allEvents.length > 0 ? id === getStartId(allEvents[0]) : false,
+        isEndOfRange: allEvents.length > 0 ? id === getEndId(allEvents[0]) : false,
         isRangeValid,
         state,
         isDisabled,
         isToday,
         eventMetadata: {
-            type: activeRange?.type,
-            color: activeRange?.color
-        }
+            type: allEvents[0]?.type,
+            color: allEvents[0]?.color
+        },
+        allEvents: allEvents.map(ev => ({ type: ev.type, color: ev.color, id: ev.id }))
     };
 };

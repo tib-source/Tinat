@@ -2,12 +2,16 @@
 import { addDays } from "date-fns"
 import { julianComputus as determineEaster } from "./determineEaster"
 import religiousEvents from "./religiousEvents"
-import { EthiopianDate, gregorianToEthiopian, toEthiopianDateId } from "./helpers/ethiopianCalendarHelpers"
+import {gregorianToEthiopian, toCalendarDateId } from "./helpers/ethiopianCalendarHelpers"
 import { toDateId } from "@marceloterreiro/flash-calendar"
 import { EthiopicCalendar } from "@internationalized/date"
 
 export interface GeneratedEvent {
-    id: string, 
+    id: string,
+    name?: {
+        am: string,
+        en: string
+    }
     type: 'fast' | 'feast' | 'weekly'
     startDate?: string,
     endDate?: string,
@@ -19,12 +23,9 @@ export interface GeneratedEvent {
 
 
 export function generateReligiousEventsForYear(year: number): GeneratedEvent[] {
-    const easterDays = determineEaster(year)
-    const easterSunday = easterDays.easter.toDate("UTC")
-    const fasikaSunday = easterDays.fasika.toDate("UTC")
-    // TODO : date conversions not working as expected ?? 
-    console.log(fasikaSunday)
-    console.log(easterSunday)
+    const easter = determineEaster(year)
+    const easterSunday = easter.toDate("UTC")
+
     const eventsForYear: GeneratedEvent[] = []
 
     for (let event of religiousEvents){ 
@@ -56,14 +57,14 @@ export function generateReligiousEventsForYear(year: number): GeneratedEvent[] {
             eventsForYear.push(weeklyEvent)
             continue
         }
-
         const generated : GeneratedEvent = { 
-            id: event.id, 
+            id: event.id,
+            name: event.name,
             type: event.eventType, 
             startDate: toDateId(start),
             endDate: toDateId(end),
-            ethStartDate: toEthiopianDateId(gregorianToEthiopian(start)),
-            ethEndDate: toEthiopianDateId(gregorianToEthiopian(end)),
+            ethStartDate: toCalendarDateId(gregorianToEthiopian(start)),
+            ethEndDate: toCalendarDateId(gregorianToEthiopian(end)),
             color: event.color
         }
         eventsForYear.push(generated)

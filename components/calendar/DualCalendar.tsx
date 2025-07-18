@@ -1,7 +1,7 @@
 import { Calendar } from '@marceloterreiro/flash-calendar';
 import { useTheme } from '@react-navigation/native';
 import { memo, useEffect, useMemo, useState } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import MonthHeader from './MonthHeader';
 import {
     getEthiopianMonthName,
@@ -13,7 +13,6 @@ import { useEnhancedCalendar } from '~/src/hooks/useEnhancedCalendar';
 import type {
     CalendarTheme,
     CalendarMetadata,
-    EnhancedCalendarDayMetadata,
     GregorianCalendarProps
 } from './types';
 
@@ -70,7 +69,7 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
             }),
             active: ({ isPressed, eventMetadata }) => ({
                 container: {
-                    backgroundColor: eventMetadata.color,
+                    backgroundColor: theme.colors.background,
                     opacity: isPressed ? 0.6 : 0.8,
                     transitionDuration: '100ms'
                 },
@@ -119,7 +118,6 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
                         </Calendar.Item.WeekName>
                     ))}
                 </Calendar.Row.Week>
-
                 {calendarMetadata.weeksList.map((week, i) => (
                     <Calendar.Row.Week key={i}>
                         {week.map((day) => (
@@ -135,7 +133,29 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
                                     onPress={props.onCalendarDayPress}
                                     theme={calendarTheme.itemDay as any}
                                 >
-                                    {day.displayLabel}
+                                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                                        <View style={{ minHeight: 18, justifyContent: 'center' }}>
+                                            <Text style={{ textAlign: 'center', color: theme.colors.text, fontSize: 14, fontWeight: '500' }}>
+                                                {day.displayLabel}
+                                            </Text>
+                                        </View>
+                                        {Array.isArray(day.allEvents) && day.allEvents.length > 0 && (
+                                            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 2 }}>
+                                                {day.allEvents.map((ev, idx) => (
+                                                    <View
+                                                        key={(ev.id ?? 'event') + '-' + idx}
+                                                        style={{
+                                                            width: 12,
+                                                            height: 6,
+                                                            borderRadius: 3,
+                                                            backgroundColor: ev.color || '#888',
+                                                            marginHorizontal: 1
+                                                        }}
+                                                    />
+                                                ))}
+                                            </View>
+                                        )}
+                                    </View>
                                 </Calendar.Item.Day>
                             </Calendar.Item.Day.Container>
                         ))}
