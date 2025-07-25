@@ -1,10 +1,6 @@
 // taken from flash-calendar. Had to copy these since they are not exported by default
-import {
-    CalendarActiveDateRange,
-    UseCalendarParams
-} from '@marceloterreiro/flash-calendar';
+import { UseCalendarParams } from '@marceloterreiro/flash-calendar';
 import { GeneratedEvent } from '../generateEvents';
-import { act } from 'react';
 
 export type DayState = 'idle' | 'active' | 'today' | 'disabled';
 

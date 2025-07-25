@@ -6,7 +6,6 @@ import {
     toCalendarDateId
 } from './helpers/ethiopianCalendarHelpers';
 import { toDateId } from '@marceloterreiro/flash-calendar';
-import { EthiopicCalendar } from '@internationalized/date';
 
 export interface GeneratedEvent {
     id: string;
@@ -33,25 +32,36 @@ export function generateReligiousEventsForYear(year: number): GeneratedEvent[] {
         let start = new Date();
         let end = new Date();
 
-        if (event.dateType == 'fixed') {
-            if (event.day != undefined && event.month != undefined) {
-                start = new Date(year, event?.month - 1, event?.day);
+        if (event.dateType === 'fixed') {
+            if (event.day !== undefined && event.month !== undefined) {
+                start = new Date(year, event?.month - 1, event?.day, 1, 0, 0);
                 end = addDays(start, event.duration || 0);
             } else {
                 throw Error(
                     'Fixed event without specified day and month : ' + event.id
                 );
             }
-        } else if (event.dateType == 'variable') {
-            if (event.fromEaster != undefined) {
+        } else if (event.dateType === 'variable') {
+            if (event.fromEaster !== undefined) {
                 start = addDays(easterSunday, event.fromEaster);
-                end = addDays(start, event.duration || 0);
+                if (event.until) {
+                    end = new Date(
+                        year,
+                        event.until?.month - 1,
+                        event.until?.day,
+                        1,
+                        0,
+                        0
+                    );
+                } else {
+                    end = addDays(start, event.duration || 0);
+                }
             } else {
                 throw Error(
                     'Variable event without fromEaster day : ' + event.id
                 );
             }
-        } else if (event.dateType == 'weekly') {
+        } else if (event.dateType === 'weekly') {
             let weeklyEvent: GeneratedEvent = {
                 id: event.id,
                 type: event.dateType,

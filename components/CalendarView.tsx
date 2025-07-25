@@ -1,18 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import { addMonths } from 'date-fns';
 import { View, Text, ScrollView } from 'react-native';
-import {
-    CalendarActiveDateRange,
-    toDateId
-} from '@marceloterreiro/flash-calendar';
+import { toDateId } from '@marceloterreiro/flash-calendar';
 import { Card, CardContent } from '~/components/ui/card';
 import { Button } from '~/components/ui/button';
 import { cn } from '~/lib/utils';
-import { getMiddleOfMonth, getToday } from '~/src/helpers/dateHelpers';
+import { getMiddleOfMonth } from '~/src/helpers/dateHelpers';
 import DualCalendar from './calendar/DualCalendar';
 import { MonthlyEventList } from './calendar/MonthlyEventList';
 import { generateReligiousEventsForYear } from '~/src/generateEvents';
 import { CalendarDate } from '@internationalized/date';
+import { year } from 'drizzle-orm/mysql-core';
 
 interface EthiopianCalendarProps {
     onDateSelect?: (date: CalendarDate) => void;
@@ -41,7 +39,7 @@ export default function CalendarView(props: EthiopianCalendarProps) {
             seen.add(key);
             return true;
         });
-    }, [currentDate.getFullYear()]);
+    }, [year]);
     const [viewMode, setViewMode] = useState<'gregorian' | 'ethiopian'>(
         'ethiopian'
     );

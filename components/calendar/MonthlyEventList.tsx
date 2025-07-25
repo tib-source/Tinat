@@ -8,7 +8,6 @@ import {
 } from '~/src/helpers/ethiopianCalendarHelpers';
 import {
     CalendarDate,
-    DateFormatter,
     endOfMonth,
     EthiopicCalendar,
     GregorianCalendar,
@@ -68,7 +67,7 @@ function isEventInMonth(
         const start = parseYMD(event.startDate);
         const end = parseYMD(event.endDate);
         if (!start || !end) return false;
-        // TODO: use the calendar date compare tool 
+        // TODO: use the calendar date compare tool
         // Check for overlap: eventStart <= monthEnd && eventEnd >= monthStart
         const eventStartsBeforeMonthEnd =
             start.year < monthEnd.year ||
@@ -91,6 +90,8 @@ export const MonthlyEventList: React.FC<MonthlyEventListProps> = ({
     events,
     viewMode
 }) => {
+    const theme = useTheme();
+
     const filtered = events.filter((ev) =>
         isEventInMonth(ev, currentDate, viewMode)
     );
@@ -181,7 +182,6 @@ export const MonthlyEventList: React.FC<MonthlyEventListProps> = ({
             </View>
         );
     }
-    const theme = useTheme();
     return (
         <View className="mt-4 space-y-3">
             {filtered.map((ev) => (

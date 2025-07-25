@@ -3,9 +3,7 @@
  * The Ethiopian calendar is approximately 7-8 years behind the Gregorian calendar
  * and has 13 months (12 months of 30 days each + 1 month of 5 or 6 days)
  */
-import { toEthiopian, toGregorian } from 'ethiopian-date';
 import { getToday } from './dateHelpers';
-
 import { getStateFields } from './calendarHelper';
 import { GeneratedEvent } from '../generateEvents';
 import { EnhancedCalendarDayMetadata } from '~/components/calendar/types';
@@ -20,9 +18,6 @@ import {
     startOfMonth,
     toCalendar
 } from '@internationalized/date';
-import { eachHourOfInterval, endOfDay, lastDayOfMonth } from 'date-fns';
-import { startMapper } from 'react-native-reanimated';
-import { toDateId } from '@marceloterreiro/flash-calendar';
 
 export interface EthiopianMonth {
     id: number;
@@ -175,9 +170,6 @@ function generateDayMetadata(
     };
 }
 
-/**
- * Format Ethiopian date as string
- */
 export function formatCalendarDate(ethDate: CalendarDate): string {
     const monthName = getEthiopianMonthName(ethDate.month);
     return `${ethDate.day} ${monthName} ${ethDate.year}`;
@@ -200,9 +192,6 @@ export function getCurrentEthiopianDate(): CalendarDate {
     return gregorianToEthiopian(getToday());
 }
 
-/**
- * Generate calendar days for a given Ethiopian month
- */
 export function getEthiopianMonthDays(ethDate: CalendarDate): number[] {
     let daysInMonth = 30;
 
@@ -211,16 +200,6 @@ export function getEthiopianMonthDays(ethDate: CalendarDate): number[] {
     }
 
     return Array.from({ length: daysInMonth }, (_, i) => i + 1);
-}
-
-/**
- * Check if twos dates are the same
- */
-export function isSameCalendarDate(
-    date1: CalendarDate,
-    date2: CalendarDate
-): boolean {
-    return date1.compare(date2) == 0;
 }
 
 // Borrowed from flash calendar repo
