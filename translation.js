@@ -38,7 +38,7 @@ const resources = {
             },
         }
     },
-    amh: {
+    am: {
         translation: {
             home: {
                 welcome: 'እንኳን ደህና መጡ!',
@@ -82,9 +82,9 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: 'amh', // Default language
+        lng: 'am', // Default language
         interpolation: {
-            escapeValue: false, // React already escapes values
+            escapeValue: false,
         },
     });
 

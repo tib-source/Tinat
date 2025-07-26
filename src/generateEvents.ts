@@ -6,6 +6,7 @@ import {
     toCalendarDateId
 } from './helpers/ethiopianCalendarHelpers';
 import { toDateId } from '@marceloterreiro/flash-calendar';
+import { CalendarDate } from '@internationalized/date';
 
 export interface GeneratedEvent {
     id: string;
@@ -14,10 +15,16 @@ export interface GeneratedEvent {
         en: string;
     };
     type: 'fast' | 'feast' | 'weekly';
+    // Flash calendar compatible string IDs (for calendar rendering)
     startDate?: string;
     endDate?: string;
     ethStartDate?: string;
     ethEndDate?: string;
+    // Native date objects
+    startDateObject?: Date;
+    endDateObject?: Date;
+    ethStartDateObject?: CalendarDate;
+    ethEndDateObject?: CalendarDate;
     days?: number[];
     color: string;
 }
@@ -71,14 +78,21 @@ export function generateReligiousEventsForYear(year: number): GeneratedEvent[] {
             eventsForYear.push(weeklyEvent);
             continue;
         }
+        const ethStartDate = gregorianToEthiopian(start);
+        const ethEndDate = gregorianToEthiopian(end);
+
         const generated: GeneratedEvent = {
             id: event.id,
             name: event.name,
             type: event.eventType,
             startDate: toDateId(start),
             endDate: toDateId(end),
-            ethStartDate: toCalendarDateId(gregorianToEthiopian(start)),
-            ethEndDate: toCalendarDateId(gregorianToEthiopian(end)),
+            ethStartDate: toCalendarDateId(ethStartDate),
+            ethEndDate: toCalendarDateId(ethEndDate),
+            startDateObject: start,
+            endDateObject: end,
+            ethStartDateObject: ethStartDate,
+            ethEndDateObject: ethEndDate,
             color: event.color
         };
         eventsForYear.push(generated);

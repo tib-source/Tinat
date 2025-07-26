@@ -1,6 +1,23 @@
 // taken from flash-calendar. Had to copy these since they are not exported by default
 import { UseCalendarParams } from '@marceloterreiro/flash-calendar';
 import { GeneratedEvent } from '../generateEvents';
+import {
+    gregorianToEthiopian,
+    formatCalendarDate,
+    formatGregCalendarDate
+} from '~/src/helpers/ethiopianCalendarHelpers';
+
+import {
+    CalendarDate,
+    endOfMonth,
+    GregorianCalendar,
+    startOfMonth
+} from '@internationalized/date';
+
+import {
+    startOfMonth as startOfMonthDateFns,
+    endOfMonth as endOfMonthDateFns
+} from 'date-fns';
 
 export type DayState = 'idle' | 'active' | 'today' | 'disabled';
 
@@ -96,3 +113,91 @@ export const getStateFields = ({
         }))
     };
 };
+
+export function parseYMD(
+    str?: string
+): { year: number; month: number; day?: number } | null {
+    if (!str) return null;
+    const parts = str.split('-').map(Number);
+    if (parts.length < 2) return null;
+    return { year: parts[0], month: parts[1], day: parts[2] };
+}
+
+export function isEventInMonth(
+    event: GeneratedEvent,
+    date: Date,
+    viewMode: 'ethiopian' | 'gregorian'
+) {
+    if (viewMode === 'ethiopian') {
+        const eth = gregorianToEthiopian(date);
+        const monthStart = startOfMonth(eth);
+        const monthEnd = endOfMonth(eth);
+
+        const eventStart = event.ethStartDateObject;
+        const eventEnd = event.ethEndDateObject;
+
+        if (!eventStart || !eventEnd) return false;
+
+        return (
+            eventStart.compare(monthEnd) <= 0 &&
+            eventEnd.compare(monthStart) >= 0
+        );
+    } else {
+        const eventStart = event.startDateObject;
+        const eventEnd = event.endDateObject;
+
+        if (!eventStart || !eventEnd) return false;
+
+        const monthStart = startOfMonthDateFns(date);
+        const monthEnd = endOfMonthDateFns(date);
+        return eventStart <= monthEnd && eventEnd >= monthStart;
+    }
+}
+
+export function formatEventRange(ev: GeneratedEvent, viewMode: string) {
+    let startDate, endDate;
+    let format;
+
+    if (viewMode === 'ethiopian') {
+        // Use native Ethiopian date objects
+        startDate = ev.ethStartDateObject;
+        endDate = ev.ethEndDateObject;
+        if (!startDate || !endDate) return '';
+        format = formatCalendarDate;
+    } else {
+        // Use native Date objects and convert to CalendarDate for formatting
+        const startDateObj = ev.startDateObject;
+        const endDateObj = ev.endDateObject;
+        if (!startDateObj || !endDateObj) return '';
+
+        startDate = new CalendarDate(
+            new GregorianCalendar(),
+            startDateObj.getFullYear(),
+            startDateObj.getMonth() + 1,
+            startDateObj.getDate()
+        );
+        endDate = new CalendarDate(
+            new GregorianCalendar(),
+            endDateObj.getFullYear(),
+            endDateObj.getMonth() + 1,
+            endDateObj.getDate()
+        );
+        format = formatGregCalendarDate;
+    }
+
+    // Check if it's a single day event
+    if (startDate.compare(endDate) === 0) {
+        return format(startDate);
+    }
+    // If event spans multiple days
+    return `${format(startDate)} – ${format(endDate)}`;
+}
+
+export function getEventName(ev: GeneratedEvent, locale: string) {
+    if (ev.name) {
+        if (locale === 'am' || locale === 'en') {
+            return ev.name[locale];
+        }
+    }
+    return ev.id;
+}
