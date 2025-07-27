@@ -105,15 +105,16 @@ export function getEthiopianWeeksList(
     range?: GeneratedEvent[]
 ): EnhancedCalendarDayMetadata[][] {
     const emptyCells = getNumberOfEmptyCellsForMonthStart(
-        startOfMonth(ethDate)
+        ethDate
     );
+    console.log(emptyCells, ethDate, startOfMonth(ethDate))
     const monthDays = getEthiopianMonthDays(ethDate);
     let weekList: EnhancedCalendarDayMetadata[][] = [];
 
     let week: EnhancedCalendarDayMetadata[] = [];
-    for (let i = 1; i < emptyCells + 1; i++) {
+    for (let i = emptyCells; i > 0 ; i--) {
         let firstDay = startOfMonth(ethDate);
-        let prevMonthDay = firstDay.subtract({ days: i });
+        let prevMonthDay = firstDay.subtract({days: i})
         week.push(generateDayMetadata(true, prevMonthDay, range));
     }
 
@@ -204,8 +205,10 @@ export function getEthiopianMonthDays(ethDate: CalendarDate): number[] {
 
 // Borrowed from flash calendar repo
 export function getNumberOfEmptyCellsForMonthStart(date: CalendarDate) {
-    const startDayOfMonth = getDayOfWeek(date, 'am-ET', 'mon');
-    return startDayOfMonth === 0 ? 6 : startDayOfMonth;
+    const monthStart = startOfMonth(date)
+    const startDayOfMonth = getDayOfWeek(monthStart, 'am-ET', 'mon');
+    console.log(startDayOfMonth)
+    return startDayOfMonth;
 }
 
 export function toCalendarDateId(ethDate: CalendarDate): string {
