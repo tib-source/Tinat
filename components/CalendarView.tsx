@@ -4,15 +4,18 @@ import { View, ScrollView } from 'react-native';
 import { toDateId } from '@marceloterreiro/flash-calendar';
 import { Card, CardContent } from '~/components/ui/card';
 
-import { getMiddleOfMonth } from '~/src/helpers/dateHelpers';
+import { getMiddleOfMonth, getToday } from '~/src/helpers/dateHelpers';
 import DualCalendar from './calendar/DualCalendar';
 import { MonthlyEventList } from './calendar/MonthlyEventList';
 import { generateReligiousEventsForYear } from '~/src/generateEvents';
 import { useCalendarStore } from '~/src/state/store';
+import { CalendarDate } from '@internationalized/date';
+import { ethiopianToGregorian, getCurrentEthiopianDate } from '~/src/helpers/ethiopianCalendarHelpers';
 
 export default function CalendarView() {
-    const [currentDate, setCurrentDate] = useState<Date>(getMiddleOfMonth());
-    const year = currentDate.getFullYear();
+    const [currentDate, setCurrentDate] = useState<CalendarDate>(getCurrentEthiopianDate());
+    const gregCurrDate = ethiopianToGregorian(currentDate)
+    const year = gregCurrDate.getFullYear();
     // Generate events for previous, current, and next year, merge, and deduplicate by id+startDate+endDate
     const religiousEvents = useMemo(() => {
         const prevYear = generateReligiousEventsForYear(year - 1);
@@ -38,9 +41,9 @@ export default function CalendarView() {
     const navigateMonth = (direction: 'prev' | 'next') => {
         setCurrentDate((prev) => {
             if (direction === 'next') {
-                return addMonths(prev, 1);
+                return prev.add({months: 1})
             } else {
-                return addMonths(prev, -1);
+                return prev.subtract({months: 1})
             }
         });
     };
@@ -52,8 +55,8 @@ export default function CalendarView() {
                 <Card className="w-full">
                     <CardContent className="p-4">
                         <DualCalendar
-                            currDate={currentDate}
-                            calendarMonthId={toDateId(currentDate)}
+                            currDate={gregCurrDate}
+                            calendarMonthId={toDateId(gregCurrDate)}
                             onCalendarDayPress={() => {}}
                             religiousEvents={religiousEvents}
                             calendarFirstDayOfWeek="monday"
@@ -63,7 +66,7 @@ export default function CalendarView() {
                     </CardContent>
                 </Card>
                 <MonthlyEventList
-                    currentDate={currentDate}
+                    currentDate={gregCurrDate}
                     events={religiousEvents}
                     viewMode={viewMode}
                 />

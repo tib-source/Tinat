@@ -19,13 +19,13 @@ export default function TabLayout() {
             screenOptions={{
                 tabBarShowLabel: false,
                 tabBarStyle: {
+                    height: 70,
                     borderColor: theme.colors.background,
                     display: isReadingScreen ? 'none' : 'flex'
                 },
                 tabBarItemStyle: {
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }
+                    paddingTop: 12, 
+                },
             }}
         >
             <Tabs.Screen
