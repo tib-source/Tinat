@@ -41,7 +41,7 @@ export const MonthlyEventList: React.FC<MonthlyEventListProps> = ({
             {filtered.map((ev) => (
                 <View
                     key={ev.id}
-                    className="bg-white rounded-2xl p-5 w-full flex-row items-center mb-2"
+                    className="bg-background rounded-2xl p-5 w-full flex-row items-center mb-2"
                     style={{
                         borderLeftWidth: 5,
                         borderLeftColor: ev.color,
@@ -57,11 +57,11 @@ export const MonthlyEventList: React.FC<MonthlyEventListProps> = ({
                         flexDirection: 'row'
                     }}
                 >
-                    <View className="flex-1 justify-center">
-                        <Text className="font-bold text-base text-slate-800 mb-0.5">
+                    <View className="flex-1 justify-center p-1">
+                        <Text className="font-bold text-base text-foreground mb-0.5">
                             {getEventName(ev, locale)}
                         </Text>
-                        <Text className="text-xs text-slate-600 mt-0.5 italic tracking-[0.1px]">
+                        <Text className="text-xs text-muted-foreground mt-.5 italic tracking-[0.1px]">
                             {formatEventRange(ev, viewMode)}
                         </Text>
                     </View>

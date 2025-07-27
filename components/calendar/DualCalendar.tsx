@@ -53,20 +53,25 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
         },
         itemWeekName: { content: { color: theme.colors.text } },
         itemDay: {
+            base: ({ isDifferentMonth }) => ({
+                container: isDifferentMonth
+                    ? {
+                          opacity: 0.3
+                      }
+                    : undefined
+            }),
             today: () => ({
                 container: {
                     borderWidth: 2,
                     borderColor: theme.colors.border
                 }
             }),
-            idle: ({ isDifferentMonth }) => ({
-                content: isDifferentMonth
-                    ? {
-                          color: theme.colors.background
-                      }
-                    : undefined
+            idle: () => ({
+                content: {
+                    color: theme.colors.background
+                }
             }),
-            active: ({ isPressed, eventMetadata }) => ({
+            active: ({ isPressed }) => ({
                 container: {
                     backgroundColor: theme.colors.background,
                     opacity: isPressed ? 0.6 : 0.8,
@@ -77,8 +82,8 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
                 }
             }),
             disabled: () => ({
-                content: {
-                    color: theme.colors.border
+                container: {
+                    display: 'none'
                 }
             })
         }

@@ -84,14 +84,11 @@ export const getStateFields = ({
 
     const isToday = todayId === id;
 
-    const state: DayState =
-        allEvents.length > 0
-            ? ('active' as const)
-            : isDisabled
-              ? 'disabled'
-              : isToday
-                ? 'today'
-                : 'idle';
+    const state: DayState = isDisabled
+        ? 'disabled'
+        : isToday
+          ? 'today'
+          : 'idle';
 
     return {
         isStartOfRange:

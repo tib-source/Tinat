@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import CalendarToggle from '~/components/calendar/CalendarToggle';
 
 export default function CalendarLayout() {
     const { t } = useTranslation();
@@ -13,7 +14,8 @@ export default function CalendarLayout() {
                         'calendar.headerTitle',
                         'Ethiopian Calendar'
                     ),
-                    headerShadowVisible: false
+                    headerShadowVisible: false,
+                    headerRight: () => <CalendarToggle />
                 }}
             />
         </Stack>

@@ -11,11 +11,14 @@ import {
     CalendarDate,
     DateFormatter,
     endOfMonth,
+    endOfWeek,
     EthiopicCalendar,
     getDayOfWeek,
     getLocalTimeZone,
     GregorianCalendar,
+    isWeekend,
     startOfMonth,
+    startOfWeek,
     toCalendar
 } from '@internationalized/date';
 
@@ -112,7 +115,7 @@ export function getEthiopianWeeksList(
     for (let i = 1; i < emptyCells + 1; i++) {
         let firstDay = startOfMonth(ethDate);
         let prevMonthDay = firstDay.subtract({ days: i });
-        week.push(generateDayMetadata(true, prevMonthDay));
+        week.push(generateDayMetadata(true, prevMonthDay, range));
     }
 
     const monthCopy = [...monthDays];
@@ -124,7 +127,7 @@ export function getEthiopianWeeksList(
             for (let i = 1; i <= remainingDays; i++) {
                 const lastDay = endOfMonth(ethDate);
                 const newDay = lastDay.add({ days: i });
-                let newMetadata = generateDayMetadata(true, newDay);
+                let newMetadata = generateDayMetadata(true, newDay, range);
 
                 week.push(newMetadata);
             }
@@ -145,7 +148,7 @@ export function getEthiopianWeeksList(
 }
 
 function generateDayMetadata(
-    isEmpty: boolean,
+    isDifferentMonth: boolean,
     ethDate: CalendarDate,
     range?: GeneratedEvent[]
 ): EnhancedCalendarDayMetadata {
@@ -154,13 +157,14 @@ function generateDayMetadata(
     return {
         id: toCalendarDateId(ethDate),
         date: gregDay,
-        displayLabel: isEmpty ? '' : ethDate.day.toString(),
-        isDifferentMonth: isEmpty,
-        isEndOfMonth: false,
-        isEndOfWeek: false,
-        isStartOfMonth: false,
-        isStartOfWeek: false,
-        isWeekend: false,
+        displayLabel: ethDate.day.toString(),
+        isDifferentMonth: isDifferentMonth,
+        isEndOfMonth: endOfMonth(ethDate).compare(ethDate) === 0,
+        isEndOfWeek: endOfWeek(ethDate, 'am-ET').compare(ethDate) === 0,
+        isStartOfMonth: startOfMonth(ethDate).compare(ethDate) === 0,
+        isStartOfWeek:
+            startOfWeek(ethDate, 'am-ET', 'mon').compare(ethDate) === 0,
+        isWeekend: isWeekend(ethDate, 'am-ET'),
         ...getStateFields({
             id: toCalendarDateId(ethDate),
             todayId: toCalendarDateId(today),
@@ -185,9 +189,6 @@ export function formatGregCalendarDate(gregDate: CalendarDate): string {
     return formatter.format(greg);
 }
 
-/**
- * Get current Ethiopian date
- */
 export function getCurrentEthiopianDate(): CalendarDate {
     return gregorianToEthiopian(getToday());
 }
@@ -213,7 +214,6 @@ export function toCalendarDateId(ethDate: CalendarDate): string {
     const month = ethDate.month;
     const day = ethDate.day;
 
-    // Pad single digit month and day with leading zeros
     const monthFormatted = month < 10 ? `0${month}` : month;
     const dayFormatted = day < 10 ? `0${day}` : day;
 

@@ -1,23 +1,17 @@
 import React, { useMemo, useState } from 'react';
 import { addMonths } from 'date-fns';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { toDateId } from '@marceloterreiro/flash-calendar';
 import { Card, CardContent } from '~/components/ui/card';
-import { Button } from '~/components/ui/button';
-import { cn } from '~/lib/utils';
+
 import { getMiddleOfMonth } from '~/src/helpers/dateHelpers';
 import DualCalendar from './calendar/DualCalendar';
 import { MonthlyEventList } from './calendar/MonthlyEventList';
 import { generateReligiousEventsForYear } from '~/src/generateEvents';
-import { CalendarDate } from '@internationalized/date';
 import { year } from 'drizzle-orm/mysql-core';
+import { useCalendarStore } from '~/src/state/store';
 
-interface EthiopianCalendarProps {
-    onDateSelect?: (date: CalendarDate) => void;
-    selectedDate?: CalendarDate;
-}
-
-export default function CalendarView(props: EthiopianCalendarProps) {
+export default function CalendarView() {
     const [currentDate, setCurrentDate] = useState<Date>(getMiddleOfMonth());
     // Generate events for previous, current, and next year, merge, and deduplicate by id+startDate+endDate
     const religiousEvents = useMemo(() => {
@@ -40,9 +34,7 @@ export default function CalendarView(props: EthiopianCalendarProps) {
             return true;
         });
     }, [year]);
-    const [viewMode, setViewMode] = useState<'gregorian' | 'ethiopian'>(
-        'ethiopian'
-    );
+    const { viewMode } = useCalendarStore();
 
     const navigateMonth = (direction: 'prev' | 'next') => {
         setCurrentDate((prev) => {
@@ -56,58 +48,6 @@ export default function CalendarView(props: EthiopianCalendarProps) {
 
     return (
         <View className="flex-1 p-4">
-            {/* Header with view toggle */}
-            <Card className="mb-4">
-                <CardContent className="p-4">
-                    <View className="flex-row items-center justify-between mb-4">
-                        <View className="flex-row rounded-lg bg-muted p-1">
-                            <Button
-                                variant={
-                                    viewMode === 'ethiopian'
-                                        ? 'default'
-                                        : 'ghost'
-                                }
-                                size="sm"
-                                onPress={() => setViewMode('ethiopian')}
-                                className="px-3"
-                            >
-                                <Text
-                                    className={cn(
-                                        'text-xs',
-                                        viewMode === 'ethiopian'
-                                            ? 'text-primary-foreground'
-                                            : 'text-muted-foreground'
-                                    )}
-                                >
-                                    የኢትዮጵያ
-                                </Text>
-                            </Button>
-                            <Button
-                                variant={
-                                    viewMode === 'gregorian'
-                                        ? 'default'
-                                        : 'ghost'
-                                }
-                                size="sm"
-                                onPress={() => setViewMode('gregorian')}
-                                className="px-3"
-                            >
-                                <Text
-                                    className={cn(
-                                        'text-xs',
-                                        viewMode === 'gregorian'
-                                            ? 'text-primary-foreground'
-                                            : 'text-muted-foreground'
-                                    )}
-                                >
-                                    Gregorian
-                                </Text>
-                            </Button>
-                        </View>
-                    </View>
-                </CardContent>
-            </Card>
-
             {/* Calendar view */}
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Card className="w-full">
