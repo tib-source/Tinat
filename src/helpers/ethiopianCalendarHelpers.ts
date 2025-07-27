@@ -28,7 +28,6 @@ export interface EthiopianMonth {
     days: number;
 }
 
-// Ethiopian month names
 export const ETHIOPIAN_MONTHS: EthiopianMonth[] = [
     { id: 1, nameAm: 'መስከረም', days: 30 },
     { id: 2, nameAm: 'ጥቅምት', days: 30 },
@@ -205,7 +204,7 @@ export function getEthiopianMonthDays(ethDate: CalendarDate): number[] {
 
 // Borrowed from flash calendar repo
 export function getNumberOfEmptyCellsForMonthStart(date: CalendarDate) {
-    const startDayOfMonth = getDayOfWeek(date, 'fr-FR', 'mon');
+    const startDayOfMonth = getDayOfWeek(date, 'am-ET', 'mon');
     return startDayOfMonth === 0 ? 6 : startDayOfMonth;
 }
 

@@ -128,7 +128,7 @@ const religiousEvents: ReligiousEvent[] = [
         eventType: 'feast',
         dateType: 'variable',
         fromEaster: 49,
-        color: 'rgba(12, 87, 225, 0.53)'
+        color: 'rgba(12, 87, 225, 0.65)'
     },
     {
         id: 'transfiguration',

@@ -8,14 +8,13 @@ import { getMiddleOfMonth } from '~/src/helpers/dateHelpers';
 import DualCalendar from './calendar/DualCalendar';
 import { MonthlyEventList } from './calendar/MonthlyEventList';
 import { generateReligiousEventsForYear } from '~/src/generateEvents';
-import { year } from 'drizzle-orm/mysql-core';
 import { useCalendarStore } from '~/src/state/store';
 
 export default function CalendarView() {
     const [currentDate, setCurrentDate] = useState<Date>(getMiddleOfMonth());
+    const year = currentDate.getFullYear();
     // Generate events for previous, current, and next year, merge, and deduplicate by id+startDate+endDate
     const religiousEvents = useMemo(() => {
-        const year = currentDate.getFullYear();
         const prevYear = generateReligiousEventsForYear(year - 1);
         const thisYear = generateReligiousEventsForYear(year);
         const nextYear = generateReligiousEventsForYear(year + 1);
