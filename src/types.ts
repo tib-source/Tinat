@@ -16,12 +16,13 @@ export interface ReligiousEvent {
     // For fixed dates
     month?: number;
     day?: number;
-    // For variable dates (relative to Easter)
     fromEaster?: number;
-    // For weekly events
     weekDays?: number[];
-    // For fasts only
     duration?: number;
-    // Color for the event (light and transparent, works in both light and dark modes)
+    // Some fasts have a set end day but variable start
+    until?: {
+        month: number;
+        day: number;
+    };
     color: string;
 }

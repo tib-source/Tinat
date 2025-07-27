@@ -43,3 +43,5 @@ expo-env.d.ts
 # vscode
 .vscode/
 .idea/
+.github/chatmodes/
+.github/copilot-instructions.md

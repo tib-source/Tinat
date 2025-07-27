@@ -25,10 +25,9 @@ export function getToday(): Date {
     return today;
 }
 
-
 export function getMiddleOfMonth() {
-    const today = getToday()
-    today.setDate(15)
+    const today = getToday();
+    today.setDate(15);
 
-    return today
+    return today;
 }
