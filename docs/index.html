@@ -304,7 +304,6 @@
             transform: rotate(0deg);
         }
 
-        /* Language transition effects */
         .lang-content {
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
@@ -345,7 +344,6 @@
     <div class="orb"></div>
 
     <div class="container">
-        <!-- Language Toggle -->
         <div class="language-toggle">
             <button class="lang-btn active" data-lang="am">አማ</button>
             <button class="lang-btn" data-lang="en">EN</button>
@@ -415,7 +413,6 @@
     </div>
 
     <script>
-        // i18n Configuration - Clean translation management
         const translations = {
             am: {
                 status: "በቅርቡ በGoogle Play",
@@ -457,14 +454,13 @@
             }
         };
 
-        // Language toggle functionality with i18n
         class LanguageToggle {
             constructor() {
                 this.currentLang = 'am';
                 this.langButtons = document.querySelectorAll('.lang-btn');
                 this.langContent = document.querySelectorAll('.lang-content');
                 this.init();
-                this.updateContent(); // Initial content load
+                this.updateContent();
             }
 
             init() {
@@ -479,18 +475,15 @@
             }
 
             switchLanguage(targetLang) {
-                // Add switching class for animation
                 this.langContent.forEach(element => {
                     element.classList.add('switching');
                 });
 
-                // Wait for animation, then switch content
                 setTimeout(() => {
                     this.currentLang = targetLang;
                     this.updateContent();
                     this.updateActiveButton();
 
-                    // Remove switching class
                     setTimeout(() => {
                         this.langContent.forEach(element => {
                             element.classList.remove('switching');
@@ -509,7 +502,6 @@
                     }
                 });
 
-                // Update Ethiopic font class based on language
                 this.langContent.forEach(element => {
                     if (this.currentLang === 'am' && element.classList.contains('ethiopic-text')) {
                         element.classList.add('ethiopic-text');
@@ -526,12 +518,10 @@
             }
         }
 
-        // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             new LanguageToggle();
         });
 
-        // Add smooth scroll behavior for any future internal links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -545,7 +535,6 @@
             });
         });
 
-        // Add a subtle parallax effect to the floating orbs
         window.addEventListener('mousemove', (e) => {
             const orbs = document.querySelectorAll('.orb');
             const x = e.clientX / window.innerWidth;
