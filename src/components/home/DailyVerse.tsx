@@ -1,13 +1,13 @@
 import { useTheme } from '@react-navigation/native';
+import { Loader } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { View, Text } from 'react-native';
+import { useDailyVerse } from '~/src/hooks/useDatabase';
 
 export default function DailyVerse() {
     const theme = useTheme();
     const { t } = useTranslation();
-    // function updateProgressValue() {
-    //   setProgress(Math.floor(verseCount/verseGoal * 100));
-    // }
+    const { data: dailyVerse, isSuccess } = useDailyVerse()
     return (
         <View
             className="bg-background"
@@ -44,13 +44,17 @@ export default function DailyVerse() {
                     }}
                 >
                     <View style={{ flex: 1, margin: 12 }}>
-                        <Text className="text-base italic text-muted-foreground">
-                            &quot; እኔ ስለ እናንተ የማሰብውን አሳብ አውቄአለሁ፥ የሰላም አሳብ እንጂ
-                            የክፉ አይደለም፤ እርስዋም የሚተማመኑትን ፈጽሞ ለመስጠት ነው &quot;
-                        </Text>
-                        <Text className="mt-2 text-xs text-muted-foreground">
-                            — ኤርምያስ 29፥11
-                        </Text>
+                        {!isSuccess ? <Loader/> : (
+                        <>
+                            <Text className="text-base italic text-muted-foreground">
+                                &quot;{dailyVerse.textAm}&quot;
+                            </Text>
+                            <Text className="mt-2 text-xs text-muted-foreground">
+                                — {dailyVerse.bookTitleAm} {dailyVerse.chapterNumber}፥{dailyVerse.verseNumber}
+                            </Text>
+                        </>
+                    )}
+
                     </View>
                 </View>
             </View>
