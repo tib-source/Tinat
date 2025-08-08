@@ -21,7 +21,7 @@ on:
           - all
 
 env:
-  # EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+  EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
   NODE_OPTIONS: --openssl-legacy-provider
 
 jobs:
@@ -73,7 +73,7 @@ jobs:
       - name: 🏗 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
 
       - name: 📦 Setup npm cache

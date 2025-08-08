@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": ".",
-    "slug": ".",
+    "slug": "tinat",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,9 +16,13 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "extra":{
-      "db" : {
-        "bible" : "./assets/bible.sqlite"
+    "extra": {
+      "db": {
+        "bible": "./assets/bible.sqlite"
+      },
+      "router": {},
+      "eas": {
+        "projectId": "dcca5b52-b20c-44ce-82a4-e0980893b259"
       }
     },
     "ios": {
@@ -41,6 +45,7 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "owner": "tibss"
   }
 }
