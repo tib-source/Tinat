@@ -45,9 +45,9 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
-      - name: 📦 Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      # - name: 📦 Get yarn cache directory path
+      #   id: yarn-cache-dir-path
+      #   run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
       - name: 📦 Setup yarn cache
         uses: actions/cache@v3
