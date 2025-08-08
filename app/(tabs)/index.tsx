@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import Streak from '~/components/home/Streak';
-import DailyVerse from '~/components/home/DailyVerse';
+import Streak from '~/src/components/home/Streak';
+import DailyVerse from '~/src/components/home/DailyVerse';
 
 export default function Screen() {
     return (

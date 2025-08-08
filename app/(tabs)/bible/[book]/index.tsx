@@ -2,10 +2,10 @@ import { useLocalSearchParams, useRouter } from 'expo-router/build/hooks';
 import { BookOpen } from '~/lib/icons/Book';
 import { CircleCheck } from '~/lib/icons/CircleCheck';
 import { View, FlatList, TouchableOpacity } from 'react-native';
-import { Card, CardContent } from '~/components/ui/card';
+import { Card, CardContent } from '~/src/components/ui/card';
 import { useTheme } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { Text } from '~/components/ui/text';
+import { Text } from '~/src/components/ui/text';
 import { useChaptersForBook } from '~/src/hooks/useDatabase';
 export default function Index() {
     const { book } = useLocalSearchParams();

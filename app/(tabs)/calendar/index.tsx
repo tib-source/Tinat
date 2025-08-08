@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import CalendarView from '~/components/CalendarView';
+import CalendarView from '~/src/components/CalendarView';
 
 export default function Index() {
     return (

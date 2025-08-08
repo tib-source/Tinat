@@ -15,7 +15,7 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import { PortalHost } from '@rn-primitives/portal';
 import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import DatabaseLoader from '~/components/DatabaseLoader';
+import DatabaseLoader from '~/src/components/DatabaseLoader';
 import { QueryProvider } from '~/src/providers/QueryProvider';
 
 const LIGHT_THEME: Theme = {
