@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Input } from '~/components/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
-import BibleBookList from '~/components/BibleBookList';
-import { Text } from '~/components/ui/text';
+import { Input } from '~/src/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/src/components/ui/tabs';
+import BibleBookList from '~/src/components/BibleBookList';
+import { Text } from '~/src/components/ui/text';
 import { View } from 'react-native';
 import { useBooks } from '~/src/hooks/useDatabase';
 import { Loader } from 'lucide-react-native';

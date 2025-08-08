@@ -2,13 +2,13 @@ import { useTheme } from '@react-navigation/native';
 import * as React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Button } from '~/components/ui/button';
+import { Button } from '~/src/components/ui/button';
 import {
     Popover,
     PopoverContent,
     PopoverTrigger
-} from '~/components/ui/popover';
-import { Text } from '~/components/ui/text';
+} from '~/src/components/ui/popover';
+import { Text } from '~/src/components/ui/text';
 import { FontIcon } from '~/lib/icons/Font';
 import { Slider } from 'react-native-awesome-slider';
 import { SharedValue } from 'react-native-reanimated';

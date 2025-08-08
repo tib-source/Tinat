@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import { toDateId } from '@marceloterreiro/flash-calendar';
-import { Card, CardContent } from '~/components/ui/card';
+import { Card, CardContent } from '~/src/components/ui/card';
 import DualCalendar from './calendar/DualCalendar';
 import { MonthlyEventList } from './calendar/MonthlyEventList';
 import { generateReligiousEventsForYear } from '~/src/generateEvents';

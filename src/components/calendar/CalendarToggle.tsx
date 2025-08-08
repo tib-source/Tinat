@@ -1,6 +1,6 @@
 import { View } from 'react-native';
-import { Button } from '~/components/ui/button';
-import { Text } from '~/components/ui/text';
+import { Button } from '~/src/components/ui/button';
+import { Text } from '~/src/components/ui/text';
 import { cn } from '~/lib/utils';
 import { useCalendarStore } from '~/src/state/store';
 

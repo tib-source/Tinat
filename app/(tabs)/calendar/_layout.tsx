@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import CalendarToggle from '~/components/calendar/CalendarToggle';
+import CalendarToggle from '~/src/components/calendar/CalendarToggle';
 
 export default function CalendarLayout() {
     const { t } = useTranslation();

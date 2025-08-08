@@ -3,10 +3,10 @@ import { useLocalSearchParams, useRouter } from 'expo-router/build/hooks';
 import { View, Text, FlatList } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { useState } from 'react';
-import { CardContent } from '~/components/ui/card';
-import { Button } from '~/components/ui/button';
+import { CardContent } from '~/src/components/ui/card';
+import { Button } from '~/src/components/ui/button';
 import { LeftArrow, RightArrow } from '~/lib/icons/Navigation';
-import { FontPopover } from '~/components/FontPopover';
+import { FontPopover } from '~/src/components/FontPopover';
 import { useSharedValue } from 'react-native-reanimated';
 import { useVersesForChapter } from '~/src/hooks/useDatabase';
 

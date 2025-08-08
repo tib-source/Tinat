@@ -1,7 +1,7 @@
 import { View } from 'react-native';
-import { Card, CardContent } from '~/components/ui/card';
-import { Progress } from '~/components/ui/progress';
-import { Text } from '~/components/ui/text';
+import { Card, CardContent } from '~/src/components/ui/card';
+import { Progress } from '~/src/components/ui/progress';
+import { Text } from '~/src/components/ui/text';
 import { useTranslation } from 'react-i18next';
 import { CircleCheck } from '~/lib/icons/CircleCheck';
 import { Flame } from '~/lib/icons/Flame';

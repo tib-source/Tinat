@@ -6,7 +6,7 @@
 import { getToday } from './dateHelpers';
 import { getStateFields } from './calendarHelper';
 import { GeneratedEvent } from '../generateEvents';
-import { EnhancedCalendarDayMetadata } from '~/components/calendar/types';
+import { EnhancedCalendarDayMetadata } from '~/src/components/calendar/types';
 import {
     CalendarDate,
     DateFormatter,
@@ -105,7 +105,6 @@ export function getEthiopianWeeksList(
     range?: GeneratedEvent[]
 ): EnhancedCalendarDayMetadata[][] {
     const emptyCells = getNumberOfEmptyCellsForMonthStart(ethDate);
-    console.log(emptyCells, ethDate, startOfMonth(ethDate));
     const monthDays = getEthiopianMonthDays(ethDate);
     let weekList: EnhancedCalendarDayMetadata[][] = [];
 
@@ -205,7 +204,6 @@ export function getEthiopianMonthDays(ethDate: CalendarDate): number[] {
 export function getNumberOfEmptyCellsForMonthStart(date: CalendarDate) {
     const monthStart = startOfMonth(date);
     const startDayOfMonth = getDayOfWeek(monthStart, 'am-ET', 'mon');
-    console.log(startDayOfMonth);
     return startDayOfMonth;
 }
 

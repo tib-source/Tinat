@@ -1,6 +1,6 @@
 import { Tabs, usePathname } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { ThemeToggle } from '~/components/ThemeToggle';
+import { ThemeToggle } from '~/src/components/ThemeToggle';
 import { CalendarDays, HomeIcon } from '~/lib/icons/Navigation';
 import { BookOpen } from '~/lib/icons/Book';
 import '~/translation';
