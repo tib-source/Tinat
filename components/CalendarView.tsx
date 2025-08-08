@@ -1,20 +1,22 @@
 import React, { useMemo, useState } from 'react';
-import { addMonths } from 'date-fns';
 import { View, ScrollView } from 'react-native';
 import { toDateId } from '@marceloterreiro/flash-calendar';
 import { Card, CardContent } from '~/components/ui/card';
-
-import { getMiddleOfMonth, getToday } from '~/src/helpers/dateHelpers';
 import DualCalendar from './calendar/DualCalendar';
 import { MonthlyEventList } from './calendar/MonthlyEventList';
 import { generateReligiousEventsForYear } from '~/src/generateEvents';
 import { useCalendarStore } from '~/src/state/store';
 import { CalendarDate } from '@internationalized/date';
-import { ethiopianToGregorian, getCurrentEthiopianDate } from '~/src/helpers/ethiopianCalendarHelpers';
+import {
+    ethiopianToGregorian,
+    getCurrentEthiopianDate
+} from '~/src/helpers/ethiopianCalendarHelpers';
 
 export default function CalendarView() {
-    const [currentDate, setCurrentDate] = useState<CalendarDate>(getCurrentEthiopianDate());
-    const gregCurrDate = ethiopianToGregorian(currentDate)
+    const [currentDate, setCurrentDate] = useState<CalendarDate>(
+        getCurrentEthiopianDate()
+    );
+    const gregCurrDate = ethiopianToGregorian(currentDate);
     const year = gregCurrDate.getFullYear();
     // Generate events for previous, current, and next year, merge, and deduplicate by id+startDate+endDate
     const religiousEvents = useMemo(() => {
@@ -41,9 +43,9 @@ export default function CalendarView() {
     const navigateMonth = (direction: 'prev' | 'next') => {
         setCurrentDate((prev) => {
             if (direction === 'next') {
-                return prev.add({months: 1})
+                return prev.add({ months: 1 });
             } else {
-                return prev.subtract({months: 1})
+                return prev.subtract({ months: 1 });
             }
         });
     };

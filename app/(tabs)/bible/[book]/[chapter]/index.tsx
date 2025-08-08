@@ -23,6 +23,7 @@ export default function Index() {
     const maxFont = useSharedValue(32);
     const verses = useVersesForChapter(chapterId);
     const router = useRouter();
+
     return (
         <View className="flex-1 p-2 pb-0 pt-0 items-center">
             <FlatList
