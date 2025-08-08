@@ -63,6 +63,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@types/react": "~19.0.10",
+    "@types/webpack-env": "^1.18.8",
     "babel-plugin-inline-import": "^3.0.0",
     "drizzle-kit": "^0.31.1",
     "drizzle-orm": "^0.43.1",
