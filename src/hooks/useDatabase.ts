@@ -5,7 +5,10 @@ import {
     getChapterWithId,
     toggleChapterRead
 } from '../queries/chapterQueries';
-import { getDailyVerse, getVersesForChapter } from '../queries/verseQueries';
+import {
+    getDailyVerseCached,
+    getVersesForChapter
+} from '../queries/verseQueries';
 import { getAllBooks, getBookWithId } from '../queries/bookQueries';
 import {
     addChaptersRead,
@@ -55,11 +58,11 @@ export function useVersesForChapter(chapterId: number) {
 }
 
 // Verse Queries
-export function useDailyVerse(){
+export function useDailyVerse() {
     return useQuery({
         queryKey: ['daily-verse'],
-        queryFn: getDailyVerse
-    })
+        queryFn: getDailyVerseCached
+    });
 }
 
 // Mutations

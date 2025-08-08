@@ -7,7 +7,7 @@ import { useDailyVerse } from '~/src/hooks/useDatabase';
 export default function DailyVerse() {
     const theme = useTheme();
     const { t } = useTranslation();
-    const { data: dailyVerse, isSuccess } = useDailyVerse()
+    const { data: dailyVerse, isSuccess } = useDailyVerse();
     return (
         <View
             className="bg-background"
@@ -44,17 +44,20 @@ export default function DailyVerse() {
                     }}
                 >
                     <View style={{ flex: 1, margin: 12 }}>
-                        {!isSuccess ? <Loader/> : (
-                        <>
-                            <Text className="text-base italic text-muted-foreground">
-                                &quot;{dailyVerse.textAm}&quot;
-                            </Text>
-                            <Text className="mt-2 text-xs text-muted-foreground">
-                                — {dailyVerse.bookTitleAm} {dailyVerse.chapterNumber}፥{dailyVerse.verseNumber}
-                            </Text>
-                        </>
-                    )}
-
+                        {!isSuccess ? (
+                            <Loader />
+                        ) : (
+                            <>
+                                <Text className="text-base italic text-muted-foreground">
+                                    &quot;{dailyVerse.textAm}&quot;
+                                </Text>
+                                <Text className="mt-2 text-xs text-muted-foreground">
+                                    — {dailyVerse.bookTitleAm}{' '}
+                                    {dailyVerse.chapterNumber}፥
+                                    {dailyVerse.verseNumber}
+                                </Text>
+                            </>
+                        )}
                     </View>
                 </View>
             </View>
