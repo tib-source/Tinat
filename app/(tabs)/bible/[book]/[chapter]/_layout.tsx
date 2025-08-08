@@ -12,11 +12,11 @@ export default function VerseLayout() {
     );
 
     const { data: book } = useBook(bookId);
-    const { data: chapterData } = useChapter(chapterId);
-    const title = `${book?.titleAm ?? ''} - ${chapterData?.chapterNumber ?? ''} : ${chapterData?.verses ?? ''}`;
+    const { data: chapter } = useChapter(chapterId);
+    const title = `${book?.titleAm ?? ''} - ${chapter?.chapterNumber ?? ''} : ${chapter?.verses ?? ''}`;
 
     const logTime = 5 * 1000; // mark chapter as read after this time passes
-    useReadingTracker(chapterData, logTime);
+    useReadingTracker(chapter, logTime);
 
     return (
         <Stack>

@@ -59,5 +59,5 @@ export function useReadingTracker(
         }, delayMs);
 
         return () => clearTimeout(activeTimer);
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [chapter]); // eslint-disable-line react-hooks/exhaustive-deps
 }
