@@ -24,8 +24,8 @@ export default function TabLayout() {
                     display: isReadingScreen ? 'none' : 'flex'
                 },
                 tabBarItemStyle: {
-                    paddingTop: 12, 
-                },
+                    paddingTop: 12
+                }
             }}
         >
             <Tabs.Screen

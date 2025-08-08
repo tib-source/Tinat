@@ -108,7 +108,7 @@ const DualCalendar = memo((props: GregorianCalendarProps) => {
         } else {
             setCalendarMetadata(gregorianMetadata);
         }
-    }, [props]);
+    }, [props, currentEthDate]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <View>

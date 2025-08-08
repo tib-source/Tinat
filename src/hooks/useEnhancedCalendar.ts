@@ -45,7 +45,7 @@ export const useEnhancedCalendar = ({
                 };
             })
         );
-    }, [calendarMonthId, religiousEvents]);
+    }, [religiousEvents, calendarResult.weeksList]);
 
     return {
         weeksList: enhancedWeekList,

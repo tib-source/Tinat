@@ -48,7 +48,7 @@ export function useChaptersForBook(bookId: number) {
 
 export function useVersesForChapter(chapterId: number) {
     return useQuery({
-        queryKey: ['verses', 'chapter', chapterId],
+        queryKey: ['verses', 'chapters', chapterId],
         queryFn: () => getVersesForChapter(chapterId),
         enabled: !!chapterId
     });
@@ -60,10 +60,9 @@ export function useToggleChapterRead() {
 
     return useMutation({
         mutationFn: toggleChapterRead,
-        onSuccess: (_, { chapterId }) => {
-            // Invalidate affected queries
+        onSuccess: (_) => {
             queryClient.invalidateQueries({
-                queryKey: ['chapters', chapterId]
+                queryKey: ['chapters']
             });
             queryClient.invalidateQueries({ queryKey: ['books'] });
         }
