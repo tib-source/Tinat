@@ -1,6 +1,6 @@
 # Tinat - Ethiopian Orthodox Bible Reading App
 
-**Tinat** is a modern Bible reading application specifically designed for the Ethiopian Orthodox community. The app combines traditional scripture reading with modern gamification features to encourage daily Bible engagement through streak tracking and goal setting.
+**Tinat** is a modern Bible reading application specifically designed for the Ethiopian Orthodox community. The app combines traditional scripture reading with modern gamification features to encourage daily Bible engagement.
 
 ## Features
 
