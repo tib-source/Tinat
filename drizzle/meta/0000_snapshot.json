@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "cce2c799-9f86-405f-9a0a-e995598ee92a",
+  "id": "03a83586-907b-4a37-994e-23fb4d886cea",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "books": {
@@ -59,15 +59,15 @@
           "notNull": true,
           "autoincrement": true
         },
-        "book_id": {
-          "name": "book_id",
+        "bookId": {
+          "name": "bookId",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "chapter_number": {
-          "name": "chapter_number",
+        "chapterNumber": {
+          "name": "chapterNumber",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
@@ -87,8 +87,8 @@
           "notNull": false,
           "autoincrement": false
         },
-        "is_read": {
-          "name": "is_read",
+        "isRead": {
+          "name": "isRead",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
@@ -98,12 +98,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "chapters_book_id_books_id_fk": {
-          "name": "chapters_book_id_books_id_fk",
+        "chapters_bookId_books_id_fk": {
+          "name": "chapters_bookId_books_id_fk",
           "tableFrom": "chapters",
           "tableTo": "books",
           "columnsFrom": [
-            "book_id"
+            "bookId"
           ],
           "columnsTo": [
             "id"
@@ -133,15 +133,15 @@
           "notNull": true,
           "autoincrement": false
         },
-        "chapters_read": {
-          "name": "chapters_read",
+        "chaptersRead": {
+          "name": "chaptersRead",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -212,15 +212,15 @@
           "notNull": true,
           "autoincrement": true
         },
-        "chapter_id": {
-          "name": "chapter_id",
+        "chapterId": {
+          "name": "chapterId",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "verse_number": {
-          "name": "verse_number",
+        "verseNumber": {
+          "name": "verseNumber",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
@@ -243,12 +243,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "verses_chapter_id_chapters_id_fk": {
-          "name": "verses_chapter_id_chapters_id_fk",
+        "verses_chapterId_chapters_id_fk": {
+          "name": "verses_chapterId_chapters_id_fk",
           "tableFrom": "verses",
           "tableTo": "chapters",
           "columnsFrom": [
-            "chapter_id"
+            "chapterId"
           ],
           "columnsTo": [
             "id"

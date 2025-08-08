@@ -26,3 +26,14 @@ export interface ReligiousEvent {
     };
     color: string;
 }
+
+export interface DailyVerse {
+    chapterNumber: number | null;
+    bookTitleAm: string | null;
+    bookTitleEn: string | null;
+    id: number;
+    chapterId: number;
+    verseNumber: number;
+    textAm: string;
+    textEn: string;
+}

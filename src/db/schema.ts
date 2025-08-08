@@ -13,22 +13,22 @@ export const books = sqliteTable('books', {
 // Chapters table
 export const chapters = sqliteTable('chapters', {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-    bookId: integer('book_id')
+    bookId: integer('bookId')
         .notNull()
         .references(() => books.id),
-    chapterNumber: integer('chapter_number').notNull(),
+    chapterNumber: integer('chapterNumber').notNull(),
     titleAm: text('titleAm'),
     titleEn: text('titleEn'),
-    isRead: integer('is_read', { mode: 'boolean' }).default(false)
+    isRead: integer('isRead', { mode: 'boolean' }).default(false)
 });
 
 // Verses table
 export const verses = sqliteTable('verses', {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-    chapterId: integer('chapter_id')
+    chapterId: integer('chapterId')
         .notNull()
         .references(() => chapters.id),
-    verseNumber: integer('verse_number').notNull(),
+    verseNumber: integer('verseNumber').notNull(),
     textAm: text('textAm').notNull(),
     textEn: text('textEn').notNull()
 });
@@ -36,10 +36,10 @@ export const verses = sqliteTable('verses', {
 export const logs = sqliteTable('logs', {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
     date: integer({ mode: 'timestamp' }).notNull(), // Use text for dates in SQLite
-    chaptersRead: text('chapters_read', { mode: 'json' })
+    chaptersRead: text('chaptersRead', { mode: 'json' })
         .$type<number[]>()
         .notNull(), // Use text with JSON mode
-    createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`)
+    createdAt: text('createdAt').default(sql`CURRENT_TIMESTAMP`)
 });
 
 // // Bookmarks table
