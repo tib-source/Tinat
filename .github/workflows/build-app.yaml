@@ -22,7 +22,7 @@ on:
 
 env:
   # EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-  NODE_OPTIONS: --openssl-legacy-provider --legacy-peer-deps
+  NODE_OPTIONS: --openssl-legacy-provider
 
 jobs:
   check-skip:
