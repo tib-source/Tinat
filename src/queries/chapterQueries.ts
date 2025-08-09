@@ -1,4 +1,4 @@
-import { db } from '../..';
+import { db } from '../../App';
 import { chapters, NewChapter, verses } from '../db/schema';
 import { eq, getTableColumns, sql } from 'drizzle-orm';
 

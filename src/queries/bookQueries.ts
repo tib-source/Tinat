@@ -1,5 +1,5 @@
 import { eq, getTableColumns, sql } from 'drizzle-orm';
-import { db } from '../..';
+import { db } from '../../App';
 import { books, chapters, NewBook } from '../db/schema';
 import { BookData } from '../types';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ActivityIndicator, Text } from 'react-native';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
-import { db } from '~/.';
+import { db } from '~/App';
 import migrations from '~/drizzle/migrations';
 import { seedBibleData } from '~/src/db/seedBibleData';
 

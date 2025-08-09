@@ -1,4 +1,4 @@
-import { db } from '../..';
+import { db } from '../../App';
 import { logs, NewLog } from '../db/schema';
 import { eq, gte } from 'drizzle-orm';
 import { getToday } from '../helpers/dateHelpers';

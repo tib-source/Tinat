@@ -1,6 +1,6 @@
 {
-  "name": "Tinat",
-  "main": "index.tsx",
+  "name": "tinat",
+  "main": "App.tsx",
   "version": "1.0.0",
   "scripts": {
     "dev": "expo start -c",

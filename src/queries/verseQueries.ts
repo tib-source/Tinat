@@ -1,5 +1,5 @@
 import { eq, getTableColumns, sql } from 'drizzle-orm';
-import { db } from '../..';
+import { db } from '../../App';
 import { books, chapters, NewVerse, Verse, verses } from '../db/schema';
 import { toDateId } from '@marceloterreiro/flash-calendar';
 import AsyncStorage from '@react-native-async-storage/async-storage';

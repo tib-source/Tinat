@@ -1,4 +1,4 @@
-import { db } from '~/index';
+import { db } from '~/App';
 import bibleData from './amharic-bible.json';
 import { books, chapters, logs, NewVerse, verses } from './schema';
 import { sql } from 'drizzle-orm';
