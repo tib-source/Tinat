@@ -6,8 +6,6 @@ import { openDatabaseSync } from 'expo-sqlite';
 import * as schema from './src/db/schema';
 import * as Font from 'expo-font';
 import React from 'react';
-import { View, ActivityIndicator } from 'react-native';
-
 // Open the database with change listeners enabled for live queries
 const expo = openDatabaseSync('bible.db', { enableChangeListener: true });
 
@@ -32,14 +30,6 @@ export function App() {
     }
     loadFonts();
   }, []);
-
-  if (!fontsLoaded) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
 
   const ctx = require.context('./app');
   return <ExpoRoot context={ctx} />;
