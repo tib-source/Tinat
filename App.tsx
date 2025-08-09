@@ -7,7 +7,7 @@ import * as schema from './src/db/schema';
 import * as Font from 'expo-font';
 import React from 'react';
 // Open the database with change listeners enabled for live queries
-const expo = openDatabaseSync('bible.db', { enableChangeListener: true });
+const expo = openDatabaseSync('bible.sqlite', { enableChangeListener: true });
 
 // Create the drizzle instance with schema
 export const db = drizzle(expo, { schema });
