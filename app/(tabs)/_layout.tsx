@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ThemeToggle } from '~/src/components/ThemeToggle';
 import { CalendarDays, HomeIcon } from '~/lib/icons/Navigation';
 import { BookOpen } from '~/lib/icons/Book';
+import CalendarToggle from '~/src/components/calendar/CalendarToggle';
 import '~/translation';
 import { useTheme } from '@react-navigation/native';
 
@@ -11,8 +12,8 @@ export default function TabLayout() {
     const theme = useTheme();
     const path = usePathname();
 
-    // Check if current path is a Bible chapter view
-    const isReadingScreen = path.match(/\/bible\/[^\/]+\/[^\/]+$/);
+    // Check if current path is a Bible chapter view (verse reading screen)
+    const isReadingScreen = path.match(/\/bible\/[^\/]+\/\d+$/);
 
     return (
         <Tabs
@@ -46,11 +47,16 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="calendar"
+                name="calendar/index"
                 options={{
                     title: t('calendar.title', 'Calendar'),
-                    headerShown: false,
+                    headerTitle: t(
+                        'calendar.headerTitle',
+                        'Ethiopian Calendar'
+                    ),
+                    headerShown: true,
                     headerShadowVisible: false,
+                    headerRight: () => <CalendarToggle />,
                     tabBarIcon: ({ color }) => <CalendarDays color={color} />
                 }}
             />

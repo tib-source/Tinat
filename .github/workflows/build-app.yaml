@@ -23,6 +23,8 @@ on:
 env:
   EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
   NODE_OPTIONS: --openssl-legacy-provider
+  # Gradle optimization settings
+  GRADLE_OPTS: -Dorg.gradle.jvmargs=-Xmx4096m -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true -Dorg.gradle.caching=true
 
 jobs:
   check-skip:
@@ -84,20 +86,41 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
 
+      - name: 🏗 Setup Gradle cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: 🏗 Setup Android SDK cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.android/sdk
+          key: ${{ runner.os }}-android-sdk-${{ hashFiles('**/android/app/build.gradle', '**/android/build.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-android-sdk-
+
+      - name: 📦 Setup Metro cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules/.cache
+            .metro-health-check*
+          key: ${{ runner.os }}-metro-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-metro-
+
       - name: 📦 Install dependencies
         run: |
           npm ci
           npm install -g eas-cli@latest
 
-      - name: 📱 Setup EAS build cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.eas-build-local
-          key: ${{ runner.os }}-eas-build-local-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-eas-build-local-
-
-      - name: 🔄 Verify EAS CLI installation
+      - name:  Verify EAS CLI installation
         run: |
           echo "EAS CLI version:"
           eas --version
@@ -126,8 +149,9 @@ jobs:
       # - name: 📱 Build Development APK
       #   if: github.event.inputs.buildType == 'all' || github.event.inputs.buildType == 'dev' || github.event_name == 'push'
       #   run: |
-      #     # Build with increased memory limit
+      #     # Build with increased memory limit and Gradle optimizations
       #     export NODE_OPTIONS="--openssl-legacy-provider --max_old_space_size=4096"
+      #     export GRADLE_OPTS="-Dorg.gradle.jvmargs=-Xmx4096m -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true -Dorg.gradle.caching=true"
       #     eas build --platform android --profile development --local --non-interactive --output=./app-dev.apk
       #   env:
       #     NODE_ENV: development
@@ -136,6 +160,8 @@ jobs:
         if: github.event.inputs.buildType == 'all' || github.event.inputs.buildType == 'prod-apk' || github.event_name == 'push'
         run: |
           export NODE_OPTIONS="--openssl-legacy-provider --max_old_space_size=4096"
+          # Enable Gradle optimizations
+          export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true -Dorg.gradle.caching=true"
           eas build --platform android --profile production-apk --local --non-interactive --output=./app-prod.apk
         env:
           NODE_ENV: production
@@ -144,12 +170,14 @@ jobs:
       #   if: github.event.inputs.buildType == 'all' || github.event.inputs.buildType == 'prod-aab' || github.event_name == 'push'
       #   run: |
       #     export NODE_OPTIONS="--openssl-legacy-provider --max_old_space_size=4096"
+      #     export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true -Dorg.gradle.caching=true"
       #     eas build --platform android --profile production --local --non-interactive --output=./app-prod.aab
       #   env:
       #     NODE_ENV: production
 
       - name: 📦 Upload build artifacts to GitHub
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: app-builds
           path: |
@@ -157,3 +185,4 @@ jobs:
             ./app-prod.apk
             ./app-prod.aab
           retention-days: 7
+          if-no-files-found: ignore

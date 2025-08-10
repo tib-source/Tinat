@@ -19,11 +19,12 @@ export default function VerseLayout() {
     useReadingTracker(chapter, logTime);
 
     return (
-        <Stack>
-            <Stack.Screen
-                name="index"
-                options={{ headerTitle: title, headerShadowVisible: false }}
-            />
+        <Stack
+            screenOptions={{
+                headerShadowVisible: false
+            }}
+        >
+            <Stack.Screen name="index" options={{ headerTitle: title }} />
         </Stack>
     );
 }

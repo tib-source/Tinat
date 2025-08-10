@@ -24,7 +24,6 @@ export function App() {
         });
         setFontsLoaded(true);
       } catch (e) {
-        // If font fails to load, still allow app to render
         setFontsLoaded(true);
       }
     }

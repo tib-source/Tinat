@@ -17,7 +17,6 @@ import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import DatabaseLoader from '~/src/components/DatabaseLoader';
 import { QueryProvider } from '~/src/providers/QueryProvider';
-
 const LIGHT_THEME: Theme = {
     ...DefaultTheme,
     colors: NAV_THEME.light
@@ -56,27 +55,36 @@ export default function RootLayout() {
     }
 
     return (
-        <GestureHandlerRootView>
-            <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-                <DatabaseLoader>
-                    <QueryProvider>
-                        <StatusBar
-                            style={isDarkColorScheme ? 'light' : 'dark'}
-                        />
-                        <Stack>
-                            <Stack.Screen
-                                name="(tabs)"
-                                options={{
-                                    headerShown: false
-                                }}
+            <GestureHandlerRootView>
+                <ThemeProvider
+                    value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}
+                >
+                    <DatabaseLoader>
+                        <QueryProvider>
+                            <StatusBar
+                                style={isDarkColorScheme ? 'light' : 'dark'}
                             />
-                        </Stack>
+                            <Stack
+                                screenOptions={{
+                                    headerShown: false,
+                                    contentStyle: {
+                                        backgroundColor: 'transparent'
+                                    }
+                                }}
+                            >
+                                <Stack.Screen
+                                    name="(tabs)"
+                                    options={{
+                                        headerShown: false
+                                    }}
+                                />
+                            </Stack>
 
-                        <PortalHost />
-                    </QueryProvider>
-                </DatabaseLoader>
-            </ThemeProvider>
-        </GestureHandlerRootView>
+                            <PortalHost />
+                        </QueryProvider>
+                    </DatabaseLoader>
+                </ThemeProvider>
+            </GestureHandlerRootView>
     );
 }
 

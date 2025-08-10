@@ -12,11 +12,12 @@ export default function ChapterLayout() {
     let { data: book } = useBook(bookId);
     let bookName = book?.titleAm || '';
     return (
-        <Stack>
-            <Stack.Screen
-                name="index"
-                options={{ headerTitle: bookName, headerShadowVisible: false }}
-            />
+        <Stack
+            screenOptions={{
+                headerShadowVisible: false
+            }}
+        >
+            <Stack.Screen name="index" options={{ headerTitle: bookName }} />
             <Stack.Screen name="[chapter]" options={{ headerShown: false }} />
         </Stack>
     );
