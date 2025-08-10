@@ -55,36 +55,34 @@ export default function RootLayout() {
     }
 
     return (
-            <GestureHandlerRootView>
-                <ThemeProvider
-                    value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}
-                >
-                    <DatabaseLoader>
-                        <QueryProvider>
-                            <StatusBar
-                                style={isDarkColorScheme ? 'light' : 'dark'}
-                            />
-                            <Stack
-                                screenOptions={{
-                                    headerShown: false,
-                                    contentStyle: {
-                                        backgroundColor: 'transparent'
-                                    }
+        <GestureHandlerRootView>
+            <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+                <DatabaseLoader>
+                    <QueryProvider>
+                        <StatusBar
+                            style={isDarkColorScheme ? 'light' : 'dark'}
+                        />
+                        <Stack
+                            screenOptions={{
+                                headerShown: false,
+                                contentStyle: {
+                                    backgroundColor: 'transparent'
+                                }
+                            }}
+                        >
+                            <Stack.Screen
+                                name="(tabs)"
+                                options={{
+                                    headerShown: false
                                 }}
-                            >
-                                <Stack.Screen
-                                    name="(tabs)"
-                                    options={{
-                                        headerShown: false
-                                    }}
-                                />
-                            </Stack>
+                            />
+                        </Stack>
 
-                            <PortalHost />
-                        </QueryProvider>
-                    </DatabaseLoader>
-                </ThemeProvider>
-            </GestureHandlerRootView>
+                        <PortalHost />
+                    </QueryProvider>
+                </DatabaseLoader>
+            </ThemeProvider>
+        </GestureHandlerRootView>
     );
 }
 
