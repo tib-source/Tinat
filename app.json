@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "tinat",
+    "name": "Tinat",
     "slug": "tinat",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FDBB5A"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -31,8 +31,8 @@
     "android": {
       "package": "com.tibss.tinat",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/adaptive-icon/foreground.png",
+        "backgroundColor": "#FDBB5A"
       }
     },
     "web": {
