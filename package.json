@@ -74,12 +74,12 @@
     "eslint-config-expo": "~9.2.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
-    "pre-commit": "^1.2.2",
     "prettier": "^3.5.3",
+    "simple-git-hooks": "^2.13.1",
     "typescript": "^5.3.3"
-  }, 
-  "pre-commit": [
-    "lint"
-  ],
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run lint"
+  },
   "private": true
 }

@@ -8,6 +8,7 @@ export default function Screen() {
         <View className="w-full flex-1 items-center gap-5 p-6">
             <Streak />
             <DailyVerse />
-        </View>
+        </
+        View>
     );
 }
