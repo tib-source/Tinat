@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Input } from '~/src/components/ui/input';
 import {
     Tabs,
     TabsContent,

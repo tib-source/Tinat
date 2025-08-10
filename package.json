@@ -67,6 +67,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.3",
     "@types/react": "~19.0.10",
     "@types/webpack-env": "^1.18.8",
     "drizzle-kit": "^0.31.1",
@@ -75,6 +78,7 @@
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
     "prettier": "^3.5.3",
+    "semantic-release": "^24.2.7",
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.3.3"
   },

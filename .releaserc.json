@@ -1,0 +1,30 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "app-prod.apk",
+            "name": "tinat-${nextRelease.version}.apk",
+            "label": "Tinat Android APK v${nextRelease.version}"
+          }
+        ],
+        "successComment": "🎉 This ${issue.pull_request ? 'pull request' : 'issue'} is included in version [${nextRelease.version}](${releases.filter(release => release.name)[0].url}) 🎉",
+        "failTitle": "🚨 The automated release is failing",
+        "failComment": "This release from branch `${branch.name}` had failed due to the following errors:\n- ${errors.map(err => err.message).join('\\n- ')}"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["CHANGELOG.md", "package.json"],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ]
+  ]
+}
