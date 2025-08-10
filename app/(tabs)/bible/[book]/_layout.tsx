@@ -14,10 +14,11 @@ export default function ChapterLayout() {
     return (
         <Stack
             screenOptions={{
+                headerTitle: bookName,
                 headerShadowVisible: false
             }}
         >
-            <Stack.Screen name="index" options={{ headerTitle: bookName }} />
+            <Stack.Screen name="index" />
             <Stack.Screen name="[chapter]" options={{ headerShown: false }} />
         </Stack>
     );

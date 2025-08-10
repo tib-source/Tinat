@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "tinat",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -26,10 +26,12 @@
       }
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tibss.tinat"
     },
     "android": {
       "package": "com.tibss.tinat",
+      "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon/foreground.png",
         "backgroundColor": "#FDBB5A"

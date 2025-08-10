@@ -31,7 +31,6 @@ export default function TabLayout() {
                 options={{
                     headerTitle: t('home.greeting', { name: 'Tibebe' }),
                     headerShadowVisible: false,
-
                     headerRight: () => <ThemeToggle />,
                     tabBarIcon: ({ color }) => <HomeIcon color={color} />
                 }}
@@ -51,7 +50,6 @@ export default function TabLayout() {
                         'calendar.headerTitle',
                         'Ethiopian Calendar'
                     ),
-                    headerShown: true,
                     headerShadowVisible: false,
                     headerRight: () => <CalendarToggle />,
                     tabBarIcon: ({ color }) => <CalendarDays color={color} />
