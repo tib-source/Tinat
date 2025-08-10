@@ -6,6 +6,7 @@ import { openDatabaseSync } from 'expo-sqlite';
 import * as schema from './src/db/schema';
 import * as Font from 'expo-font';
 import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 // Open the database with change listeners enabled for live queries
 const expo = openDatabaseSync('bible.sqlite', { enableChangeListener: true });
 
@@ -31,7 +32,7 @@ export function App() {
   }, []);
 
   const ctx = require.context('./app');
-  return <ExpoRoot context={ctx} />;
+  return <SafeAreaProvider><ExpoRoot context={ctx} /></SafeAreaProvider>;
 }
 
 registerRootComponent(App);

@@ -1,11 +1,9 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useBook, useChapter } from '~/src/hooks/useDatabase';
 import { useReadingTracker } from '~/src/hooks/useReadingTracker';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function VerseLayout() {
     const params = useLocalSearchParams();
-    const insets = useSafeAreaInsets();
     const bookId = Number.parseInt(
         Array.isArray(params?.book) ? params.book[0] : params?.book
     );
@@ -23,10 +21,7 @@ export default function VerseLayout() {
     return (
         <Stack
             screenOptions={{
-                headerShadowVisible: false,
-                contentStyle: {
-                    paddingTop: insets.top
-                }
+                headerShadowVisible: false
             }}
         >
             <Stack.Screen name="index" options={{ headerTitle: title }} />
