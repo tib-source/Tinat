@@ -32,7 +32,7 @@ export function App() {
   }, []);
 
   const ctx = require.context('./app');
-  return <SafeAreaProvider><ExpoRoot context={ctx} /></SafeAreaProvider>;
+  return <ExpoRoot context={ctx} />;
 }
 
 registerRootComponent(App);
