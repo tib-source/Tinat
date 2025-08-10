@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/tib-source/Tinat/compare/v1.0.2...v1.0.3) (2025-08-10)
+
+
+### Bug Fixes
+
+* maybe this will fix the headers ([9984b6d](https://github.com/tib-source/Tinat/commit/9984b6d5c79c52567049eae8ec4a486e30dee7b3))
+
 ## [1.0.2](https://github.com/tib-source/Tinat/compare/v1.0.1...v1.0.2) (2025-08-10)
 
 
