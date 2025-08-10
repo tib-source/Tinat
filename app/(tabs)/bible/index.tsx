@@ -31,11 +31,11 @@ export default function Index() {
     const [testament, setTestament] = useState('old');
     return (
         <View className="flex-1 p-2">
-            <Input
+            {/* <Input
                 className="rounded-2xl mb-5"
                 placeholder="Search Books..."
                 onChange={() => {}}
-            />
+            /> */}
             {isLoading ? (
                 <Loader />
             ) : (

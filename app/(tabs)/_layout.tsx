@@ -20,12 +20,9 @@ export default function TabLayout() {
             screenOptions={{
                 tabBarShowLabel: false,
                 tabBarStyle: {
-                    height: 70,
+                    height: 50,
                     borderColor: theme.colors.background,
                     display: isReadingScreen ? 'none' : 'flex'
-                },
-                tabBarItemStyle: {
-                    paddingTop: 12
                 }
             }}
         >
@@ -43,7 +40,6 @@ export default function TabLayout() {
                 name="bible"
                 options={{
                     headerShown: false,
-                    headerShadowVisible: false,
                     tabBarIcon: ({ color }) => <BookOpen color={color} />
                 }}
             />

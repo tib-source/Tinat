@@ -1,8 +1,10 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useBook } from '~/src/hooks/useDatabase';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function ChapterLayout() {
     const params = useLocalSearchParams();
+    const insets = useSafeAreaInsets();
 
     const bookParam = params?.book;
     const bookId = Number.parseInt(
@@ -14,7 +16,10 @@ export default function ChapterLayout() {
     return (
         <Stack
             screenOptions={{
-                headerShadowVisible: false
+                headerShadowVisible: false,
+                contentStyle: {
+                    paddingTop: insets.top
+                }
             }}
         >
             <Stack.Screen name="index" options={{ headerTitle: bookName }} />
