@@ -7,13 +7,13 @@ export default function BibleLayout() {
     return (
         <Stack
             screenOptions={{
-                headerShadowVisible: false,
+                headerShadowVisible: false
             }}
         >
             <Stack.Screen
                 name="index"
                 options={{
-                    headerTitle: t('bible.headerTitle'),
+                    headerTitle: t('bible.headerTitle')
                 }}
             />
             <Stack.Screen name="[book]" options={{ headerShown: false }} />

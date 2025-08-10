@@ -58,7 +58,9 @@ export default function RootLayout() {
     return (
         <SafeAreaProvider>
             <GestureHandlerRootView>
-                <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+                <ThemeProvider
+                    value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}
+                >
                     <DatabaseLoader>
                         <QueryProvider>
                             <StatusBar
