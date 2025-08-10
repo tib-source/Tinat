@@ -34,6 +34,8 @@ export default function TabLayout() {
                 options={{
                     headerTitle: t('home.greeting', { name: 'Tibebe' }),
                     headerShadowVisible: false,
+
+                    
                     headerRight: () => <ThemeToggle />,
                     tabBarIcon: ({ color }) => <HomeIcon color={color} />
                 }}

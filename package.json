@@ -11,7 +11,7 @@
     "web": "expo start -c --web",
     "clean": "rm -rf .expo node_modules",
     "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css",
-    "lint": "expo lint"
+    "lint": "expo lint --fix"
   },
   "dependencies": {
     "@internationalized/date": "^3.8.2",
