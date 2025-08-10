@@ -11,7 +11,7 @@
     "web": "expo start -c --web",
     "clean": "rm -rf .expo node_modules",
     "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css",
-    "lint": "expo lint --fix"
+    "lint": "expo lint"
   },
   "dependencies": {
     "@internationalized/date": "^3.8.2",
@@ -79,7 +79,7 @@
     "typescript": "^5.3.3"
   },
   "simple-git-hooks": {
-    "pre-commit": "npm run lint -- --fix"
+    "pre-commit": "npm run lint && npm run lint -- --fix"
   },
   "private": true
 }
