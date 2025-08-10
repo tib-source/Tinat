@@ -79,7 +79,7 @@
     "typescript": "^5.3.3"
   }, 
   "pre-commit": [
-    "lint -- --fix"
+    "lint"
   ],
   "private": true
 }
