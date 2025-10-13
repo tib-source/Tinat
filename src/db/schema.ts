@@ -1,5 +1,6 @@
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
+import { UserSettings } from '../types';
 
 // Books table
 export const books = sqliteTable('books', {
@@ -75,11 +76,12 @@ export const logs = sqliteTable('logs', {
 // });
 
 // User settings table
-export const userSettings = sqliteTable('user_settings', {
-    id: integer('id').primaryKey(),
-    key: text('key').notNull().unique(),
-    value: text('value').notNull(),
-    updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`)
+export const userSettings = sqliteTable('userSettings', {
+    id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+    settings: text('settings', { mode: 'json' })
+        .$type<UserSettings>()
+        .notNull(),
+    updatedAt: text('updatedAt').default(sql`CURRENT_TIMESTAMP`)
 });
 
 export type Book = typeof books.$inferSelect;

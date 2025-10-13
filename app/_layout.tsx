@@ -18,6 +18,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import DatabaseLoader from '~/src/components/DatabaseLoader';
 import { QueryProvider } from '~/src/providers/QueryProvider';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 const LIGHT_THEME: Theme = {
     ...DefaultTheme,
     colors: NAV_THEME.light
@@ -36,7 +37,7 @@ export default function RootLayout() {
     const hasMounted = React.useRef(false);
     const { colorScheme, isDarkColorScheme } = useColorScheme();
     const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
-
+    const { t } = useTranslation();
     useIsomorphicLayoutEffect(() => {
         if (hasMounted.current) {
             return;
@@ -74,10 +75,18 @@ export default function RootLayout() {
                                     }
                                 }}
                             >
-                                <Stack.Screen
+                                {/* <Stack.Screen
                                     name="(tabs)"
                                     options={{
                                         headerShown: false
+                                    }}
+                                /> */}
+                                <Stack.Screen
+                                    name="settings/index"
+                                    options={{
+                                        headerShown: true,
+                                        headerShadowVisible: false,
+                                        headerTitle: t('settings.headerTitle')
                                     }}
                                 />
                             </Stack>
