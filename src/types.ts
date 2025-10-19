@@ -37,3 +37,9 @@ export interface DailyVerse {
     textAm: string;
     textEn: string;
 }
+
+export interface UserSettings {
+    language: string;
+    fontSize: number;
+    darkMode: true;
+}

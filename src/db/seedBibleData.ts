@@ -1,7 +1,15 @@
 import { db } from '~/App';
 import bibleData from './amharic-bible.json';
-import { books, chapters, logs, NewVerse, verses } from './schema';
+import {
+    books,
+    chapters,
+    logs,
+    NewVerse,
+    userSettings,
+    verses
+} from './schema';
 import { sql } from 'drizzle-orm';
+import { defaultSettings } from '../state/store';
 
 interface BibleChapter {
     chapter: string;
@@ -26,7 +34,7 @@ export async function seedBibleData(): Promise<{
     error?: string;
 }> {
     try {
-        const DB_VERSION = 1;
+        const DB_VERSION = 2;
         const result = await db.transaction(async (tx) => {
             return await tx.get(sql`PRAGMA user_version`);
         });
@@ -53,6 +61,7 @@ export async function seedBibleData(): Promise<{
                 await tx.delete(chapters);
                 await tx.delete(books);
                 await tx.delete(logs);
+                await tx.delete(userSettings);
             });
             console.log('Tables cleared successfully');
         } catch (err) {
@@ -145,6 +154,10 @@ export async function seedBibleData(): Promise<{
         //     }
         //   }
         // })
+
+        await db.transaction(async (tx) => {
+            await tx.insert(userSettings).values({ settings: defaultSettings });
+        });
 
         console.log('🎉 Database seeding completed successfully!');
 

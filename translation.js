@@ -36,6 +36,9 @@ const resources = {
                 ethiopian: 'Ethiopian',
                 gregorian: 'Gregorian'
             },
+            settings: {
+                headerTitle: "Settings"
+            }
         }
     },
     am: {
@@ -74,6 +77,9 @@ const resources = {
                 ethiopian: 'የኢትዮጵያ',
                 gregorian: 'የፈረንጆች'
             },
+            settings: {
+                headerTitle: "ቅንብሮች"
+            }
         }
     }
 };
