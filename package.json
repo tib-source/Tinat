@@ -78,7 +78,7 @@
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
     "prettier": "^3.5.3",
-    "semantic-release": "^24.2.7",
+    "semantic-release": "^25.0.5",
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.3.3"
   },
