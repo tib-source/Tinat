@@ -36,7 +36,7 @@
     "clsx": "^2.1.0",
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.43.1",
-    "expo": "53.0.20",
+    "expo": "57.0.11",
     "expo-dev-client": "~5.2.4",
     "expo-linking": "~7.1.7",
     "expo-navigation-bar": "~4.2.7",
